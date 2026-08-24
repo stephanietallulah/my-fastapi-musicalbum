@@ -54,7 +54,7 @@ songs = [
     {
         "id": 4,
         "artist": "Daniel Caesar",
-        "title": "Superpowers",
+        "title": "Cool",
         "album": "Never Enough",
         "year": 2023,
         "genre": "R&B / Soul",
