@@ -21,56 +21,67 @@ songs = [
     {
         "id": 1,
         "artist": "Daniel Caesar",
-        "title": "Ocho Rios",
-        "album": "Never Enough",
-        "year": 2023,
+        "title": "Toronto 2014",
+        "album": "Freudian",
+        "year": 2017,
         "genre": "R&B / Soul",
-        "duration": "3:45",
-        "description": "A smooth and emotional R&B track from Never Enough."
+        "duration": "3:34",
+        "description": "A soulful track reflecting on love, memories, and personal experiences."
     },
 
     {
         "id": 2,
-        "artist": "Daniel Caesar",
-        "title": "Let Me Go",
-        "album": "Never Enough",
-        "year": 2023,
-        "genre": "R&B / Soul",
-        "duration": "3:48",
-        "description": "A reflective song about relationships and emotional distance."
-    },
-
-    {
-        "id": 3,
         "artist": "Daniel Caesar",
         "title": "Do You Like Me?",
         "album": "Never Enough",
         "year": 2023,
         "genre": "R&B / Soul",
         "duration": "3:59",
-        "description": "A romantic R&B song exploring attraction and uncertainty."
+        "description": "A romantic R&B song exploring attraction, uncertainty, and emotional connection."
+    },
+
+    {
+        "id": 3,
+        "artist": "Daniel Caesar",
+        "title": "Disillusioned",
+        "album": "Never Enough",
+        "year": 2023,
+        "genre": "R&B / Soul",
+        "duration": "3:42",
+        "description": "A reflective song about disappointment, changing perspectives, and relationships."
     },
 
     {
         "id": 4,
+        "artist": "Daniel Caesar",
+        "title": "Superpowers",
+        "album": "Never Enough",
+        "year": 2023,
+        "genre": "R&B / Soul",
+        "duration": "2:36",
+        "description": "A heartfelt track about the powerful connection between two people."
+    },
+
+    {
+        "id": 5,
         "artist": "Daniel Caesar",
         "title": "Always",
         "album": "Never Enough",
         "year": 2023,
         "genre": "R&B / Soul",
         "duration": "3:34",
-        "description": "An emotional track about lingering feelings and devotion."
+        "description": "An emotional track about lingering feelings, love, and devotion."
     },
 
     {
-        "id": 5,
+        "id": 6,
         "artist": "Daniel Caesar",
-        "title": "Cool",
+        "title": "Valentina",
         "album": "Never Enough",
         "year": 2023,
         "genre": "R&B / Soul",
-        "duration": "3:47",
-        "description": "A mellow song with a laid-back sound and intimate atmosphere."
+        "duration": "2:34",
+        "description": "A smooth and romantic R&B song expressing admiration and affection."
     }
 
 ]
