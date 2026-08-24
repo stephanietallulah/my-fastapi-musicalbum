@@ -26,6 +26,7 @@ songs = [
         "year": 2017,
         "genre": "R&B / Soul",
         "duration": "3:34",
+        "image": "images/coverphoto.jpeg",
         "description": "A soulful track reflecting on love, memories, and personal experiences."
     },
 
@@ -37,6 +38,7 @@ songs = [
         "year": 2023,
         "genre": "R&B / Soul",
         "duration": "3:59",
+        "image": "images/coverphoto.jpeg",
         "description": "A romantic R&B song exploring attraction, uncertainty, and emotional connection."
     },
 
@@ -48,6 +50,7 @@ songs = [
         "year": 2023,
         "genre": "R&B / Soul",
         "duration": "3:42",
+        "image": "images/coverphoto.jpeg",
         "description": "A reflective song about disappointment, changing perspectives, and relationships."
     },
 
@@ -59,6 +62,7 @@ songs = [
         "year": 2023,
         "genre": "R&B / Soul",
         "duration": "2:36",
+        "image": "images/coverphoto.jpeg",
         "description": "A heartfelt track about the powerful connection between two people."
     },
 
@@ -70,6 +74,7 @@ songs = [
         "year": 2023,
         "genre": "R&B / Soul",
         "duration": "3:34",
+        "image": "images/coverphoto.jpeg",
         "description": "An emotional track about lingering feelings, love, and devotion."
     },
 
@@ -81,6 +86,7 @@ songs = [
         "year": 2023,
         "genre": "R&B / Soul",
         "duration": "2:34",
+        "image": "images/coverphoto.jpeg",
         "description": "A smooth and romantic R&B song expressing admiration and affection."
     }
 
