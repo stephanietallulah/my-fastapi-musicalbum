@@ -1,9 +1,9 @@
-from fastapi import FastAPI, HTTPException, Header, Query
+from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(
-    title="Simple Car API",
-    description="A beginner-friendly REST API containing information about cars.",
+    title="Daniel Caesar Music API",
+    description="A beginner-friendly REST API containing information about Daniel Caesar songs.",
     version="1.0.0"
 )
 
@@ -15,99 +15,113 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# CAR DATA
-cars = [
+# MUSIC DATA
+songs = [
 
     {
         "id": 1,
-        "make": "Toyota",
-        "model": "Corolla",
-        "year": 1998,
-        "engine": "1.6L 4-cylinder",
-        "horsepower": 105,
-        "description": "A practical and reliable compact sedan."
+        "artist": "Daniel Caesar",
+        "title": "Ocho Rios",
+        "album": "Never Enough",
+        "year": 2023,
+        "genre": "R&B / Soul",
+        "duration": "3:45",
+        "description": "A smooth and emotional R&B track from Never Enough."
     },
 
     {
         "id": 2,
-        "make": "Honda",
-        "model": "Civic Si",
-        "year": 1999,
-        "engine": "1.6L 4-cylinder",
-        "horsepower": 160,
-        "description": "A sporty compact car popular with enthusiasts."
+        "artist": "Daniel Caesar",
+        "title": "Let Me Go",
+        "album": "Never Enough",
+        "year": 2023,
+        "genre": "R&B / Soul",
+        "duration": "3:48",
+        "description": "A reflective song about relationships and emotional distance."
     },
 
     {
         "id": 3,
-        "make": "Mitsubishi",
-        "model": "Eclipse GSX",
-        "year": 1999,
-        "engine": "2.0L Turbo 4-cylinder",
-        "horsepower": 210,
-        "description": "A turbocharged AWD coupe built for performance."
+        "artist": "Daniel Caesar",
+        "title": "Do You Like Me?",
+        "album": "Never Enough",
+        "year": 2023,
+        "genre": "R&B / Soul",
+        "duration": "3:59",
+        "description": "A romantic R&B song exploring attraction and uncertainty."
     },
 
     {
         "id": 4,
-        "make": "Subaru",
-        "model": "Impreza WRX",
-        "year": 2002,
-        "engine": "2.0L Turbo 4-cylinder",
-        "horsepower": 227,
-        "description": "A turbocharged AWD performance sedan."
+        "artist": "Daniel Caesar",
+        "title": "Always",
+        "album": "Never Enough",
+        "year": 2023,
+        "genre": "R&B / Soul",
+        "duration": "3:34",
+        "description": "An emotional track about lingering feelings and devotion."
     },
 
     {
         "id": 5,
-        "make": "Mazda",
-        "model": "MX-5 Miata",
-        "year": 2001,
-        "engine": "1.8L 4-cylinder",
-        "horsepower": 142,
-        "description": "A lightweight two-seat roadster famous for its handling."
+        "artist": "Daniel Caesar",
+        "title": "Cool",
+        "album": "Never Enough",
+        "year": 2023,
+        "genre": "R&B / Soul",
+        "duration": "3:47",
+        "description": "A mellow song with a laid-back sound and intimate atmosphere."
     }
 
 ]
+
 
 # HOME
 @app.get("/")
 def home():
 
     return {
-        "message": "Welcome to the Simple Car API!",
+        "message": "Welcome to Daniel Caesar's Album Never Enough",
         "endpoints": [
-            "/cars",
-            "/cars/{id}",
-            "/cars/search"
+            "/songs",
+            "/songs/{song_id}",
+            "/songs/search"
         ]
     }
 
 
-# GET ALL CARS
-@app.get("/cars")
-def get_cars():
+# GET ALL SONGS
+@app.get("/songs")
+def get_songs():
 
     return {
-        "count": len(cars),
-        "cars": cars
+        "count": len(songs),
+        "songs": songs
     }
 
-# SEARCH CARS
-@app.get("/cars/search")
-def search_cars( q: str = Query(..., min_length=1)):
+
+# SEARCH SONGS
+# IMPORTANT: This must come BEFORE /songs/{song_id}
+@app.get("/songs/search")
+def search_songs(q: str = Query(..., min_length=1)):
+
     q = q.lower()
+
     results = []
-    for car in cars:
+
+    for song in songs:
+
         searchable_text = (
-            f"{car['make']} "
-            f"{car['model']} "
-            f"{car['year']} "
-            f"{car['engine']}"
+            f"{song['artist']} "
+            f"{song['title']} "
+            f"{song['album']} "
+            f"{song['year']} "
+            f"{song['genre']} "
+            f"{song['description']}"
         ).lower()
 
         if q in searchable_text:
-            results.append(car)
+            results.append(song)
 
     return {
         "query": q,
@@ -115,16 +129,17 @@ def search_cars( q: str = Query(..., min_length=1)):
         "results": results
     }
 
-# GET ONE CAR
-@app.get("/cars/{car_id}")
-def get_car(car_id: int):
 
-    for car in cars:
+# GET ONE SONG
+@app.get("/songs/{song_id}")
+def get_song(song_id: int):
 
-        if car["id"] == car_id:
-            return car
+    for song in songs:
+
+        if song["id"] == song_id:
+            return song
 
     raise HTTPException(
         status_code=404,
-        detail="Car not found."
+        detail="Song not found."
     )
