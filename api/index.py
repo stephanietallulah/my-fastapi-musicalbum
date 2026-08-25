@@ -82,6 +82,17 @@ songs = [
         "genre": "R&B / Soul",
         "duration": "2:34",
         "description": "A smooth and romantic R&B song expressing admiration and affection."
+    },
+
+        {
+        "id": 7,
+        "artist": "Daniel Caesar",
+        "title": "Valentina",
+        "album": "Never Enough",
+        "year": 2023,
+        "genre": "R&B / Soul",
+        "duration": "2:34",
+        "description": "A smooth and romantic R&B song expressing admiration and affection."
     }
 
 ]
