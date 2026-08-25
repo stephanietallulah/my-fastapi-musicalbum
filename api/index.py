@@ -85,15 +85,81 @@ songs = [
     },
 
         {
+        "id": 7,
+        "artist": "Daniel Caesar",
+        "title": "Vince Van Gogh",
+        "album": "Never Enough",
+        "year": 2023,
+        "genre": "R&B / Soul",
+        "duration": "2:34",
+        "description": "explores self-doubt, public perception, and artistic isolation."
+    },
+
+    {
         "id": 8,
         "artist": "Daniel Caesar",
-        "title": "Valentina",
+        "title": "Shot My Baby",
         "album": "Never Enough",
         "year": 2023,
         "genre": "R&B / Soul",
         "duration": "2:34",
         "description": "A smooth and romantic R&B song expressing admiration and affection."
-    }
+    },
+    
+    {
+        "id": 9,
+        "artist": "Daniel Caesar",
+        "title": "Pain Is Inevitable",
+        "album": "Never Enough",
+        "year": 2023,
+        "genre": "R&B / Soul",
+        "duration": "2:34",
+        "description": "A smooth and romantic R&B song expressing admiration and affection."
+    },
+
+    {
+        "id": 10,
+        "artist": "Daniel Caesar",
+        "title": "Ocho Rios",
+        "album": "Never Enough",
+        "year": 2023,
+        "genre": "R&B / Soul",
+        "duration": "2:34",
+        "description": "A smooth and romantic R&B song expressing admiration and affection."
+    },
+
+    {
+        "id": 11,
+        "artist": "Daniel Caesar",
+        "title": "Buyer's Remorse",
+        "album": "Never Enough",
+        "year": 2023,
+        "genre": "R&B / Soul",
+        "duration": "2:34",
+        "description": "A smooth and romantic R&B song expressing admiration and affection."
+    },
+
+    {
+        "id": 12
+        "artist": "Daniel Caesar",
+        "title": "Homiesexua",
+        "album": "Never Enough",
+        "year": 2023,
+        "genre": "R&B / Soul",
+        "duration": "2:34",
+        "description": "A smooth and romantic R&B song expressing admiration and affection."
+    },
+
+    {
+        "id": 12
+        "artist": "Daniel Caesar",
+        "title": "Homiesexual",
+        "album": "Never Enough",
+        "year": 2023,
+        "genre": "R&B / Soul",
+        "duration": "2:34",
+        "description": "A smooth and romantic R&B song expressing admiration and affection."
+    },
 
 ]
 
