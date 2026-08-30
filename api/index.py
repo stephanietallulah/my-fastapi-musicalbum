@@ -34,11 +34,6 @@ function displaySongs(songs) {
             <p>${song.duration}</p>
             <p>${song.description}</p>
             <button onclick="viewSong(${song.id})"> View Details</button>
-            <a href="${song.spotify_url}" 
-                   target="_blank" 
-                   class="spotify-button">
-                    ▶ Play on Spotify
-                </a>
         `;
 
         songList.appendChild(card);
