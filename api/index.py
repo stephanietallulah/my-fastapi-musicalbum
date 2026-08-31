@@ -249,7 +249,7 @@ songs = [
         "rating": "4.4/5",
         "spotify_url": "https://open.spotify.com/track/554p4ro2rs7dHqGPwQX67H?si=a20776bd59934662",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZ149LbhVD-td9f0ePs0M_HgI43vWVAN6NV0ewazen3g&s=10",
-        "audio_url": "hhttps://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/PARTYNEXTDOOR%20-%20Some%20Of%20Your%20Love%20(Official%20Audio)-preview.mp3",
+        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/PARTYNEXTDOOR%20-%20Some%20Of%20Your%20Love%20(Official%20Audio)-preview.mp3",
         "duration": "2:39",
         "description": "A song about centered on attraction and wanting affection from someone."
     },
@@ -329,7 +329,7 @@ songs = [
         "rating": "4.5/5",
         "spotify_url": "https://open.spotify.com/track/6wcjLOGIdmw8BUaRho4c9L?si=ff7d00b331014be8",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9Fv_8M1aM9L557rLx4ICLYuSZuEEKLmfuXd19EfdoVg&s",
-        "audio_url": "hhttps://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/iluna%20-%20panaginip%20(Official%20Lyric%20Video)-preview.mp3",
+        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/iluna%20-%20panaginip%20(Official%20Lyric%20Video)-preview.mp3",
         "duration": "5:17",
         "description": "A song about being deeply captivated by someone and imagining a future together."
     },
@@ -369,7 +369,7 @@ songs = [
         "rating": "4.6/5",
         "spotify_url": "https://open.spotify.com/track/3CWq0pAKKTWb0K4yiglDc4?si=74b752468d544fdf",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQL1r7Kjvv_zi-F42XyK6SBs1wZ5oGFq-nvk8FicMYTsQ&s=10",
-        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/Taylor%20Swift%20-%20You're%20Losing%20Me%20(From%20The%20Vault)-preview.mp3",
+        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/Taylor%20Swift%20-%20You%27re%20Losing%20Me%20%28From%20The%20Vault%29-preview.mp3",
         "duration": "4:38",
         "description": "A song about relationship falling apart and the painful realization that it may no longer be possible to save it."
     },  
@@ -389,7 +389,7 @@ songs = [
         "rating": "4.4/5",
         "spotify_url": "https://open.spotify.com/track/20jbSiX29FDX4oQxBXyUEi?si=da1c033780414c4d",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhwDxG_sS1WDxTbx4IRPOGHJbHd4iBm4-9ZQ6pceU0WA&s",
-        "audio_url": "hhttps://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/Ariana%20Grande%20-%20hate%20that%20i%20made%20you%20love%20me%20(official%20lyric%20video)-preview.mp3",
+        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/Ariana%20Grande%20-%20hate%20that%20i%20made%20you%20love%20me%20(official%20lyric%20video)-preview.mp3",
         "duration": "3:17",
         "description": "A song about unwanted attention, emotional boundaries, and being blamed for someone else's attachment."
     },  
