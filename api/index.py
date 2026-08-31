@@ -38,7 +38,7 @@ songs = [
         "id": 2,
         "title": "Backburner",
         "album": "Nicole",
-        "artist": "Niki",
+        "artist": "NIKI",
         "featured_artist": "None",
         "writers": "Nicole Zefanya",
         "producers": "NIKI and Ethan Gruska",
