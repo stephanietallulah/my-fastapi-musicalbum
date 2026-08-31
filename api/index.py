@@ -372,6 +372,7 @@ songs = [
         "rating": "4.4/5",
         "spotify_url": "https://open.spotify.com/track/20jbSiX29FDX4oQxBXyUEi?si=da1c033780414c4d",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhwDxG_sS1WDxTbx4IRPOGHJbHd4iBm4-9ZQ6pceU0WA&s",
+        "audio_url": "https://github.com/stephanietallulah/my-fastapi-musicalbum/blob/main/previews/Ariana%20Grande%20-%20hate%20that%20i%20made%20you%20love%20me%20(official%20lyric%20video)-preview.mp3",
         "duration": "3:17",
         "description": "A song about unwanted attention, emotional boundaries, and being blamed for someone else's attachment."
     },  
