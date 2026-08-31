@@ -51,7 +51,7 @@ songs = [
         "rating": "4.7/5",
         "spotify_url": "https://open.spotify.com/track/7gqdZpe7MlTLA59viClLoY?si=7d231e5c82f3459f",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTy_KoRj3Uxz9zXTk4k6aZ3fllcVE1PfVXVMJdm5lJUuQ&s=10",
-        "audio_url": "https://github.com/stephanietallulah/my-fastapi-musicalbum/blob/main/previews/Backburner-preview.mp3",
+        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/Backburner-preview.mp3",
         "duration": "3:34",
         "description": "A song about staying attached to someone who doesn't fully prioritize you, despite knowing you deserve more."
     },
@@ -71,7 +71,7 @@ songs = [
         "rating": "4.4/5",
         "spotify_url": "https://open.spotify.com/track/1a19jsjG2DvbN1fVJonKUU?si=767f37dbeeb141b4",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2XSGoaWNwdu3fbNJu0DgfBPCbTzmwTmqqSnIyH0HM8w&s=10",
-        "audio_url": "https://github.com/stephanietallulah/my-fastapi-musicalbum/blob/main/previews/beabadoobee%20-%20Beaches-preview.mp3",
+        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/beabadoobee%20-%20Beaches-preview.mp3",
         "duration": "3:50",
         "description": "It is about overcoming self-doubt, stepping out of one's comfort zone, and finding a state of calm clarity."
     },
@@ -91,7 +91,7 @@ songs = [
         "rating": "4.7/5",
         "spotify_url": "https://open.spotify.com/track/4ciwlQ4UYHUMj2wuH0ffw6?si=89b385f60af1442b",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcm43sjdPWddoV08Xd2jJE71bUMNwNPcvLt0pff1462Q&s",
-        "audio_url": "https://github.com/stephanietallulah/my-fastapi-musicalbum/blob/main/previews/Katy%20Perry%20-%20Thinking%20Of%20You%20(Lyrics)-preview.mp3",
+        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/Katy%20Perry%20-%20Thinking%20Of%20You%20(Lyrics)-preview.mp3",
         "duration": "4:06",
         "description": "An emotional soft-rock power ballad about lingering grief, regret, and being unable to move on from a past love while stuck in a new relationship."
     },
@@ -111,7 +111,7 @@ songs = [
         "rating": "4.2/5",
         "spotify_url": "https://open.spotify.com/track/5WdMBJD7V5CVBTBdE2at2D?si=f6f305bea216494f",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1qI2nxDo6lcWxM0HFjOWeUtVHYfJJY7q2Ht69a1LBcQ&s",
-        "audio_url": "https://github.com/stephanietallulah/my-fastapi-musicalbum/blob/main/previews/The%201975%20-%20All%20I%20Need%20To%20Hear%20(Audio)-preview.mp3",
+        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/The%201975%20-%20All%20I%20Need%20To%20Hear%20(Audio)-preview.mp3",
         "duration": "3:30",
         "description": "It explores emotional dependency and deep-seated isolation."
     },
