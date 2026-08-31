@@ -49,7 +49,7 @@ songs = [
         "popularity": "Over 100 million of streams on Spotify",
         "rating": "4.7/5",
         "spotify_url": "https://open.spotify.com/track/7gqdZpe7MlTLA59viClLoY?si=7d231e5c82f3459f",
-        "image_url:": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTy_KoRj3Uxz9zXTk4k6aZ3fllcVE1PfVXVMJdm5lJUuQ&s=10",
+        "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTy_KoRj3Uxz9zXTk4k6aZ3fllcVE1PfVXVMJdm5lJUuQ&s=10",
         "duration": "3:34",
         "description": "A song about staying attached to someone who doesn't fully prioritize you, despite knowing you deserve more."
     },
