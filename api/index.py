@@ -150,7 +150,7 @@ songs = [
         "rating": "4.5/5",
         "spotify_url": "https://open.spotify.com/track/0zZ5TnmUIub96AsZmkCXYS?si=49ae86329b474fe9",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTG-WQt0reCCYhOyhAL4p46UMT0FcE1NO1yaUSMkyvttA&s",
-        "audio_url": "https://github.com/stephanietallulah/my-fastapi-musicalbum/blob/main/previews/Rex%20Orange%20County%2C%20Daniel%20Caesar%20-%20Indecision%20(Lyrics)-preview.mp3",
+        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/Rex%20Orange%20County%2C%20Daniel%20Caesar%20-%20Indecision%20(Lyrics)-preview.mp3",
         "duration": "3:06",
         "description": "A dreamy and emotional indie-pop song about uncertainty in love and the struggle of making a decision about a relationship."
     },
@@ -170,6 +170,7 @@ songs = [
         "rating": "4.1/5",
         "spotify_url": "https://open.spotify.com/track/4HwDCXsMBC7SUdp2WT4MZP?si=cb102e43ec494bef",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQP6nU36o42iFEKXLGD8z_s_4vcDGtqnZBEDCnjtx0mWg&s=10",
+        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/Chase%20Atlantic%20-%20Into%20It%20(Official%20Audio)-preview.mp3",
         "duration": "3:17",
         "description": "A dark, energetic track about fame, relationships, and embracing a chaotic lifestyle despite its pressures."
     },
@@ -189,6 +190,7 @@ songs = [
         "rating": "4.1/5",
         "spotify_url": "https://open.spotify.com/track/2oVVaVY0LkzwAYYcyzon6Z?si=3f179fe459b642fa",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnXP_-h2kNQlN9aDX4yF64VzOtYUw0TKpLMyA5dz3-ug&s=10",
+        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/Heart%20Of%20A%20Woman-preview.mp3",
         "duration": "2:50",
         "description": "A song about loving someone despite their flaws and reaching the limit of how much you can tolerate in a relationship."
     },
@@ -208,6 +210,7 @@ songs = [
         "rating": "4.4/5",
         "spotify_url": "https://open.spotify.com/track/3uuR20w7HgLlb5Hha2mCxb?si=cd74ed152a364d3d",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJLjIzHsiIHa4O6DAXAaf8aqkhfSP7TcOh1AczcPzEXw&s=10",
+        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/The%20Weeknd%20Moth%20To%20A%20Flame%20(HD%20AUDIO)-preview.mp3",
         "duration": "2:50",
         "description": "A song about being drawn to someone even when you know the relationship may be complicated."
     },
@@ -226,6 +229,7 @@ songs = [
         "rating": "4.5/5",
         "spotify_url": "https://open.spotify.com/track/29eiVZ3R6iJcXB01dOAl6H?si=9a3cc16fc7b04926",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVkKEBiHYVzg6W42Qf6KGvZp5BDERos4fX9srVM6YuIw&s=10",
+        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/Waltz%20of%20Four%20Left%20Feet-preview.mp3",
         "duration": "5:38",
         "description": "A song about quietly admiring someone and being content simply to be near them."
     },
@@ -245,6 +249,7 @@ songs = [
         "rating": "4.4/5",
         "spotify_url": "https://open.spotify.com/track/554p4ro2rs7dHqGPwQX67H?si=a20776bd59934662",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZ149LbhVD-td9f0ePs0M_HgI43vWVAN6NV0ewazen3g&s=10",
+        "audio_url": "hhttps://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/PARTYNEXTDOOR%20-%20Some%20Of%20Your%20Love%20(Official%20Audio)-preview.mp3",
         "duration": "2:39",
         "description": "A song about centered on attraction and wanting affection from someone."
     },
@@ -264,6 +269,7 @@ songs = [
         "rating": "4.6/5",
         "spotify_url": "https://open.spotify.com/track/0nJW01T7XtvILxQgC5J7Wh?si=50e8d621e24744e4",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-WWY_96Rm-llgpMDvjX2NIRyPaztQp_VuG8x1qAHAog&s=10",
+        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/Bruno%20Mars%20-%20When%20I%20Was%20Your%20Man%20(Audio)-preview.mp3",
         "duration": "3:33",
         "description": "A song about regret and realizing too late that you should have treated someone better."
     },
@@ -283,6 +289,7 @@ songs = [
         "rating": "4.5/5",
         "spotify_url": "https://open.spotify.com/track/09WPbmLdcBhJPcJwEJc1Yv?si=12e7bd32b0ef4153",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDIhlKNKwqVpLn8bjocUglgJ-dNRzFmxxhLxbCWx7c6A&s",
+        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/PANGARAP%20LANG%20KITA%20-%20Parokya%20Ni%20Edgar%20feat%2C%20Happy%20Sy%20(lyrics)-preview.mp3",
         "duration": "3:14",
         "description": "A song about loving someone who feels out of reach and accepting that they may remain only a dream."
     },
@@ -302,6 +309,7 @@ songs = [
         "rating": "4.6/5",
         "spotify_url": "https://open.spotify.com/track/3BJe4B8zGnqEdQPMvfVjuS?si=69b7a8fa7a0348df",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzEtujGvbM3pJJFDEFL7mVGSgb4BAGzoA0SogCxCGLZQ&s=10", 
+        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/Lana%20Del%20Rey%20-%20Summertime%20Sadness%20(Lyrics)-preview.mp3",
         "duration": "4:25",
         "description": "A song about love, longing, and the sadness that comes with the possibility of losing someone."
     },
@@ -321,6 +329,7 @@ songs = [
         "rating": "4.5/5",
         "spotify_url": "https://open.spotify.com/track/6wcjLOGIdmw8BUaRho4c9L?si=ff7d00b331014be8",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9Fv_8M1aM9L557rLx4ICLYuSZuEEKLmfuXd19EfdoVg&s",
+        "audio_url": "hhttps://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/iluna%20-%20panaginip%20(Official%20Lyric%20Video)-preview.mp3",
         "duration": "5:17",
         "description": "A song about being deeply captivated by someone and imagining a future together."
     },
@@ -340,6 +349,7 @@ songs = [
         "rating": "4.4/5",
         "spotify_url": "https://open.spotify.com/track/6mXdCcFnPKQznj4CmMRmHC?si=958a47ccf1f44007",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQ6uHMlcvTmONsVa-wvvcuUR3KXwc-4thxKAp5cHmVDg&s=10",
+        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/Lauv%2C%20LANY%20-%20Mean%20It%20(Lyrics)-preview.mp3",
         "duration": "3:52",
         "description": "A song about wanting someone to be honest about their feelings instead of giving mixed signals."
     },
@@ -359,6 +369,7 @@ songs = [
         "rating": "4.6/5",
         "spotify_url": "https://open.spotify.com/track/3CWq0pAKKTWb0K4yiglDc4?si=74b752468d544fdf",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQL1r7Kjvv_zi-F42XyK6SBs1wZ5oGFq-nvk8FicMYTsQ&s=10",
+        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/Taylor%20Swift%20-%20You're%20Losing%20Me%20(From%20The%20Vault)-preview.mp3",
         "duration": "4:38",
         "description": "A song about relationship falling apart and the painful realization that it may no longer be possible to save it."
     },  
@@ -378,7 +389,7 @@ songs = [
         "rating": "4.4/5",
         "spotify_url": "https://open.spotify.com/track/20jbSiX29FDX4oQxBXyUEi?si=da1c033780414c4d",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhwDxG_sS1WDxTbx4IRPOGHJbHd4iBm4-9ZQ6pceU0WA&s",
-        "audio_url": "https://github.com/stephanietallulah/my-fastapi-musicalbum/blob/main/previews/Ariana%20Grande%20-%20hate%20that%20i%20made%20you%20love%20me%20(official%20lyric%20video)-preview.mp3",
+        "audio_url": "hhttps://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/Ariana%20Grande%20-%20hate%20that%20i%20made%20you%20love%20me%20(official%20lyric%20video)-preview.mp3",
         "duration": "3:17",
         "description": "A song about unwanted attention, emotional boundaries, and being blamed for someone else's attachment."
     },  
@@ -398,6 +409,7 @@ songs = [
         "rating": "4.7/5",
         "spotify_url": "https://open.spotify.com/track/5XeFesFbtLpXzIVDNQP22n?si=22b97566c452476e",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSzuoz1-idhHAm-ZBqI6_9mitNA5fewlNFf_FimaMS4Q&s",
+        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/I%20Wanna%20Be%20Yours-preview.mp3",
         "duration": "3:04",
         "description": "A song about expressing intense devotion and the desire to be completely committed to someone."
     },  
