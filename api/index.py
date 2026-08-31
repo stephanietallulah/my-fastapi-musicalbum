@@ -314,6 +314,7 @@ songs = [
         "popularity": "Over 147 million streams on Spotify",
         "rating": "4.5/5",
         "spotify_url": "https://open.spotify.com/track/6wcjLOGIdmw8BUaRho4c9L?si=ff7d00b331014be8",
+        "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9Fv_8M1aM9L557rLx4ICLYuSZuEEKLmfuXd19EfdoVg&s",
         "duration": "5:17",
         "description": "A song about being deeply captivated by someone and imagining a future together."
     },
@@ -332,7 +333,7 @@ songs = [
         "popularity": "Over 592 million streams on Spotify",
         "rating": "4.4/5",
         "spotify_url": "https://open.spotify.com/track/6mXdCcFnPKQznj4CmMRmHC?si=958a47ccf1f44007",
-        "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9Fv_8M1aM9L557rLx4ICLYuSZuEEKLmfuXd19EfdoVg&s",
+        "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQ6uHMlcvTmONsVa-wvvcuUR3KXwc-4thxKAp5cHmVDg&s=10",
         "duration": "3:52",
         "description": "A song about wanting someone to be honest about their feelings instead of giving mixed signals."
     },
