@@ -1,6 +1,5 @@
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
-const API_URL = "https://my-fastapi-musicalbum.vercel.app";
 
 app = FastAPI(
     title="Daniel Caesar Music API",
@@ -21,14 +20,18 @@ songs = [
 
     {
         "id": 1,
+        "artist": "Daniel Caesar",
         "title": "Toronto 2014",
         "album": "Freudian",
+        "year": 2017,
         "artist": "Daniel Caesar",
         "featured_artist": "Mustafa",
         "writers": "Daniel Caesar, Mustafa, Simon Hessman, Dylan Wiggins",
         "producers": "Daniel Caesar, Sir Dylan, Simon On The Moon",
         "year": 2023,
         "genre": "R&B / Soul",
+        "duration": "3:34",
+        "description": "A soulful track reflecting on love, memories, and personal experiences."
         "mood": "Nonstalgic / Emotional",
         "language": "English",
         "theme": "Love / Heartbreak",
@@ -39,27 +42,35 @@ songs = [
 
     {
         "id": 2,
+        "artist": "Niki",
         "title": "Backburner",
         "album": "Nicole",
+        "rating": "4.7/5",
         "artist": "Niki",
         "featured_artist": "None",
         "writers": "Nicole Zefanya",
         "producers": "NIKI and Ethan Gruska",
         "year": 2022,
         "genre": "R&B / Indie Rock",
+        "popularity": "Hundreds of million of streams on Spotify",
+        "producers": "NIKI and Ethan Gruska",
+        "writers": "Nicole Zefanya",
         "mood": "Melancholic / Reflective",
         "language": "English",
         "theme": "Unrequited Love / Heartbreak",
         "popularity": "Over 100 million of streams on Spotify",
         "rating": "4.7/5",
         "duration": "3:34",
+        "description": "A melancholic alternative R&B and pop song about unrequited love and the pain of being someone's second choice."
         "description": "A song about staying attached to someone who doesn't fully prioritize you, despite knowing you deserve more."
     },
 
     {
         "id": 3,
+        "artist": "beabadoobee",
         "title": "Beaches",
         "album": "This Is How Tomorrow Moves",
+        "rating": "4.4/5",
         "artist": "beabadoobee",
         "featured_artist": "None",
         "writers": "Beatrice Laus",
@@ -70,6 +81,8 @@ songs = [
         "language": "English",
         "theme": "Love / Attraction",
         "popularity": "Over 235 million streams on Spotify",
+        "producers": "Rick Rubin and Jacob Bugden",
+        "writers": "Beatrice Laus",
         "rating": "4.4/5",
         "duration": "3:50",
         "description": "It is about overcoming self-doubt, stepping out of one's comfort zone, and finding a state of calm clarity."
@@ -77,8 +90,10 @@ songs = [
 
     {
         "id": 4,
+        "artist": "Katy Perry",
         "title": "Thinking of You",
         "album": "One of the Boys",
+        "rating": "4.7/5",
         "artist": "Katy Perry",
         "featured_artist": "None",
         "writers": "Katy Perry",
@@ -89,6 +104,8 @@ songs = [
         "language": "English",
         "theme": "Heartbreak / Regret",
         "popularity": "Over 240 million streams on Spotify",
+        "producers": "Butch Walker",
+        "writers": "Katy Perry",
         "rating": "4.7/5",
         "duration": "4:06",
         "description": "An emotional soft-rock power ballad about lingering grief, regret, and being unable to move on from a past love while stuck in a new relationship."
@@ -96,8 +113,10 @@ songs = [
 
     {
         "id": 5,
+        "artist": "The 1975",
         "title": "All I Need To Hear",
         "album": "Being Funny in a Foreign Language",
+        "rating": "4.2/5",
         "artist": "The 1975",
         "featured_artist": "None",
         "writers": "Matty Healy",
@@ -107,6 +126,8 @@ songs = [
         "mood": "Tender / Emotional",
         "language": "English",
         "popularity": "Over 82 million streams on Spotify",
+        "producers": "Matty Healy, George Daniel, Jack Antonoff",
+        "writers": "Matty Healy",
         "rating": "4.2/5",
         "duration": "3:30",
         "description": "It explores emotional dependency and deep-seated isolation."
@@ -114,8 +135,10 @@ songs = [
 
     {
         "id": 6,
+        "artist": "Tyler, the Creator",
         "title": "Darling, I",
         "album": "Chromakopia",
+        "rating": "4.1/5",
         "artist": "Tyler, the Creator",
         "featured_artist": "Teezo Touchdown",
         "writers": "Tyler Okonma, Kamaal Fareed, and Barry White",
@@ -125,6 +148,8 @@ songs = [
         "mood": "Romantic / Warm",
         "language": "English",
         "popularity": "Over 240 million streams on Spotify",
+        "producers": "Tyler Okonma",
+        "writers": "Tyler Okonma, Kamaal Fareed, and Barry White",
         "rating": "4.1/5",
         "duration": "4:13",
         "description": "It explores emotional dependency and deep-seated isolation."
@@ -132,6 +157,17 @@ songs = [
 
     {
         "id": 7,
+        "artist": "Luther Kendrick",
+        "title": "Heart P6",
+        "album": "Unknown",
+        "rating": "N/A",
+        "year": "Unknown",
+        "genre": "R&B / Soul",
+        "popularity": "Unknown",
+        "producers": "Unknown",
+        "writers": "Luther Kendrick",
+        "duration": "Unknown",
+        "description": "A heartfelt track with emotional depth."
         "title": "Indecision",
         "album": "None",
         "artist": "Rex Orange County",
@@ -147,9 +183,21 @@ songs = [
         "duration": "3:06",
         "description": "A dreamy and emotional indie-pop song about uncertainty in love and the struggle of making a decision about a relationship."
     },
+
    
     {
         "id": 8,
+        "artist": "Kendrick",
+        "title": "6 Kendrick",
+        "album": "Unknown",
+        "rating": "N/A",
+        "year": "Unknown",
+        "genre": "Hip-hop / Rap",
+        "popularity": "Unknown",
+        "producers": "Unknown",
+        "writers": "Kendrick",
+        "duration": "Unknown",
+        "description": "A rap track showcasing lyrical prowess."
         "title": "Into It",
         "album": "Chase Atlantic (2017)",
         "artist": "Chase Atlantic",
@@ -168,6 +216,17 @@ songs = [
 
     {
         "id": 9,
+        "artist": "Eric Bellinger",
+        "title": "Drive By",
+        "album": "Unknown",
+        "rating": "N/A",
+        "year": "Unknown",
+        "genre": "R&B / Hip-hop",
+        "popularity": "Unknown",
+        "producers": "Unknown",
+        "writers": "Eric Bellinger",
+        "duration": "Unknown",
+        "description": "A smooth R&B track with hip-hop influences."
         "title": "Heart of A Woman",
         "album": "Finally Over It",
         "artist": "Summer Walker",
@@ -184,8 +243,20 @@ songs = [
         "description": "A song about loving someone despite their flaws and reaching the limit of how much you can tolerate in a relationship."
     },
 
+    {
      {
         "id": 10,
+        "artist": "Taylor Swift",
+        "title": "Ruin the Friendship",
+        "album": "Unreleased / Demo",
+        "rating": "N/A",
+        "year": "Unknown",
+        "genre": "Pop",
+        "popularity": "Fan-favorite unreleased track",
+        "producers": "Unknown",
+        "writers": "Taylor Swift",
+        "duration": "Unknown",
+        "description": "A song about crossing the line between friendship and romance."
         "title": "Moth To A Flame",
         "album": "Paradise Again",
         "artist": "Swedish House Mafia",
@@ -204,6 +275,17 @@ songs = [
 
     {
         "id": 11,
+        "artist": "Backstreet Boys",
+        "title": "Shape of My Heart",
+        "album": "Black & Blue",
+        "rating": "4.6/5",
+        "year": 2000,
+        "genre": "Pop",
+        "popularity": "Classic hit with millions of streams",
+        "producers": "Max Martin",
+        "writers": "Max Martin, Rami Yacoub, Lisa Miskovsky",
+        "duration": "3:50",
+        "description": "A heartfelt pop ballad about regret and love."
         "title": "Waltz of Four Left Feet",
         "album": "For Princesses, By Thieves (O Mga Awit ng Hiraya Para sa Guni-guning Sinta",
         "artist": "Shirebound & Busking",
@@ -222,6 +304,17 @@ songs = [
 
     {
         "id": 12,
+        "artist": "Green Day",
+        "title": "Last Night on Earth",
+        "album": "21st Century Breakdown",
+        "rating": "4.3/5",
+        "year": 2009,
+        "genre": "Alternative Rock",
+        "popularity": "Millions of streams on Spotify",
+        "producers": "Butch Vig",
+        "writers": "Billie Joe Armstrong",
+        "duration": "3:57",
+        "description": "A romantic rock ballad with emotional intensity."
         "title": "Some Of Your Love",
         "album": "PARTYNEXTDOOR 3 (P3) [10-YEAR EDITION]",
         "artist": "PARTYNEXTDOOR",
@@ -240,6 +333,17 @@ songs = [
 
     {
         "id": 13,
+        "artist": "Charlie Burg",
+        "title": "I Don’t Wanna Be Okay Without You",
+        "album": "Two, Five, Six, Four",
+        "rating": "4.5/5",
+        "year": 2018,
+        "genre": "Indie Pop / R&B",
+        "popularity": "Cult favorite indie track",
+        "producers": "Charlie Burg",
+        "writers": "Charlie Burg",
+        "duration": "Unknown",
+        "description": "An emotional indie pop song about vulnerability and love."
         "title": "When I Was Your Man",
         "album": "Unorthodox Jukebox",
         "artist": "Bruno Mars",
@@ -256,8 +360,20 @@ songs = [
         "description": "A song about regret and realizing too late that you should have treated someone better."
     },
 
+    {
    {
         "id": 14,
+        "artist": "Chase Atlantic",
+        "title": "Friends",
+        "album": "Unknown",
+        "rating": "N/A",
+        "year": "Unknown",
+        "genre": "Alternative R&B",
+        "popularity": "Fan-favorite track",
+        "producers": "Chase Atlantic",
+        "writers": "Chase Atlantic",
+        "duration": "Unknown",
+        "description": "A dark, moody track about toxic relationships."
         "title": "Pangarap Lang Kita",
         "album": "Middle-Aged Juvenile Novelty Pop Rockers",
         "artist": "Parokya Ni Edgar",
@@ -273,9 +389,21 @@ songs = [
         "duration": "3:14",
         "description": "A song about loving someone who feels out of reach and accepting that they may remain only a dream."
     },
+
     
     {
         "id": 15,
+        "artist": "Chase Atlantic",
+        "title": "Consume",
+        "album": "Unknown",
+        "rating": "N/A",
+        "year": "Unknown",
+        "genre": "Alternative R&B",
+        "popularity": "Fan-favorite track",
+        "producers": "Chase Atlantic",
+        "writers": "Chase Atlantic",
+        "duration": "Unknown",
+        "description": "A track about indulgence, addiction, and desire."
         "title": "Summertime Sadness",
         "album": "Born To Die",
         "artist": "Lana Del Rey",
@@ -294,6 +422,18 @@ songs = [
 
     {
         "id": 16,
+        "artist": "Frank Ocean",
+        "title": "Moon River",
+        "album": "Single Release",
+        "rating": "4.8/5",
+        "year": 2018,
+        "genre": "R&B / Soul",
+        "popularity": "Millions of streams on Spotify",
+        "producers": "Frank Ocean",
+        "writers": "Henry Mancini, Johnny Mercer",
+        "duration": "Unknown",
+        "description": "Frank Ocean’s haunting cover of the classic ballad."
+    }
         "title": "Panaginip",
         "album": "None",
         "artist": "nicole",
@@ -397,12 +537,6 @@ def home():
             "/songs/{song_id}",
             "/songs/search"
         ]
-// GET ALL SONGS
-async function loadSongs() {
-    try {
-        const response = await fetch(`${API_URL}/songs`);
-        const data = await response.json();
-        displaySongs(data.songs);
     }
 
 
@@ -413,101 +547,11 @@ def get_songs():
     return {
         "count": len(songs),
         "songs": songs
-    catch (error) {
-        console.error(error);
-        document.getElementById("songList").innerHTML = "Unable to connect to the API.";
-    }
-}
-
-
-// DISPLAY SONGS
-function displaySongs(songs) {
-    const songList =
-        document.getElementById("songList");
-
-    songList.innerHTML = "";
-
-    songs.forEach(song => {
-        const card = document.createElement("div");
-        card.className = "song-card";
-        card.innerHTML = `
-            <div class="song-year">${song.year}</div>
-            <h3>${song.artist} - ${song.title}</h3>
-            <p class="song-album">${song.album}</p>
-            <p>${song.genre}</p>
-            <p>${song.duration}</p>
-            <p>${song.description}</p>
-            <button onclick="viewSong(${song.id})"> View Details</button>
-            <a href="${song.spotify_url}" 
-                   target="_blank" 
-                   class="spotify-button">
-                    ▶ Play on Spotify
-                </a>
-        `;
-
-        songList.appendChild(card);
-    });
-
-}
-
-// DISPLAY IMAGES
-function displaySongs(songs) {
-    const songList = document.getElementById("songList");
-
-    songList.innerHTML = "";
-
-    songs.forEach(song => {
-        const card = document.createElement("div");
-
-        card.className = "song-card";
-
-        card.innerHTML = `
-            <img src="./coverphoto.jpeg" alt="Never Enough album cover">
-
-            <p class="song-year">${song.year}</p>
-            <h3>${song.title}</h3>
-            <p>${song.artist}</p>
-            <p class="song-album">${song.album}</p>
-            <p>${song.description}</p>
-            <button onclick="viewSong(${song.id})">
-                View Song
-            </button>
-        `;
-
-        songList.appendChild(card);
-    });
-}
-
-// GET ONE SONG
-async function viewSong(id) {
-
-    try {
-        const response = await fetch(`${API_URL}/songs/${id}`);
-        const song = await response.json();
-
-        alert(`
-            ${song.artist} - ${song.title}
-            Album:
-            ${song.album}
-
-            Genre:
-            ${song.genre}
-
-            Duration:
-            ${song.duration}
-
-            Description:
-            ${song.description}
-        `);
-    }
-    catch (error) {
-        console.error(error);
-        alert("Unable to retrieve song.");
     }
 
-}
 
 # SEARCH SONGS
+# IMPORTANT: This must come BEFORE /songs/{song_id}
 @app.get("/songs/search")
 def search_songs(q: str = Query(..., min_length=1)):
 
@@ -528,37 +572,19 @@ def search_songs(q: str = Query(..., min_length=1)):
 
         if q in searchable_text:
             results.append(song)
-// SEARCH
-async function searchSongs() {
 
     return {
         "query": q,
         "count": len(results),
         "results": results
-    const query = document.getElementById("searchInput").value;
-    if (!query) {
-        loadSongs();
-        return;
-    }
-    try {
-        const response =
-            await fetch(`${API_URL}/songs/search?q=${encodeURIComponent(query)}`);
-        const data = await response.json();
-        displaySongs(data.results);
     }
 
-    catch (error) {
-        console.error(error);
-        alert("Search failed.");
-    }
-}
 
 # GET ONE SONG
 @app.get("/songs/{song_id}")
 def get_song(song_id: int):
 
     for song in songs:
-loadSongs();
 
         if song["id"] == song_id:
             return song
