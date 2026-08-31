@@ -30,6 +30,7 @@ songs = [
         "language": "English",
         "popularity": "Over 118 million of streams on Spotify",
         "spotify_url": "https://open.spotify.com/track/4t9R5rbtovdvya28uMODDz?si=cd8429623cc245ca",
+        "image_url": "https://cdn-images.dzcdn.net/images/cover/0d571082af7c78114321031d7f84d331/1900x1900-000000-80-0-0.jpg",
         "duration": "4:37",
         "description": "A song about looking back on the past, personal growth, and Daniel Caesar's connection to his hometown of Toronto."
     },
@@ -48,6 +49,7 @@ songs = [
         "popularity": "Over 100 million of streams on Spotify",
         "rating": "4.7/5",
         "spotify_url": "https://open.spotify.com/track/7gqdZpe7MlTLA59viClLoY?si=7d231e5c82f3459f",
+        "image_url:": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIuWdXisT0bdWR-yYnHYxBb-EMT7f-cjLJsXDb4UyeJA&s=10",
         "duration": "3:34",
         "description": "A song about staying attached to someone who doesn't fully prioritize you, despite knowing you deserve more."
     },
@@ -65,8 +67,9 @@ songs = [
         "language": "English",
         "popularity": "Over 235 million streams on Spotify",
         "rating": "4.4/5",
-        "duration": "3:50",
         "spotify_url": "https://open.spotify.com/track/1a19jsjG2DvbN1fVJonKUU?si=767f37dbeeb141b4",
+        "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2XSGoaWNwdu3fbNJu0DgfBPCbTzmwTmqqSnIyH0HM8w&s=10",
+        "duration": "3:50",
         "description": "It is about overcoming self-doubt, stepping out of one's comfort zone, and finding a state of calm clarity."
     },
 
@@ -84,6 +87,7 @@ songs = [
         "popularity": "Over 240 million streams on Spotify",
         "rating": "4.7/5",
         "spotify_url": "https://open.spotify.com/track/4ciwlQ4UYHUMj2wuH0ffw6?si=89b385f60af1442b",
+        "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcm43sjdPWddoV08Xd2jJE71bUMNwNPcvLt0pff1462Q&s",
         "duration": "4:06",
         "description": "An emotional soft-rock power ballad about lingering grief, regret, and being unable to move on from a past love while stuck in a new relationship."
     },
@@ -102,6 +106,7 @@ songs = [
         "popularity": "Over 82 million streams on Spotify",
         "rating": "4.2/5",
         "spotify_url": "https://open.spotify.com/track/5WdMBJD7V5CVBTBdE2at2D?si=f6f305bea216494f",
+        "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1qI2nxDo6lcWxM0HFjOWeUtVHYfJJY7q2Ht69a1LBcQ&s",
         "duration": "3:30",
         "description": "It explores emotional dependency and deep-seated isolation."
     },
@@ -120,6 +125,7 @@ songs = [
         "popularity": "Over 240 million streams on Spotify",
         "rating": "4.1/5",
         "spotify_url": "https://open.spotify.com/track/0VaeksJaXy5R1nvcTMh3Xk?si=aab59049ca80461d",
+        "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQaoCxvIbeMF_wGllAm9n7Zki9rAS_Jpr0K-G7HSm6Ww&s=10",
         "duration": "4:13",
         "description": "It explores emotional dependency and deep-seated isolation."
     },
@@ -138,6 +144,7 @@ songs = [
         "popularity": "Over 4.2 million streams on Spotify",
         "rating": "4.5/5",
         "spotify_url": "https://open.spotify.com/track/0zZ5TnmUIub96AsZmkCXYS?si=49ae86329b474fe9",
+        "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTG-WQt0reCCYhOyhAL4p46UMT0FcE1NO1yaUSMkyvttA&s",
         "duration": "3:06",
         "description": "A dreamy and emotional indie-pop song about uncertainty in love and the struggle of making a decision about a relationship."
     },
@@ -156,6 +163,7 @@ songs = [
         "popularity": "Over 920 million streams on Spotify",
         "rating": "4.1/5",
         "spotify_url": "https://open.spotify.com/track/4HwDCXsMBC7SUdp2WT4MZP?si=cb102e43ec494bef",
+        "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQP6nU36o42iFEKXLGD8z_s_4vcDGtqnZBEDCnjtx0mWg&s=10",
         "duration": "3:17",
         "description": "A dark, energetic track about fame, relationships, and embracing a chaotic lifestyle despite its pressures."
     },
@@ -174,6 +182,7 @@ songs = [
         "popularity": "Over 112 million streams on Spotify",
         "rating": "4.1/5",
         "spotify_url": "https://open.spotify.com/track/2oVVaVY0LkzwAYYcyzon6Z?si=3f179fe459b642fa",
+        "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnXP_-h2kNQlN9aDX4yF64VzOtYUw0TKpLMyA5dz3-ug&s=10",
         "duration": "2:50",
         "description": "A song about loving someone despite their flaws and reaching the limit of how much you can tolerate in a relationship."
     },
@@ -192,6 +201,7 @@ songs = [
         "popularity": "Over 1.52 billion streams on Spotify",
         "rating": "4.4/5",
         "spotify_url": "https://open.spotify.com/track/3uuR20w7HgLlb5Hha2mCxb?si=cd74ed152a364d3d",
+        "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJLjIzHsiIHa4O6DAXAaf8aqkhfSP7TcOh1AczcPzEXw&s=10",
         "duration": "2:50",
         "description": "A song about being drawn to someone even when you know the relationship may be complicated."
     },
@@ -209,6 +219,7 @@ songs = [
         "popularity": "Over 118 million streams on Spotify",
         "rating": "4.5/5",
         "spotify_url": "https://open.spotify.com/track/29eiVZ3R6iJcXB01dOAl6H?si=9a3cc16fc7b04926",
+        "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVkKEBiHYVzg6W42Qf6KGvZp5BDERos4fX9srVM6YuIw&s=10",
         "duration": "5:38",
         "description": "A song about quietly admiring someone and being content simply to be near them."
     },
@@ -227,6 +238,7 @@ songs = [
         "popularity": "Over 11 million streams on Spotify",
         "rating": "4.4/5",
         "spotify_url": "https://open.spotify.com/track/554p4ro2rs7dHqGPwQX67H?si=a20776bd59934662",
+        "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZ149LbhVD-td9f0ePs0M_HgI43vWVAN6NV0ewazen3g&s=10",
         "duration": "2:39",
         "description": "A song about centered on attraction and wanting affection from someone."
     },
@@ -245,6 +257,7 @@ songs = [
         "popularity": "Over 3.27 million streams on Spotify",
         "rating": "4.6/5",
         "spotify_url": "https://open.spotify.com/track/0nJW01T7XtvILxQgC5J7Wh?si=50e8d621e24744e4",
+        "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-WWY_96Rm-llgpMDvjX2NIRyPaztQp_VuG8x1qAHAog&s=10",
         "duration": "3:33",
         "description": "A song about regret and realizing too late that you should have treated someone better."
     },
@@ -263,6 +276,7 @@ songs = [
         "popularity": "Over 200 million streams on Spotify",
         "rating": "4.5/5",
         "spotify_url": "https://open.spotify.com/track/09WPbmLdcBhJPcJwEJc1Yv?si=12e7bd32b0ef4153",
+        "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDIhlKNKwqVpLn8bjocUglgJ-dNRzFmxxhLxbCWx7c6A&s",
         "duration": "3:14",
         "description": "A song about loving someone who feels out of reach and accepting that they may remain only a dream."
     },
@@ -281,6 +295,7 @@ songs = [
         "popularity": "Over 2.45 billion streams on Spotify",
         "rating": "4.6/5",
         "spotify_url": "https://open.spotify.com/track/3BJe4B8zGnqEdQPMvfVjuS?si=69b7a8fa7a0348df",
+        "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzEtujGvbM3pJJFDEFL7mVGSgb4BAGzoA0SogCxCGLZQ&s=10", 
         "duration": "4:25",
         "description": "A song about love, longing, and the sadness that comes with the possibility of losing someone."
     },
@@ -317,6 +332,7 @@ songs = [
         "popularity": "Over 592 million streams on Spotify",
         "rating": "4.4/5",
         "spotify_url": "https://open.spotify.com/track/6mXdCcFnPKQznj4CmMRmHC?si=958a47ccf1f44007",
+        "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9Fv_8M1aM9L557rLx4ICLYuSZuEEKLmfuXd19EfdoVg&s",
         "duration": "3:52",
         "description": "A song about wanting someone to be honest about their feelings instead of giving mixed signals."
     },
@@ -335,6 +351,7 @@ songs = [
         "popularity": "Over 400 million streams on Spotify",
         "rating": "4.6/5",
         "spotify_url": "https://open.spotify.com/track/3CWq0pAKKTWb0K4yiglDc4?si=74b752468d544fdf",
+        "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQL1r7Kjvv_zi-F42XyK6SBs1wZ5oGFq-nvk8FicMYTsQ&s=10",
         "duration": "4:38",
         "description": "A song about relationship falling apart and the painful realization that it may no longer be possible to save it."
     },  
@@ -353,6 +370,7 @@ songs = [
         "popularity": "Over 419 million streams on Spotify",
         "rating": "4.4/5",
         "spotify_url": "https://open.spotify.com/track/20jbSiX29FDX4oQxBXyUEi?si=da1c033780414c4d",
+        "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhwDxG_sS1WDxTbx4IRPOGHJbHd4iBm4-9ZQ6pceU0WA&s",
         "duration": "3:17",
         "description": "A song about unwanted attention, emotional boundaries, and being blamed for someone else's attachment."
     },  
@@ -371,6 +389,7 @@ songs = [
         "popularity": "Over 3.96 billion streams on Spotify",
         "rating": "4.7/5",
         "spotify_url": "https://open.spotify.com/track/5XeFesFbtLpXzIVDNQP22n?si=22b97566c452476e",
+        "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSzuoz1-idhHAm-ZBqI6_9mitNA5fewlNFf_FimaMS4Q&s",
         "duration": "3:04",
         "description": "A song about expressing intense devotion and the desire to be completely committed to someone."
     },  
