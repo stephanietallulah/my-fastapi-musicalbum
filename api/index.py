@@ -31,7 +31,7 @@ songs = [
         "popularity": "Over 118 million of streams on Spotify",
         "spotify_url": "https://open.spotify.com/track/4t9R5rbtovdvya28uMODDz?si=cd8429623cc245ca",
         "image_url": "https://cdn-images.dzcdn.net/images/cover/0d571082af7c78114321031d7f84d331/1900x1900-000000-80-0-0.jpg",
-        "audio_url": "https://github.com/stephanietallulah/my-fastapi-musicalbum/blob/main/previews/Daniel%20Caesar%20-%20Toronto%202014%20(Official%20Audio)-preview.mp3",
+        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/Daniel%20Caesar%20-%20Toronto%202014%20(Official%20Audio)-preview.mp3",
         "duration": "4:37",
         "description": "A song about looking back on the past, personal growth, and Daniel Caesar's connection to his hometown of Toronto."
     },
