@@ -131,6 +131,7 @@ songs = [
         "rating": "4.1/5",
         "spotify_url": "https://open.spotify.com/track/0VaeksJaXy5R1nvcTMh3Xk?si=aab59049ca80461d",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQaoCxvIbeMF_wGllAm9n7Zki9rAS_Jpr0K-G7HSm6Ww&s=10",
+        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/Tyler%2C%20The%20Creator%20-%20Darling%20I%20%28LetraLegendado%29-preview.mp3",
         "duration": "4:13",
         "description": "It explores emotional dependency and deep-seated isolation."
     },
