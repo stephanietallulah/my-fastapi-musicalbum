@@ -2,8 +2,8 @@ from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(
-    title="Daniel Caesar Music API",
-    description="A beginner-friendly REST API containing information about Daniel Caesar songs.",
+    title="NOTENOUGH Music API",
+    description="Discover songs, artists, and the stories behind the music.",
     version="1.0.0"
 )
 
