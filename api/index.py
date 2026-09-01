@@ -465,34 +465,19 @@ def search_songs(
 
         if q in searchable_text:
             results.append(song)
+
 # SORTING
-
     if sort == "az":
-
         results.sort(
             key=lambda x: x["title"].lower()
         )
 
-
     elif sort == "date":
-
         results.sort(
             key=lambda x: x["year"],
             reverse=True
         )
 
-
-    elif sort == "popular":
-
-        results.sort(
-            key=lambda x: int(
-                x["popularity"]
-                .split()[1]
-                .replace("million", "")
-            ),
-            reverse=True
-        )
-        
     return {
         "query": q,
         "count": len(results),
