@@ -442,10 +442,11 @@ def get_songs():
     }
 
 
-# SEARCH SONGS
-# IMPORTANT: This must come BEFORE /songs/{song_id}
+# SEARCH SONG
 @app.get("/songs/search")
-def search_songs(q: str = Query(..., min_length=1)):
+def search_songs(
+    q: str = Query(..., min_length=1),
+    sort: str = ""):
 
     q = q.lower()
 
@@ -464,7 +465,34 @@ def search_songs(q: str = Query(..., min_length=1)):
 
         if q in searchable_text:
             results.append(song)
+# SORTING
 
+    if sort == "az":
+
+        results.sort(
+            key=lambda x: x["title"].lower()
+        )
+
+
+    elif sort == "date":
+
+        results.sort(
+            key=lambda x: x["year"],
+            reverse=True
+        )
+
+
+    elif sort == "popular":
+
+        results.sort(
+            key=lambda x: int(
+                x["popularity"]
+                .split()[1]
+                .replace("million", "")
+            ),
+            reverse=True
+        )
+        
     return {
         "query": q,
         "count": len(results),
