@@ -254,7 +254,7 @@ songs = [
         "producers": "Ean Aguila",
         "year": 2019,
         "genre": "OPM / Indie / Kundiman",
-        "language": "English",
+        "language": "Tagalog",
         "popularity": "Over 118 million streams on Spotify",
         "rating": "4.5/5",
         "spotify_url": "https://open.spotify.com/track/29eiVZ3R6iJcXB01dOAl6H?si=9a3cc16fc7b04926",
