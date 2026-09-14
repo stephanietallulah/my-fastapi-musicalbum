@@ -484,10 +484,10 @@ def get_songs():
 
 
 # SEARCH SONG
-@app.get("/songs/search")
+@app.get("/api/v1/songs/search", dependencies=[Depends(verify_api_key)])
 def search_songs(
     q: str = Query(..., min_length=1),
-    sort: str = ""):
+    sort: str = "" ):
 
     q = q.lower()
 
@@ -524,7 +524,7 @@ def search_songs(
         "count": len(results),
         "results": results
     }
-
+        
 # GET ONE SONG
 @app.get("/songs/{song_id}")
 def get_song(song_id: int):
