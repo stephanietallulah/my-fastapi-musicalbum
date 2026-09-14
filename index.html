@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Music Finder</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+
+<body>
+
+    <header>
+        <h1>NOTENOUGH Music Finder</h1>
+        <p>A website powered by a REST API</p>
+    </header>
+
+
+    <main>
+
+        <section class="search">
+
+            <select id="sortFilter">
+                <option value="">Sort By</option>
+                <option value="az">A - Z</option>
+                <option value="date">Newest</option>
+            </select>
+
+            <input type="text" id="searchInput" placeholder="Search for a song...">
+            <button onclick="searchSongs()"> Search </button>
+
+            <button class="secondary" onclick="showAllSongs()"> Show All </button>
+        </section>
+
+        <section>
+            <h2>Songs</h2>
+
+            <div id="songList" class="song-list"> Loading songs...</div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>Data provided by the Daniel Caesar Music API</p>
+    </footer>
+
+<div class="song-preview-overlay">
+
+
+    <div class="song-preview">
+
+        <div class="preview-left">
+            <img id="modalImage" src="" alt="Album Cover">
+            <span class="preview-year" id="previewYear"></span>
+            <h2 id="previewTitle"></h2>
+            <p class="preview-artist" id="previewArtist"></p>
+            <p class="preview-album" id="previewAlbum"></p>
+
+        <div class="song-stats">
+            <div>
+                <span>★</span>
+                <strong id="previewRating"></strong>
+                <small>Listener Score</small>
+            </div>
+
+            <div>
+                <strong id="previewStreams"></strong>
+                <small>Spotify Streams</small>
+            </div>
+        </div>
+</div>
+
+        <div class="preview-divider"></div>
+        <div class="preview-right">
+            <button class="preview-close">×</button>
+            
+            <div class="preview-row">
+                <span>Album</span>
+                <p id="previewAlbumInfo"></p>
+            </div>
+
+            <div class="preview-row">
+                <span>Featured Artist</span>
+                <p id="previewFeatured"></p>
+            </div>
+
+            <div class="preview-row">
+                <span>Writers</span>
+                <p id="previewWriters"></p>
+            </div>
+
+            <div class="preview-row">
+                <span>Producers</span>
+                <p id="previewProducers"></p>
+            </div>
+
+            <div class="preview-row">
+                <span>Genre</span>
+                <p id="previewGenre"></p>
+            </div>
+
+            <div class="preview-row">
+                <span>Language</span>
+                <p id="previewLanguage"></p>
+            </div>
+
+            <div class="preview-row">
+                <span>Duration</span>
+                <p id="previewDuration"></p>
+            </div>
+
+            <div class="preview-row">
+                <span>Popularity</span>
+                <p id="previewPopularity"></p>
+            </div>
+
+            <div class="preview-description">
+                <span>Description</span>
+                <p id="previewDescription"></p>
+            </div>
+
+            <button class="preview-spotify" id="spotifyButton">Open on Spotify</button>
+        </div>
+    </div>
+</div>
+    <audio id="audioPlayer"></audio>
+    <script src="app.js"></script>
+
+</body>
+</html>
