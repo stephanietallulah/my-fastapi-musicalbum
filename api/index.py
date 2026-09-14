@@ -128,7 +128,7 @@ songs = [
         "rating": "4.7/5",
         "spotify_url": "https://open.spotify.com/track/4ciwlQ4UYHUMj2wuH0ffw6?si=89b385f60af1442b",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcm43sjdPWddoV08Xd2jJE71bUMNwNPcvLt0pff1462Q&s",
-        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/Katy%20Perry%20-%20Thinking%20Of%20You%20(Lyrics)-preview.mp3",
+        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/Katy%20Perry%20-%20Thinking%20Of%20You%20%28With%20Lyrics%29-preview.mp3",
         "duration": "4:06",
         "description": "An emotional soft-rock power ballad about lingering grief, regret, and being unable to move on from a past love while stuck in a new relationship."
     },
@@ -168,7 +168,7 @@ songs = [
         "rating": "4.1/5",
         "spotify_url": "https://open.spotify.com/track/0VaeksJaXy5R1nvcTMh3Xk?si=aab59049ca80461d",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQaoCxvIbeMF_wGllAm9n7Zki9rAS_Jpr0K-G7HSm6Ww&s=10",
-        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/Tyler%2C%20The%20Creator%20-%20Darling%20I%20%28LetraLegendado%29-preview.mp3",
+        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/Tyler%2C%20The%20Creator%20-%20Darling%2C%20I%20%28Clean%29-preview.mp3",
         "duration": "4:13",
         "description": "It explores emotional dependency and deep-seated isolation."
     },
@@ -188,7 +188,7 @@ songs = [
         "rating": "4.5/5",
         "spotify_url": "https://open.spotify.com/track/0zZ5TnmUIub96AsZmkCXYS?si=49ae86329b474fe9",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTG-WQt0reCCYhOyhAL4p46UMT0FcE1NO1yaUSMkyvttA&s",
-        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/Rex%20Orange%20County%2C%20Daniel%20Caesar%20-%20Indecision%20(Lyrics)-preview.mp3",
+        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/Rex%20Orange%20County%2C%20Daniel%20Caesar%20-%20Indecision%20%28Lyrics%29-preview.mp3",
         "duration": "3:06",
         "description": "A dreamy and emotional indie-pop song about uncertainty in love and the struggle of making a decision about a relationship."
     },
@@ -328,7 +328,7 @@ songs = [
         "rating": "4.5/5",
         "spotify_url": "https://open.spotify.com/track/09WPbmLdcBhJPcJwEJc1Yv?si=12e7bd32b0ef4153",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDIhlKNKwqVpLn8bjocUglgJ-dNRzFmxxhLxbCWx7c6A&s",
-        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/PANGARAP%20LANG%20KITA%20-%20Parokya%20Ni%20Edgar%20feat%2C%20Happy%20Sy%20(lyrics)-preview.mp3",
+        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/PANGARAP%20LANG%20KITA%20-%20Parokya%20Ni%20Edgar%20feat%2C%20Happy%20Sy%20%28lyrics%29-preview.mp3",
         "duration": "3:14",
         "description": "A song about loving someone who feels out of reach and accepting that they may remain only a dream."
     },
@@ -485,8 +485,7 @@ def get_songs():
 
 # SEARCH SONG
 @app.get("/api/v1/songs/search", dependencies=[Depends(verify_api_key)])
-def search_songs(
-    q: str = Query(..., min_length=1),
+def search_songs(q: str = Query(..., min_length=1),
     sort: str = "" ):
 
     q = q.lower()
@@ -524,7 +523,7 @@ def search_songs(
         "count": len(results),
         "results": results
     }
-        
+
 # GET ONE SONG
 @app.get("/songs/{song_id}")
 def get_song(song_id: int):
