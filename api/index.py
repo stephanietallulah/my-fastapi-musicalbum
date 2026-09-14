@@ -538,3 +538,29 @@ def get_song(song_id: int):
         status_code=404,
         detail="Song not found."
     )
+
+# HEALTH CHECK (Public)
+@app.get("/health")
+def health_check():
+    return {
+        "status": "ok",
+        "service": "Simple Car API",
+        "version": API_VERSION,
+        "timestamp": datetime.utcnow().isoformat() + "Z"
+    }
+
+# GET ALL CARS (Protected)
+@app.get("/api/v1/songs", dependencies=[Depends(verify_api_key)])
+def get_songs():
+    return {
+        "count": len(songs),
+        "songs": "songs"
+    }
+
+# GET ONE CARS (Protected)
+@app.get("/api/v1/songs/{song_id}", dependencies=[Depends(verify_api_key)])
+def get_song(song_id: int):
+    for song in songs:
+        if song["id"] == song_id:
+            return song
+    raise HTTPException(status_code=404, detail="Song not found.")
