@@ -1,10 +1,17 @@
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import FastAPI, HTTPException, Header, Query, Depends
 from fastapi.middleware.cors import CORSMiddleware
+from datetime import datetime
+from pydantic import BaseModel, Field
+from typing import Optional
+
+# configuration 
+API_KEY = "student-api-key-123"
+API_VERSION = "1.0"
 
 app = FastAPI(
     title="NOTENOUGH Music API",
     description="Discover songs, artists, and the stories behind the music.",
-    version="1.0.0"
+    version=API_VERSION
 )
 
 app.add_middleware(
@@ -14,6 +21,26 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# DATA MODEL
+class Song(BaseModel):
+    id: int
+    title: str = Field(min_length=1)
+    album: Optional[str] = None
+    artist: str = Field(min_length=1)
+    featured_artist: Optional[str] = None
+    writers: str
+    producers: str
+    year: int = Field(ge=1900, le=2100)
+    genre = str
+    language: Optional[str] = None
+    popularity: str
+    rating: str = Field(min_length=1)
+    spotify_url: str
+    image_url: str
+    audio_url: str
+    duration: str = Field(min_length=1)
+    description: str = Field(min_length=1)
 
 # MUSIC DATA
 songs = [
@@ -29,6 +56,7 @@ songs = [
         "genre": "R&B / Soul",
         "language": "English",
         "popularity": "Over 118 million of streams on Spotify",
+        "rating": "4.7/5",
         "spotify_url": "https://open.spotify.com/track/4t9R5rbtovdvya28uMODDz?si=cd8429623cc245ca",
         "image_url": "https://cdn-images.dzcdn.net/images/cover/0d571082af7c78114321031d7f84d331/1900x1900-000000-80-0-0.jpg",
         "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/Daniel%20Caesar%20-%20Toronto%202014%20(Official%20Audio)-preview.mp3",
@@ -417,6 +445,9 @@ songs = [
 
 ]
 
+# validate the starting dataset when the application launches
+validated_songs = [Song(**song).model_dumpO() for song in songs]
+songs = validated_songs
 
 # HOME
 @app.get("/")
@@ -483,7 +514,6 @@ def search_songs(
         "count": len(results),
         "results": results
     }
-
 
 # GET ONE SONG
 @app.get("/songs/{song_id}")
