@@ -485,7 +485,7 @@ def get_songs():
 
 # SEARCH SONG
 @app.get("/api/v1/songs/search", dependencies=[Depends(verify_api_key)])
-def search_songs(q: str = Query(..., min_length=1),
+def search_songs(q: str = Query(..., min_length=0),
     sort: str = "" ):
 
     q = q.lower()
@@ -503,7 +503,7 @@ def search_songs(q: str = Query(..., min_length=1),
             f"{song['description']}"
         ).lower()
 
-        if q in searchable_text:
+        if q == "" or q in searchable_text:
             results.append(song)
 
 # SORTING
