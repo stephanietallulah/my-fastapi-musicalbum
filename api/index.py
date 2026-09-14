@@ -8,6 +8,15 @@ from typing import Optional
 API_KEY = "student-api-key-123"
 API_VERSION = "1.0"
 
+# API KEY AUTHENTICATION
+def verify_api_key(x_api_key: Optional[str] = Header(default=None)):
+    if x_api_key != API_KEY:
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid or missing API key."
+        )
+    return True
+
 app = FastAPI(
     title="NOTENOUGH Music API",
     description="Discover songs, artists, and the stories behind the music.",
