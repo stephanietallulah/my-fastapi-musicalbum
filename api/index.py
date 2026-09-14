@@ -544,12 +544,12 @@ def get_song(song_id: int):
 def health_check():
     return {
         "status": "ok",
-        "service": "Simple Car API",
+        "service": "NOTENOUGH Music API",
         "version": API_VERSION,
         "timestamp": datetime.utcnow().isoformat() + "Z"
     }
 
-# GET ALL CARS (Protected)
+# GET ALL SONGS(Protected)
 @app.get("/api/v1/songs", dependencies=[Depends(verify_api_key)])
 def get_songs():
     return {
@@ -557,10 +557,14 @@ def get_songs():
         "songs": "songs"
     }
 
-# GET ONE CARS (Protected)
+# GET ONE SONG (Protected)
 @app.get("/api/v1/songs/{song_id}", dependencies=[Depends(verify_api_key)])
 def get_song(song_id: int):
     for song in songs:
         if song["id"] == song_id:
             return song
-    raise HTTPException(status_code=404, detail="Song not found.")
+
+    raise HTTPException(
+        status_code=404,
+        detail="Song not found."
+    )
