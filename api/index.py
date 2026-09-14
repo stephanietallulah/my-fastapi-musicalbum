@@ -32,7 +32,7 @@ class Song(BaseModel):
     writers: str
     producers: str
     year: int = Field(ge=1900, le=2100)
-    genre = str
+    genre: str = Field(min_length=1)
     language: Optional[str] = None
     popularity: str
     rating: str = Field(min_length=1)
@@ -254,6 +254,7 @@ songs = [
         "producers": "Ean Aguila",
         "year": 2019,
         "genre": "OPM / Indie / Kundiman",
+        "language": "English",
         "popularity": "Over 118 million streams on Spotify",
         "rating": "4.5/5",
         "spotify_url": "https://open.spotify.com/track/29eiVZ3R6iJcXB01dOAl6H?si=9a3cc16fc7b04926",
@@ -446,7 +447,7 @@ songs = [
 ]
 
 # validate the starting dataset when the application launches
-validated_songs = [Song(**song).model_dumpO() for song in songs]
+validated_songs = [Song(**song).model_dump() for song in songs]
 songs = validated_songs
 
 # HOME
