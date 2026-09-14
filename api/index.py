@@ -188,7 +188,7 @@ songs = [
         "rating": "4.5/5",
         "spotify_url": "https://open.spotify.com/track/0zZ5TnmUIub96AsZmkCXYS?si=49ae86329b474fe9",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTG-WQt0reCCYhOyhAL4p46UMT0FcE1NO1yaUSMkyvttA&s",
-        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/Rex%20Orange%20County%2C%20Daniel%20Caesar%20-%20Indecision%20%28Lyrics%29-preview.mp3",
+        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/Rex%20Orange%20County%20Daniel%20Caesar%20-%20Indecision%20-preview.mp3",
         "duration": "3:06",
         "description": "A dreamy and emotional indie-pop song about uncertainty in love and the struggle of making a decision about a relationship."
     },
@@ -328,7 +328,7 @@ songs = [
         "rating": "4.5/5",
         "spotify_url": "https://open.spotify.com/track/09WPbmLdcBhJPcJwEJc1Yv?si=12e7bd32b0ef4153",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDIhlKNKwqVpLn8bjocUglgJ-dNRzFmxxhLxbCWx7c6A&s",
-        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/PANGARAP%20LANG%20KITA%20-%20Parokya%20Ni%20Edgar%20feat%2C%20Happy%20Sy%20%28lyrics%29-preview.mp3",
+        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/PANGARAP%20LANG%20KITA%20-%20Parokya%20Ni%20Edgar%20feat%20Happy%20Sy%20-preview.mp3",
         "duration": "3:14",
         "description": "A song about loving someone who feels out of reach and accepting that they may remain only a dream."
     },
@@ -388,7 +388,7 @@ songs = [
         "rating": "4.4/5",
         "spotify_url": "https://open.spotify.com/track/6mXdCcFnPKQznj4CmMRmHC?si=958a47ccf1f44007",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQ6uHMlcvTmONsVa-wvvcuUR3KXwc-4thxKAp5cHmVDg&s=10",
-        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/Lauv%2C%20LANY%20-%20Mean%20It%20(Lyrics)-preview.mp3",
+        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/Lauv%20LANY%20-%20Mean%20It%20-preview.mp3",
         "duration": "3:52",
         "description": "A song about wanting someone to be honest about their feelings instead of giving mixed signals."
     },
