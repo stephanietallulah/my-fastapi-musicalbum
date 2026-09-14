@@ -554,7 +554,7 @@ def health_check():
 def get_songs():
     return {
         "count": len(songs),
-        "songs": "songs"
+        "songs": songs
     }
 
 # GET ONE SONG (Protected)
