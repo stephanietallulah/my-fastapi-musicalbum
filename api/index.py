@@ -512,6 +512,26 @@ songs = [
         "duration": "3:27",
         "description": "A song about being deeply captivated by someone and knowing every detail about them by heart."
     },  
+
+    {
+        "id": 24,
+        "title": "Paths",
+        "album": "BUZZ",
+        "artist": "NIKI",
+        "featured_artist": "None",
+        "writers": "Blaster Silonga",
+        "producers": "Nicole Zefanya",
+        "year": 2024,
+        "genre": "R&B",
+        "language": "English",
+        "popularity": "Over 38 million streams on Spotify",
+        "rating": "4.8/5",
+        "spotify_url": "https://open.spotify.com/track/68FHdrL6dbruEBrfLjR52a?si=08181e4e3a1c4782",
+        "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThbr2siRDj88MWFOBxDgkkiPYglVGnVSPDOo885kF24w&s",
+        "audio_url": "https://leoaffooarcmfqnrjcqu.supabase.co/storage/v1/object/public/songs/NIKI%20-%20Paths%20(Official%20Lyric%20Video).mp3",
+        "duration": "3:09",
+        "description": " song about the pain of a relationship ending and hoping that two people will cross paths again someday."
+    },  
     
 ]
 
