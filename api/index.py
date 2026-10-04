@@ -468,7 +468,7 @@ songs = [
         "rating": "4.8/5",
         "spotify_url": "https://open.spotify.com/track/2WfaOiMkCvy7F5fcp2zZ8L?si=70c2b6fea84f4574",
         "image_url": "https://i.pinimg.com/1200x/70/07/73/7007730a7ea2cf0c748b79784c109f05.jpg",
-        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/I%20Wanna%20Be%20Yours-preview.mp3",
+        "audio_url": "https://leoaffooarcmfqnrjcqu.supabase.co/storage/v1/object/public/songs/Take%20on%20Me%20(Video%20Version)%20(2015%20Remaster).mp3",
         "duration": "3:04",
         "description": "A song about expressing intense devotion and the desire to be completely committed to someone."
     },  
