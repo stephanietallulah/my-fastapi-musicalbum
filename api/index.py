@@ -453,6 +453,26 @@ songs = [
         "description": "A song about expressing intense devotion and the desire to be completely committed to someone."
     },  
 
+    {
+        "id": 21,
+        "title": "Take on Me",
+        "album": "Hunting High and Low",
+        "artist": "a-ha",
+        "featured_artist": "None",
+        "writers": "Pål Waaktaar-Savoy, Magne Furuholmen, and Morten Harket.",
+        "producers": "Alan Tarney",
+        "year": 1984,
+        "genre": "Synth-pop",
+        "language": "English",
+        "popularity": "Over 2.94 billion streams on Spotify",
+        "rating": "4.8/5",
+        "spotify_url": "https://open.spotify.com/track/2WfaOiMkCvy7F5fcp2zZ8L?si=70c2b6fea84f4574",
+        "image_url": "https://i.pinimg.com/1200x/70/07/73/7007730a7ea2cf0c748b79784c109f05.jpg",
+        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/I%20Wanna%20Be%20Yours-preview.mp3",
+        "duration": "3:04",
+        "description": "A song about expressing intense devotion and the desire to be completely committed to someone."
+    },  
+
 ]
 
 # validate the starting dataset when the application launches
