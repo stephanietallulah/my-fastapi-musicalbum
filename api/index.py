@@ -48,6 +48,10 @@ class Song(BaseModel):
     spotify_url: str
     image_url: str
     audio_url: str
+    mood: list[str]
+    energy: str
+    vibe: list[str]
+    best_for: list[str]
     duration: str = Field(min_length=1)
     description: str = Field(min_length=1)
 
