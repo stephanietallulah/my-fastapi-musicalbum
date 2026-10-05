@@ -5,12 +5,12 @@ from pydantic import BaseModel, Field
 from typing import Optional
 
 # configuration 
-API_KEY = "student-api-key-123"
+API_KEY = {"api-key-one", "api-key-two", "api-key-three"}
 API_VERSION = "1.0"
 
 # API KEY AUTHENTICATION
 def verify_api_key(x_api_key: Optional[str] = Header(default=None)):
-    if x_api_key != API_KEY:
+    if x_api_key not in API_KEY:
         raise HTTPException(
             status_code=401,
             detail="Invalid or missing API key."
