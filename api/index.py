@@ -242,10 +242,11 @@ def create_song(song: Song):
     except HTTPException:
         raise
 
-    except Exception:
+    except Exception as e:
+        print("CREATE SONG ERROR:", e)
         raise HTTPException(
             status_code=500,
-            detail="Failed to create song."
+            detail=f"Failed to create song: {str(e)}"
         )
 
 # UPDATE SONG
