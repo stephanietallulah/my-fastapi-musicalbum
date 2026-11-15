@@ -9,6 +9,7 @@ from supabase import create_client, Client
 
 load_dotenv(override=True)
 
+# Phase 7 persistence test
 
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY")
@@ -362,24 +363,3 @@ def health_check():
         "version": API_VERSION,
         "timestamp": datetime.utcnow().isoformat() + "Z"
     }
-
-# TEST DATABASE CONNECTION
-@app.get("/test-db")
-def test_database():
-    try:
-        print("SUPABASE CLIENT URL:", supabase.supabase_url)
-        print("POSTGREST BASE URL:", supabase.postgrest.base_url)
-
-        response = supabase.table("songs").select("*").limit(1).execute()
-
-        return {
-            "status": "success",
-            "data": response.data
-        }
-
-    except Exception as e:
-        print("DATABASE ERROR:", repr(e))
-        raise HTTPException(
-            status_code=500,
-            detail=f"Database test failed: {str(e)}"
-        )
