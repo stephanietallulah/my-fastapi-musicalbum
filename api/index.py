@@ -9,10 +9,17 @@ from supabase import create_client, Client
 
 load_dotenv()
 
+
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY")
 
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
+
+print("FASTAPI SUPABASE_URL:", repr(SUPABASE_URL))
+print("FASTAPI KEY PREFIX:", SUPABASE_KEY[:12] if SUPABASE_KEY else None)
+print("FASTAPI KEY LENGTH:", len(SUPABASE_KEY) if SUPABASE_KEY else 0)
+print("FASTAPI CLIENT URL:", supabase.supabase_url)
+
 
 # configuration 
 API_KEY = os.getenv("API_KEY")
@@ -247,7 +254,7 @@ def create_song(song: Song):
         raise HTTPException(
             status_code=500,
             detail=f"Failed to create song: {str(e)}"
-        )
+    )
 
 # UPDATE SONG
 @app.patch(
