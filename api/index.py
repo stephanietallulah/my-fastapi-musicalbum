@@ -110,42 +110,46 @@ def search_songs(
     sort: str = ""
 ):
     try:
-        title_response = (
+        response = (
             supabase
             .table("songs")
             .select("*")
-            .ilike("title", f"%{q}%")
-            .execute() 
-        )
-
-        artist_response = (
-            supabase
-            .table("songs")
-            .select("*")
-            .ilike("artist", f"%{q}%")
             .execute()
         )
 
-        results = title_response.data
+        songs = response.data
+        keyword = q.lower()
 
-        existing_ids = {
-            song["id"] for song in results
-        }
+        results = []
 
-        for song in artist_response.data:
-            if song["id"] not in existing_ids:
+        for song in songs:
+            searchable_text = " ".join([
+                str(song.get("title", "")),
+                str(song.get("album", "")),
+                str(song.get("artist", "")),
+                str(song.get("featured_artist", "")),
+                str(song.get("writers", "")),
+                str(song.get("producers", "")),
+                str(song.get("genre", "")),
+                str(song.get("language", "")),
+                str(song.get("popularity", "")),
+                str(song.get("energy", "")),
+                str(song.get("duration", "")),
+                str(song.get("description", "")),
+                " ".join(song.get("mood", [])),
+                " ".join(song.get("vibe", [])),
+                " ".join(song.get("best_for", [])),
+                str(song.get("year", ""))
+            ]).lower()
+
+            if keyword in searchable_text:
                 results.append(song)
 
         if sort == "az":
-            results.sort(
-                key=lambda x: x["title"].lower()
-            )
+            results.sort(key=lambda x: x["title"].lower())
 
         elif sort == "date":
-            results.sort(
-                key=lambda x: x["year"],
-                reverse=True
-            )
+            results.sort(key=lambda x: x["year"], reverse=True)
 
         return {
             "query": q,
@@ -153,10 +157,10 @@ def search_songs(
             "results": results
         }
 
-    except Exception:
+    except Exception as e:
         raise HTTPException(
             status_code=500,
-            detail="Failed to search songs."
+            detail=f"Failed to search songs: {str(e)}"
         )
 
 # GET ONE SONG
