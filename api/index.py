@@ -9,8 +9,6 @@ from supabase import create_client, Client
 
 load_dotenv(override=True)
 
-# Phase 7 persistence test
-
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY")
 
