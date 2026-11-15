@@ -58,6 +58,10 @@ class Song(BaseModel):
     spotify_url: str
     image_url: str
     audio_url: str
+    mood: list[str]
+    energy: str
+    vibe: list[str]
+    best_for: list[str]
     duration: str = Field(min_length=1)
     description: str = Field(min_length=1)
 
@@ -77,6 +81,10 @@ class SongUpdate(BaseModel):
     spotify_url: Optional[str] = None
     image_url: Optional[str] = None
     audio_url: Optional[str] = None
+    mood: Optional[list[str]] = None
+    energy: Optional[str] = None
+    vibe: Optional[list[str]] = None
+    best_for: Optional[list[str]] = None
     duration: Optional[str] = Field(default=None, min_length=1)
     description: Optional[str] = Field(default=None, min_length=1)
 
