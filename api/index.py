@@ -7,19 +7,13 @@ from typing import Optional
 from dotenv import load_dotenv
 from supabase import create_client, Client
 
-load_dotenv()
+load_dotenv(override=True)
 
 
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY")
 
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
-
-print("FASTAPI SUPABASE_URL:", repr(SUPABASE_URL))
-print("FASTAPI KEY PREFIX:", SUPABASE_KEY[:12] if SUPABASE_KEY else None)
-print("FASTAPI KEY LENGTH:", len(SUPABASE_KEY) if SUPABASE_KEY else 0)
-print("FASTAPI CLIENT URL:", supabase.supabase_url)
-
 
 # configuration 
 API_KEY = os.getenv("API_KEY")
@@ -369,14 +363,19 @@ def health_check():
 @app.get("/test-db")
 def test_database():
     try:
+        print("SUPABASE CLIENT URL:", supabase.supabase_url)
+        print("POSTGREST BASE URL:", supabase.postgrest.base_url)
+
         response = supabase.table("songs").select("*").limit(1).execute()
+
         return {
             "status": "success",
-            "message": "Connected to Supabase successfully!",
             "data": response.data
         }
+
     except Exception as e:
-        return {
-            "status": "error",
-            "message": str(e)
-        }
+        print("DATABASE ERROR:", repr(e))
+        raise HTTPException(
+            status_code=500,
+            detail=f"Database test failed: {str(e)}"
+        )
