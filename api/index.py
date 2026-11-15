@@ -1,16 +1,26 @@
+import os
 from fastapi import FastAPI, HTTPException, Header, Query, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from datetime import datetime
 from pydantic import BaseModel, Field
 from typing import Optional
+from dotenv import load_dotenv
+from supabase import create_client, Client
+
+load_dotenv()
+
+SUPABASE_URL = os.getenv("SUPABASE_URL")
+SUPABASE_KEY = os.getenv("SUPABASE_KEY")
+
+supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 # configuration 
-API_KEY = {"api-key-one", "api-key-two", "api-key-three"}
+API_KEY = "api-key-one"
 API_VERSION = "1.0"
 
 # API KEY AUTHENTICATION
 def verify_api_key(x_api_key: Optional[str] = Header(default=None)):
-    if x_api_key not in API_KEY:
+    if x_api_key != API_KEY:
         raise HTTPException(
             status_code=401,
             detail="Invalid or missing API key."
@@ -48,10 +58,6 @@ class Song(BaseModel):
     spotify_url: str
     image_url: str
     audio_url: str
-    mood: list[str]
-    energy: str
-    vibe: list[str]
-    best_for: list[str]
     duration: str = Field(min_length=1)
     description: str = Field(min_length=1)
 
@@ -66,18 +72,14 @@ songs = [
         "writers": "Daniel Caesar, Mustafa, Simon Hessman, Dylan Wiggins",
         "producers": "Daniel Caesar, Sir Dylan, Simon On The Moon",
         "year": 2023,
-        "genre": "R&B",
+        "genre": "R&B / Soul",
         "language": "English",
         "popularity": "Over 118 million of streams on Spotify",
         "rating": "4.7/5",
-        "duration": "4:37",
-        "mood": ["Nostalgic", "Calm", "Refletive"],
-        "energy": "Low",
-        "vibe": ["Chill", "Warm", "Intimate"],
-        "best_for": ["Night", "Driving", "Relaxing"],
         "spotify_url": "https://open.spotify.com/track/4t9R5rbtovdvya28uMODDz?si=cd8429623cc245ca",
         "image_url": "https://cdn-images.dzcdn.net/images/cover/0d571082af7c78114321031d7f84d331/1900x1900-000000-80-0-0.jpg",
-        "audio_url": "https://leoaffooarcmfqnrjcqu.supabase.co/storage/v1/object/public/songs/Daniel%20Caesar%20-%20Toronto%202014%20(Official%20Audio).mp3",
+        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/Daniel%20Caesar%20-%20Toronto%202014%20(Official%20Audio)-preview.mp3",
+        "duration": "4:37",
         "description": "A song about looking back on the past, personal growth, and Daniel Caesar's connection to his hometown of Toronto."
     },
 
@@ -90,18 +92,14 @@ songs = [
         "writers": "Nicole Zefanya",
         "producers": "NIKI and Ethan Gruska",
         "year": 2022,
-        "genre": "Indie Rock",
+        "genre": "R&B / Indie Rock",
         "language": "English",
         "popularity": "Over 100 million of streams on Spotify",
         "rating": "4.7/5",
-        "duration": "3:34",
-        "mood": ["Sad", "Lonely", "Emotional"],
-        "energy": "Low",
-        "vibe": ["Moody", "Intimate", "Dreamy"],
-        "best_for": ["Night", "Heartbreak", "Alone"],
         "spotify_url": "https://open.spotify.com/track/7gqdZpe7MlTLA59viClLoY?si=7d231e5c82f3459f",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTy_KoRj3Uxz9zXTk4k6aZ3fllcVE1PfVXVMJdm5lJUuQ&s=10",
-        "audio_url": "https://leoaffooarcmfqnrjcqu.supabase.co/storage/v1/object/public/songs/Backburner.mp3",
+        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/Backburner-preview.mp3",
+        "duration": "3:34",
         "description": "A song about staying attached to someone who doesn't fully prioritize you, despite knowing you deserve more."
     },
 
@@ -114,18 +112,14 @@ songs = [
         "writers": "Beatrice Laus",
         "producers": "Rick Rubin and Jacob Bugden",
         "year": 2024,
-        "genre": "Indie Rock",
+        "genre": "R&B / Indie Rock",
         "language": "English",
         "popularity": "Over 235 million streams on Spotify",
         "rating": "4.4/5",
-        "duration": "3:50",
-        "mood": ["Happy", "Calm", "Hopeful"],
-        "energy": "Medium",
-        "vibe": ["Dreamy", "Carefree", "Warm"],
-        "best_for": ["Relaxing", "Studying", "Beach"],
         "spotify_url": "https://open.spotify.com/track/1a19jsjG2DvbN1fVJonKUU?si=767f37dbeeb141b4",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2XSGoaWNwdu3fbNJu0DgfBPCbTzmwTmqqSnIyH0HM8w&s=10",
-        "audio_url": "https://leoaffooarcmfqnrjcqu.supabase.co/storage/v1/object/public/songs/beabadoobee%20-%20Beaches.mp3",
+        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/beabadoobee%20-%20Beaches-preview.mp3",
+        "duration": "3:50",
         "description": "It is about overcoming self-doubt, stepping out of one's comfort zone, and finding a state of calm clarity."
     },
 
@@ -138,18 +132,14 @@ songs = [
         "writers": "Katy Perry",
         "producers": "Butch Walker",
         "year": 2009,
-        "genre": "Soft Pop Rock",
+        "genre": "Soft Rock / Pop Rock",
         "language": "English",
         "popularity": "Over 240 million streams on Spotify",
         "rating": "4.7/5",
-        "duration": "4:06",
-        "mood": ["Sad", "Emotional", "Regretful"],
-        "energy": "Low",
-        "vibe": ["Dramatic", "Romantic", "Moody"],
-        "best_for": ["Heartbreak", "Night", "Alone"],
         "spotify_url": "https://open.spotify.com/track/4ciwlQ4UYHUMj2wuH0ffw6?si=89b385f60af1442b",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcm43sjdPWddoV08Xd2jJE71bUMNwNPcvLt0pff1462Q&s",
-        "audio_url": "https://leoaffooarcmfqnrjcqu.supabase.co/storage/v1/object/public/songs/Katy%20Perry%20-%20Thinking%20Of%20You%20(With%20Lyrics).mp3",
+        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/Katy%20Perry%20-%20Thinking%20Of%20You%20%28With%20Lyrics%29-preview.mp3",
+        "duration": "4:06",
         "description": "An emotional soft-rock power ballad about lingering grief, regret, and being unable to move on from a past love while stuck in a new relationship."
     },
 
@@ -162,18 +152,14 @@ songs = [
         "writers": "Matty Healy",
         "producers": "Matty Healy, George Daniel, Jack Antonoff",
         "year": 2022,
-        "genre": "Soft Pop Rock",
+        "genre": "Soft Pop Rock / Blue-eyed Soul",
         "language": "English",
         "popularity": "Over 82 million streams on Spotify",
         "rating": "4.2/5",
-        "duration": "3:30",
-        "mood": ["Romantic", "Calm", "Vulnerable"],
-        "energy": "Low",
-        "vibe": ["Intimate", "Warm", "Chill"],
-        "best_for": ["Night", "Relaxing", "Date"],
         "spotify_url": "https://open.spotify.com/track/5WdMBJD7V5CVBTBdE2at2D?si=f6f305bea216494f",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1qI2nxDo6lcWxM0HFjOWeUtVHYfJJY7q2Ht69a1LBcQ&s",
-        "audio_url": "https://leoaffooarcmfqnrjcqu.supabase.co/storage/v1/object/public/songs/The%201975%20-%20All%20I%20Need%20To%20Hear%20(Audio).mp3",
+        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/The%201975%20-%20All%20I%20Need%20To%20Hear%20(Audio)-preview.mp3",
+        "duration": "3:30",
         "description": "It explores emotional dependency and deep-seated isolation."
     },
 
@@ -190,14 +176,10 @@ songs = [
         "language": "English",
         "popularity": "Over 240 million streams on Spotify",
         "rating": "4.1/5",
-        "duration": "4:13",
-        "mood": ["Reflective", "Emotional", "Lonely"],
-        "energy": "Medium",
-        "vibe": ["Moody", "Soulful", "Chill"],
-        "best_for": ["Driving", "Night", "Relaxing"],
         "spotify_url": "https://open.spotify.com/track/0VaeksJaXy5R1nvcTMh3Xk?si=aab59049ca80461d",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQaoCxvIbeMF_wGllAm9n7Zki9rAS_Jpr0K-G7HSm6Ww&s=10",
-        "audio_url": "https://leoaffooarcmfqnrjcqu.supabase.co/storage/v1/object/public/songs/Tyler,%20The%20Creator%20-%20Darling,%20I%20(feat.%20A$AP%20Rocky).mp3",
+        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/Tyler%20The%20Creator%20-%20Darling%20I-preview.mp3",
+        "duration": "4:13",
         "description": "It explores emotional dependency and deep-seated isolation."
     },
 
@@ -210,18 +192,14 @@ songs = [
         "writers": "Alexander O'Connor, Ashton Simmonds, Dylan Wiggins, and Aaron Paris",
         "producers": "Rex Orange County, Daniel Caesar, and Sir Dylan",
         "year": 2026,
-        "genre": "Indie Pop",
+        "genre": "Indie Pop / R&B",
         "language": "English",
         "popularity": "Over 4.2 million streams on Spotify",
         "rating": "4.5/5",
-        "duration": "3:06",
-        "mood": ["Dreamy", "Calm", "Uncertain"],
-        "energy": "Low",
-        "vibe": ["Dreamy", "Chill", "Hazy"],
-        "best_for": ["Studying", "Relaxing", "Night"],
         "spotify_url": "https://open.spotify.com/track/0zZ5TnmUIub96AsZmkCXYS?si=49ae86329b474fe9",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTG-WQt0reCCYhOyhAL4p46UMT0FcE1NO1yaUSMkyvttA&s",
-        "audio_url": "https://leoaffooarcmfqnrjcqu.supabase.co/storage/v1/object/public/songs/Rex%20Orange%20County,%20Daniel%20Caesar%20-%20Indecision%20(Lyrics).mp3",
+        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/Rex%20Orange%20County%20Daniel%20Caesar%20-%20Indecision%20-preview.mp3",
+        "duration": "3:06",
         "description": "A dreamy and emotional indie-pop song about uncertainty in love and the struggle of making a decision about a relationship."
     },
    
@@ -238,14 +216,10 @@ songs = [
         "language": "English",
         "popularity": "Over 920 million streams on Spotify",
         "rating": "4.1/5",
-        "duration": "3:17",
-        "mood": ["Confident", "Excited", "Reckless"],
-        "energy": "High",
-        "vibe": ["Dark", "Seductive", "Energetic"],
-        "best_for": ["Driving", "Party", "Workout"],
         "spotify_url": "https://open.spotify.com/track/4HwDCXsMBC7SUdp2WT4MZP?si=cb102e43ec494bef",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQP6nU36o42iFEKXLGD8z_s_4vcDGtqnZBEDCnjtx0mWg&s=10",
-        "audio_url": "https://leoaffooarcmfqnrjcqu.supabase.co/storage/v1/object/public/songs/Chase%20Atlantic%20-%20Into%20It%20(Official%20Audio).mp3",
+        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/Chase%20Atlantic%20-%20Into%20It%20(Official%20Audio)-preview.mp3",
+        "duration": "3:17",
         "description": "A dark, energetic track about fame, relationships, and embracing a chaotic lifestyle despite its pressures."
     },
 
@@ -258,18 +232,14 @@ songs = [
         "writers": "Summer Walker, David “Dos Dias” Bishop",
         "producers": "Tavaras Jordan",
         "year": 2025,
-        "genre": "R&B",
+        "genre": "R&B / Soul",
         "language": "English",
         "popularity": "Over 112 million streams on Spotify",
         "rating": "4.1/5",
-        "duration": "2:50",
-        "mood": ["Emotional", "Frustrated", "Romantic"],
-        "energy": "Medium",
-        "vibe": ["Moody", "Sultry", "Intimate"],
-        "best_for": ["Night", "Relaxing", "Date"],
         "spotify_url": "https://open.spotify.com/track/2oVVaVY0LkzwAYYcyzon6Z?si=3f179fe459b642fa",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnXP_-h2kNQlN9aDX4yF64VzOtYUw0TKpLMyA5dz3-ug&s=10",
-        "audio_url": "https://leoaffooarcmfqnrjcqu.supabase.co/storage/v1/object/public/songs/Heart%20Of%20A%20Woman.mp3",
+        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/Heart%20Of%20A%20Woman-preview.mp3",
+        "duration": "2:50",
         "description": "A song about loving someone despite their flaws and reaching the limit of how much you can tolerate in a relationship."
     },
 
@@ -282,18 +252,14 @@ songs = [
         "writers": "Axel Hedfors (Axwell), Steve Angello, Sebastian Ingrosso, Carl Nordström, and Abel “The Weeknd” Tesfaye",
         "producers": "Swedish House Mafia and Carl Nordström",
         "year": 2022,
-        "genre": "Pop",
+        "genre": "Dance / Electronic / Pop",
         "language": "English",
         "popularity": "Over 1.52 billion streams on Spotify",
         "rating": "4.4/5",
-        "duration": "2:50",
-        "mood": ["Dark", "Tempted", "Emotional"],
-        "energy": "High",
-        "vibe": ["Dark", "Cinematic", "Seductive"],
-        "best_for": ["Driving", "Party", "Night"],
         "spotify_url": "https://open.spotify.com/track/3uuR20w7HgLlb5Hha2mCxb?si=cd74ed152a364d3d",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJLjIzHsiIHa4O6DAXAaf8aqkhfSP7TcOh1AczcPzEXw&s=10",
-        "audio_url": "https://leoaffooarcmfqnrjcqu.supabase.co/storage/v1/object/public/songs/The%20Weeknd%20Moth%20To%20A%20Flame%20(HD%20AUDIO).mp3",
+        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/The%20Weeknd%20Moth%20To%20A%20Flame%20(HD%20AUDIO)-preview.mp3",
+        "duration": "2:50",
         "description": "A song about being drawn to someone even when you know the relationship may be complicated."
     },
 
@@ -306,18 +272,14 @@ songs = [
         "writers": "Iego Tan",
         "producers": "Ean Aguila",
         "year": 2019,
-        "genre": "OPM",
+        "genre": "OPM / Indie / Kundiman",
         "language": "Tagalog",
         "popularity": "Over 118 million streams on Spotify",
         "rating": "4.5/5",
-        "duration": "5:38",
-        "mood": ["Romantic", "Shy", "Hopeful"],
-        "energy": "Low",
-        "vibe": ["Dreamy", "Warm", "Whimsical"],
-        "best_for": ["Relaxing", "Date", "Reading"],
         "spotify_url": "https://open.spotify.com/track/29eiVZ3R6iJcXB01dOAl6H?si=9a3cc16fc7b04926",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVkKEBiHYVzg6W42Qf6KGvZp5BDERos4fX9srVM6YuIw&s=10",
-        "audio_url": "https://leoaffooarcmfqnrjcqu.supabase.co/storage/v1/object/public/songs/Waltz%20of%20Four%20Left%20Feet.mp3",
+        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/Waltz%20of%20Four%20Left%20Feet-preview.mp3",
+        "duration": "5:38",
         "description": "A song about quietly admiring someone and being content simply to be near them."
     },
 
@@ -334,14 +296,10 @@ songs = [
         "language": "English",
         "popularity": "Over 11 million streams on Spotify",
         "rating": "4.4/5",
-        "duration": "2:39",
-        "mood": ["Romantic", "Desirous", "Calm"],
-        "energy": "Medium",
-        "vibe": ["Sultry", "Chill", "Intimate"],
-        "best_for": ["Night", "Date", "Relaxing"],
         "spotify_url": "https://open.spotify.com/track/554p4ro2rs7dHqGPwQX67H?si=a20776bd59934662",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZ149LbhVD-td9f0ePs0M_HgI43vWVAN6NV0ewazen3g&s=10",
-        "audio_url": "https://leoaffooarcmfqnrjcqu.supabase.co/storage/v1/object/public/songs/PARTYNEXTDOOR%20-%20Some%20Of%20Your%20Love%20(Official%20Audio).mp3",
+        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/PARTYNEXTDOOR%20-%20Some%20Of%20Your%20Love%20(Official%20Audio)-preview.mp3",
+        "duration": "2:39",
         "description": "A song about centered on attraction and wanting affection from someone."
     },
 
@@ -358,14 +316,10 @@ songs = [
         "language": "English",
         "popularity": "Over 3.27 million streams on Spotify",
         "rating": "4.6/5",
-        "duration": "3:33",
-        "mood": ["Sad", "Regretful", "Lonely"],
-        "energy": "Low",
-        "vibe": ["Emotional", "Intimate", "Dramatic"],
-        "best_for": ["Heartbreak", "Night", "Alone"],
         "spotify_url": "https://open.spotify.com/track/0nJW01T7XtvILxQgC5J7Wh?si=50e8d621e24744e4",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-WWY_96Rm-llgpMDvjX2NIRyPaztQp_VuG8x1qAHAog&s=10",
-        "audio_url": "https://leoaffooarcmfqnrjcqu.supabase.co/storage/v1/object/public/songs/Bruno%20Mars%20-%20When%20I%20Was%20Your%20Man.mp3",
+        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/Bruno%20Mars%20-%20When%20I%20Was%20Your%20Man%20(Audio)-preview.mp3",
+        "duration": "3:33",
         "description": "A song about regret and realizing too late that you should have treated someone better."
     },
 
@@ -378,18 +332,14 @@ songs = [
         "writers": "Chito Miranda",
         "producers": "Chito Miranda",
         "year": 2010,
-        "genre": "OPM",
+        "genre": "OPM / Pop Rock",
         "language": "Tagalog",
         "popularity": "Over 200 million streams on Spotify",
         "rating": "4.5/5",
-        "duration": "3:14",
-       "mood": ["Romantic", "Nostalgic", "Hopeful"],
-        "energy": "Medium",
-        "vibe": ["Playful", "Warm", "Nostalgic"],
-        "best_for": ["Driving", "Karaoke", "Hangout"],
         "spotify_url": "https://open.spotify.com/track/09WPbmLdcBhJPcJwEJc1Yv?si=12e7bd32b0ef4153",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDIhlKNKwqVpLn8bjocUglgJ-dNRzFmxxhLxbCWx7c6A&s",
-        "audio_url": "https://leoaffooarcmfqnrjcqu.supabase.co/storage/v1/object/public/songs/Pangarap%20Lang%20Kita.mp3",
+        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/PANGARAP%20LANG%20KITA%20-%20Parokya%20Ni%20Edgar%20feat%20Happy%20Sy%20-preview.mp3",
+        "duration": "3:14",
         "description": "A song about loving someone who feels out of reach and accepting that they may remain only a dream."
     },
     
@@ -402,18 +352,14 @@ songs = [
         "writers": "Lana Del Rey, Rick Nowels, Kieran De Jour",
         "producers": "Emile Haynie, Rick Nowels",
         "year": 2012,
-        "genre": "Pop",
+        "genre": "Pop / Trip-Hop",
         "language": "English",
         "popularity": "Over 2.45 billion streams on Spotify",
         "rating": "4.6/5",
-        "duration": "4:25",
-        "mood": ["Sad", "Nostalgic", "Romantic"],
-        "energy": "Medium",
-        "vibe": ["Dreamy", "Cinematic", "Melancholic"],
-        "best_for": ["Night", "Driving", "Alone"],
         "spotify_url": "https://open.spotify.com/track/3BJe4B8zGnqEdQPMvfVjuS?si=69b7a8fa7a0348df",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzEtujGvbM3pJJFDEFL7mVGSgb4BAGzoA0SogCxCGLZQ&s=10", 
-        "audio_url": "https://leoaffooarcmfqnrjcqu.supabase.co/storage/v1/object/public/songs/Lana%20Del%20Rey%20-%20Summertime%20Sadness%20(Lyrics).mp3",
+        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/Lana%20Del%20Rey%20-%20Summertime%20Sadness%20(Lyrics)-preview.mp3",
+        "duration": "4:25",
         "description": "A song about love, longing, and the sadness that comes with the possibility of losing someone."
     },
 
@@ -426,18 +372,14 @@ songs = [
         "writers": "Nicole Brian De Leon",
         "producers": "Stephen Tan",
         "year": 2025,
-        "genre": "OPM",
+        "genre": "Indie Pop / OPM",
         "language": "Tagalog",
         "popularity": "Over 147 million streams on Spotify",
         "rating": "4.5/5",
-        "duration": "5:17",
-        "mood": ["Romantic", "Dreamy", "Hopeful"],
-        "energy": "Low",
-        "vibe": ["Dreamy", "Warm", "Intimate"],
-        "best_for": ["Date", "Relaxing", "Night"],
         "spotify_url": "https://open.spotify.com/track/6wcjLOGIdmw8BUaRho4c9L?si=ff7d00b331014be8",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9Fv_8M1aM9L557rLx4ICLYuSZuEEKLmfuXd19EfdoVg&s",
-        "audio_url": "https://leoaffooarcmfqnrjcqu.supabase.co/storage/v1/object/public/songs/Panaginip%20-%20nicole%20(Official%20Lyric%20Video).mp3",
+        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/iluna%20-%20panaginip%20(Official%20Lyric%20Video)-preview.mp3",
+        "duration": "5:17",
         "description": "A song about being deeply captivated by someone and imagining a future together."
     },
 
@@ -450,18 +392,14 @@ songs = [
         "writers": "Ari Leff, Paul Klein, Jake Goss, Michael Matosic, Michael Pollack, John Hill, Jordan Palmer",
         "producers": "Lauv, LANY, Mike Crossey, John Hill, Jordan Palmer",
         "year": 2020,
-        "genre": "Pop",
+        "genre": "Pop / Electropop",
         "language": "English",
         "popularity": "Over 592 million streams on Spotify",
         "rating": "4.4/5",
-        "duration": "3:52",
-        "mood": ["Emotional", "Uncertain", "Romantic"],
-        "energy": "Low",
-        "vibe": ["Chill", "Dreamy", "Bittersweet"],
-        "best_for": ["Studying", "Night", "Relaxing"],
         "spotify_url": "https://open.spotify.com/track/6mXdCcFnPKQznj4CmMRmHC?si=958a47ccf1f44007",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQ6uHMlcvTmONsVa-wvvcuUR3KXwc-4thxKAp5cHmVDg&s=10",
-        "audio_url": "https://leoaffooarcmfqnrjcqu.supabase.co/storage/v1/object/public/songs/Lauv,%20LANY%20-%20Mean%20It%20(Lyrics).mp3",
+        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/Lauv%20LANY%20-%20Mean%20It%20-preview.mp3",
+        "duration": "3:52",
         "description": "A song about wanting someone to be honest about their feelings instead of giving mixed signals."
     },
 
@@ -474,18 +412,14 @@ songs = [
         "writers": "Taylor Swift, Jack Antonoff",
         "producers": "Taylor Swift, Jack Antonoff",
         "year": 2023,
-        "genre": "Pop",
+        "genre": "Downtempo / Pop",
         "language": "English",
         "popularity": "Over 400 million streams on Spotify",
         "rating": "4.6/5",
-        "duration": "4:38",
-        "mood": ["Sad", "Desperate", "Emotional"],
-        "energy": "Low",
-        "vibe": ["Intimate", "Moody", "Dramatic"],
-        "best_for": ["Heartbreak", "Night", "Alone"],
         "spotify_url": "https://open.spotify.com/track/3CWq0pAKKTWb0K4yiglDc4?si=74b752468d544fdf",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQL1r7Kjvv_zi-F42XyK6SBs1wZ5oGFq-nvk8FicMYTsQ&s=10",
-        "audio_url": "https://leoaffooarcmfqnrjcqu.supabase.co/storage/v1/object/public/songs/Taylor%20Swift%20-%20You're%20Losing%20Me%20(From%20The%20Vault).mp3",
+        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/Taylor%20Swift%20-%20You%27re%20Losing%20Me%20%28From%20The%20Vault%29-preview.mp3",
+        "duration": "4:38",
         "description": "A song about relationship falling apart and the painful realization that it may no longer be possible to save it."
     },  
 
@@ -498,18 +432,14 @@ songs = [
         "writers": "Ariana Grande, Ilya Salmanzadeh",
         "producers": "Ariana Grande, Ilya Salmanzadeh",
         "year": 2026,
-        "genre": "Contemporary R&B",
+        "genre": "Contemporary R&B / Pop",
         "language": "English",
         "popularity": "Over 419 million streams on Spotify",
         "rating": "4.4/5",
-        "duration": "3:17",
-        "mood": ["Emotional", "Guilty", "Conflicted"],
-        "energy": "Low",
-        "vibe": ["Moody", "Intimate", "Chill"],
-        "best_for": ["Night", "Alone", "Relaxing"],
         "spotify_url": "https://open.spotify.com/track/20jbSiX29FDX4oQxBXyUEi?si=da1c033780414c4d",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhwDxG_sS1WDxTbx4IRPOGHJbHd4iBm4-9ZQ6pceU0WA&s",
-        "audio_url": "https://leoaffooarcmfqnrjcqu.supabase.co/storage/v1/object/public/songs/hate%20that%20i%20made%20you%20love%20me.mp3",
+        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/Ariana%20Grande%20-%20hate%20that%20i%20made%20you%20love%20me%20(official%20lyric%20video)-preview.mp3",
+        "duration": "3:17",
         "description": "A song about unwanted attention, emotional boundaries, and being blamed for someone else's attachment."
     },  
 
@@ -522,117 +452,17 @@ songs = [
         "writers": "Alex Turner, John Cooper Clarke",
         "producers": "James Ford, Ross Orton",
         "year": 2013,
-        "genre": "Indie Rock",
+        "genre": "Indie Rock / Alternative Rock",
         "language": "English",
         "popularity": "Over 3.96 billion streams on Spotify",
         "rating": "4.7/5",
-        "duration": "3:04",
-        "mood": ["Romantic", "Obsessed", "Calm"],
-        "energy": "Low",
-        "vibe": ["Dark", "Intimate", "Seductive"],
-        "best_for": ["Night", "Date", "Driving"],
         "spotify_url": "https://open.spotify.com/track/5XeFesFbtLpXzIVDNQP22n?si=22b97566c452476e",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSzuoz1-idhHAm-ZBqI6_9mitNA5fewlNFf_FimaMS4Q&s",
-        "audio_url": "https://leoaffooarcmfqnrjcqu.supabase.co/storage/v1/object/public/songs/I%20Wanna%20Be%20Yours.mp3",
+        "audio_url": "https://raw.githubusercontent.com/stephanietallulah/my-fastapi-musicalbum/main/previews/I%20Wanna%20Be%20Yours-preview.mp3",
+        "duration": "3:04",
         "description": "A song about expressing intense devotion and the desire to be completely committed to someone."
     },  
 
-    {
-        "id": 21,
-        "title": "Take on Me",
-        "album": "Hunting High and Low",
-        "artist": "a-ha",
-        "featured_artist": "None",
-        "writers": "Pål Waaktaar-Savoy, Magne Furuholmen, and Morten Harket.",
-        "producers": "Alan Tarney",
-        "year": 1984,
-        "genre": "Synth-pop",
-        "language": "English",
-        "popularity": "Over 2.94 billion streams on Spotify",
-        "rating": "4.8/5",
-        "duration": "3:08",
-        "mood": ["Happy", "Excited", "Hopeful"],
-        "energy": "High",
-        "vibe": ["Retro", "Playful", "Euphoric"],
-        "best_for": ["Driving", "Party", "Workout"],
-        "spotify_url": "https://open.spotify.com/track/2WfaOiMkCvy7F5fcp2zZ8L?si=8eb58dd3fb6f42bf",
-        "image_url": "https://i.pinimg.com/1200x/70/07/73/7007730a7ea2cf0c748b79784c109f05.jpg",
-        "audio_url": "https://leoaffooarcmfqnrjcqu.supabase.co/storage/v1/object/public/songs/Take%20on%20Me%20(Video%20Version)%20(2015%20Remaster).mp3",
-        "description": "A song about taking a chance on love and encouraging someone to embrace a relationship despite uncertainty."
-    },  
-
-    {
-        "id": 22,
-        "title": "I Want You Back",
-        "album": "None",
-        "artist": "NSync",
-        "featured_artist": "None",
-        "writers": "Christian Lundin, Jake Schulze, and Andreas Carlsson",
-        "producers": "Kristian Lundin",
-        "year": 1996,
-        "genre": "Pop",
-        "language": "English",
-        "popularity": "Over 500 million streams on Spotify",
-        "rating": "4.7/5",
-        "duration": "3:22",
-        "mood": ["Happy", "Excited", "Nostalgic"],
-        "energy": "High",
-        "vibe": ["Playful", "Retro", "Fun"],
-        "best_for": ["Party", "Workout", "Driving"],
-        "spotify_url": "https://open.spotify.com/track/221LRlPHPuevgE1tuUlof9?si=d1d1fdaec628495c",
-        "image_url": "https://i.pinimg.com/736x/10/78/d5/1078d58cd97f1663ab2de36a5272836d.jpg",
-        "audio_url": "https://leoaffooarcmfqnrjcqu.supabase.co/storage/v1/object/public/songs/I%20Want%20You%20Back%20-%20N%20Sync.mp3",
-        "description": "A song about regretting a breakup and desperately wanting a former lover to come back."
-    },  
-
-        {
-        "id": 23,
-        "title": "Kabisado",
-        "album": "Andalucia",
-        "artist": "IV OF SPADES",
-        "featured_artist": "None",
-        "writers": "Blaster Silonga",
-        "producers": "IV OF SPADES and Brian Lotho",
-        "year": 2025,
-        "genre": "OPM",
-        "language": "Tagalog",
-        "popularity": "Over 76 million streams on Spotify",
-        "rating": "4.8/5",
-        "duration": "3:27",
-        "mood": ["Romantic", "Dreamy", "Happy"],
-        "energy": "Medium",
-        "vibe": ["Warm", "Dreamy", "Groovy"],
-        "best_for": ["Driving", "Date", "Relaxing"],
-        "spotify_url": "https://open.spotify.com/track/4z928BtE4j1bjhcX9RU44M?si=6d0683e914584a8d",
-        "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDYRAMiOdWsVE_7YpL_ECQR0PgcwgSuGbjne8hzwQePQ&s",
-        "audio_url": "https://leoaffooarcmfqnrjcqu.supabase.co/storage/v1/object/public/songs/IV%20Of%20Spades%20-%20Kabisado%20(Lyrics).mp3",
-        "description": "A song about being deeply captivated by someone and knowing every detail about them by heart."
-    },  
-
-    {
-        "id": 24,
-        "title": "Paths",
-        "album": "BUZZ",
-        "artist": "NIKI",
-        "featured_artist": "None",
-        "writers": "Nicole Zefanya",
-        "producers": "NIKI and Ethan Gruska",
-        "year": 2024,
-        "genre": "R&B",
-        "language": "English",
-        "popularity": "Over 38 million streams on Spotify",
-        "rating": "4.8/5",
-        "duration": "3:09",
-        "mood": ["Sad", "Hopeful", "Reflective"],
-        "energy": "Low",
-        "vibe": ["Dreamy", "Emotional", "Intimate"],
-        "best_for": ["Night", "Alone", "Studying"],
-        "spotify_url": "https://open.spotify.com/track/68FHdrL6dbruEBrfLjR52a?si=08181e4e3a1c4782",
-        "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThbr2siRDj88MWFOBxDgkkiPYglVGnVSPDOo885kF24w&s",
-        "audio_url": "https://leoaffooarcmfqnrjcqu.supabase.co/storage/v1/object/public/songs/NIKI%20-%20Paths%20(Official%20Lyric%20Video).mp3",
-        "description": " song about the pain of a relationship ending and hoping that two people will cross paths again someday."
-    },  
-    
 ]
 
 # validate the starting dataset when the application launches
@@ -728,22 +558,34 @@ def health_check():
         "timestamp": datetime.utcnow().isoformat() + "Z"
     }
 
-# GET ALL SONGS(Protected)
+# GET ALL SONGS (Protected)
 @app.get("/api/v1/songs", dependencies=[Depends(verify_api_key)])
 def get_songs():
-    return {
-        "count": len(songs),
-        "songs": songs
-    }
+    try:
+        response = supabase.table("songs").select("*").execute()
+        songs_data = response.data
+        return {
+            "count": len(songs_data),
+            "songs": songs_data
+        }
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to fetch songs from database: {str(e)}"
+        )
 
-# GET ONE SONG (Protected)
-@app.get("/api/v1/songs/{song_id}", dependencies=[Depends(verify_api_key)])
-def get_song(song_id: int):
-    for song in songs:
-        if song["id"] == song_id:
-            return song
-
-    raise HTTPException(
-        status_code=404,
-        detail="Song not found."
-    )
+# TEST DATABASE CONNECTION
+@app.get("/test-db")
+def test_database():
+    try:
+        response = supabase.table("songs").select("*").limit(1).execute()
+        return {
+            "status": "success",
+            "message": "Connected to Supabase successfully!",
+            "data": response.data
+        }
+    except Exception as e:
+        return {
+            "status": "error",
+            "message": str(e)
+        }
