@@ -3,6 +3,7 @@ import bcrypt
 import jwt
 from fastapi import FastAPI, HTTPException, Header, Query, Depends
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from fastapi.middleware.cors import CORSMiddleware
 from datetime import datetime
 from pydantic import BaseModel, Field
 from typing import Optional
@@ -253,15 +254,15 @@ def login_user(user: UserLogin):
             )
 
         token = jwt.encode(
-    {
-        "user_id": account["user_id"],
-        "username": account["username"],
-        "email": account["email"],
-        "role": account["role"]
-    },
-    JWT_SECRET,
-    algorithm=JWT_ALGORITHM
-)
+            {
+                "user_id": account["user_id"],
+                "username": account["username"],
+                "email": account["email"],
+                "role": account["role"]
+            },
+            JWT_SECRET,
+            algorithm=JWT_ALGORITHM
+        )
 
         return {
             "message": "Login successful.",
