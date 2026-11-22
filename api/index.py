@@ -544,6 +544,14 @@ def delete_song(song_id: int):
             status_code=500,
             detail="Failed to delete song."
         )
+        
+# TEST JWT TOKEN
+@app.get("/api/v1/test-auth")
+def test_auth(user=Depends(verify_token)):
+    return {
+        "message": "Token is valid.",
+        "user": user
+    }
 
 # HEALTH CHECK (Public)
 @app.get("/health")
