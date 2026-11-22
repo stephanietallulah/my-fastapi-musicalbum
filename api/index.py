@@ -32,6 +32,45 @@ def verify_api_key(x_api_key: Optional[str] = Header(default=None)):
         )
     return True
 
+# JWT TOKEN AUTHENTICATION
+def verify_token(
+    authorization: Optional[str] = Header(default=None)
+):
+    if not authorization:
+        raise HTTPException(
+            status_code=401,
+            detail="Missing authentication token."
+        )
+
+    if not authorization.startswith("Bearer "):
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid authentication format."
+        )
+
+    token = authorization.split(" ", 1)[1]
+
+    try:
+        payload = jwt.decode(
+            token,
+            JWT_SECRET,
+            algorithms=[JWT_ALGORITHM]
+        )
+
+        return payload
+
+    except jwt.ExpiredSignatureError:
+        raise HTTPException(
+            status_code=401,
+            detail="Authentication token has expired."
+        )
+
+    except jwt.InvalidTokenError:
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid authentication token."
+        )
+
 app = FastAPI(
     title="NOTENOUGH Music API",
     description="Discover songs, artists, and the stories behind the music.",
