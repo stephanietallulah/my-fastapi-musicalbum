@@ -1,4 +1,5 @@
 import os
+import bcrypt
 from fastapi import FastAPI, HTTPException, Header, Query, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from datetime import datetime
@@ -8,6 +9,8 @@ from dotenv import load_dotenv
 from supabase import create_client, Client
 
 load_dotenv(override=True)
+
+# Phase 7 persistence test
 
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY")
@@ -88,6 +91,12 @@ class SongUpdate(BaseModel):
     duration: Optional[str] = Field(default=None, min_length=1)
     description: Optional[str] = Field(default=None, min_length=1)
 
+# USER REGISTRATION MODEL
+class UserRegister(BaseModel):
+    username: str = Field(min_length=1)
+    email: str = Field(min_length=3)
+    password: str = Field(min_length=6)
+
 # HOME
 @app.get("/")
 def home():
@@ -101,6 +110,79 @@ def home():
         ]
     }
 
+# REGISTER USER
+@app.post("/api/v1/register")
+def register_user(user: UserRegister):
+
+    try:
+        # Check if username already exists
+        existing_username = (
+            supabase
+            .table("user")
+            .select("user_id")
+            .eq("username", user.username)
+            .execute()
+        )
+
+        if existing_username.data:
+            raise HTTPException(
+                status_code=409,
+                detail="Username already exists."
+            )
+
+        # Check if email already exists
+        existing_email = (
+            supabase
+            .table("user")
+            .select("user_id")
+            .eq("email", user.email)
+            .execute()
+        )
+
+        if existing_email.data:
+            raise HTTPException(
+                status_code=409,
+                detail="Email already exists."
+            )
+
+        # Hash password
+        password_hash = bcrypt.hashpw(
+            user.password.encode("utf-8"),
+            bcrypt.gensalt()
+        ).decode("utf-8")
+
+        # Insert user
+        response = (
+            supabase
+            .table("user")
+            .insert({
+                "username": user.username,
+                "email": user.email,
+                "password_hash": password_hash,
+                "role": "user"
+            })
+            .execute()
+        )
+
+        return {
+            "message": "User registered successfully.",
+            "user": {
+                "user_id": response.data[0]["user_id"],
+                "username": response.data[0]["username"],
+                "email": response.data[0]["email"],
+                "role": response.data[0]["role"]
+            }
+        }
+
+    except HTTPException:
+        raise
+
+    except Exception as e:
+        print("REGISTER ERROR:", e)
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to register user: {str(e)}"
+        )
 
 # SEARCH SONG
 @app.get("/api/v1/songs/search", dependencies=[Depends(verify_api_key)])
