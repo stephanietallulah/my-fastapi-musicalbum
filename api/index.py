@@ -97,6 +97,10 @@ class UserRegister(BaseModel):
     email: str = Field(min_length=3)
     password: str = Field(min_length=6)
 
+class UserLogin(BaseModel):
+    email: str = Field(min_length=3)
+    password: str = Field(min_length=1)
+
 # HOME
 @app.get("/")
 def home():
@@ -182,6 +186,61 @@ def register_user(user: UserRegister):
         raise HTTPException(
             status_code=500,
             detail=f"Failed to register user: {str(e)}"
+        )
+
+# LOGIN USER
+@app.post("/api/v1/login")
+def login_user(user: UserLogin):
+
+    try:
+
+        response = (
+            supabase
+            .table("user")
+            .select("user_id, username, email, password_hash, role")
+            .eq("email", user.email)
+            .execute()
+        )
+
+        if not response.data:
+            raise HTTPException(
+                status_code=401,
+                detail="Invalid email or password."
+            )
+
+        account = response.data[0]
+
+        password_matches = bcrypt.checkpw(
+            user.password.encode("utf-8"),
+            account["password_hash"].encode("utf-8")
+        )
+
+        if not password_matches:
+            raise HTTPException(
+                status_code=401,
+                detail="Invalid email or password."
+            )
+
+        return {
+            "message": "Login successful.",
+            "user": {
+                "user_id": account["user_id"],
+                "username": account["username"],
+                "email": account["email"],
+                "role": account["role"]
+            }
+        }
+
+    except HTTPException:
+        raise
+
+    except Exception as e:
+
+        print("LOGIN ERROR:", e)
+
+        raise HTTPException(
+            status_code=500,
+            detail="Login failed."
         )
 
 # SEARCH SONG
