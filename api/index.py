@@ -440,7 +440,7 @@ def create_song(song: Song):
 # UPDATE SONG
 @app.patch(
     "/api/v1/songs/{song_id}",
-    dependencies=[Depends(verify_api_key)]
+    dependencies=[Depends(verify_token)]
 )
 def update_song(
     song_id: int,
