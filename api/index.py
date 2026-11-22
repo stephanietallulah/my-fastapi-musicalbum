@@ -1,5 +1,6 @@
 import os
 import bcrypt
+import jwt
 from fastapi import FastAPI, HTTPException, Header, Query, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from datetime import datetime
@@ -10,8 +11,6 @@ from supabase import create_client, Client
 
 load_dotenv(override=True)
 
-# Phase 7 persistence test
-
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY")
 
@@ -20,6 +19,9 @@ supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 # configuration 
 API_KEY = os.getenv("API_KEY")
 API_VERSION = "1.0"
+
+JWT_SECRET = os.getenv("JWT_SECRET")
+JWT_ALGORITHM = "HS256"
 
 # API KEY AUTHENTICATION
 def verify_api_key(x_api_key: Optional[str] = Header(default=None)):
@@ -221,8 +223,20 @@ def login_user(user: UserLogin):
                 detail="Invalid email or password."
             )
 
+        token = jwt.encode(
+    {
+        "user_id": account["user_id"],
+        "username": account["username"],
+        "email": account["email"],
+        "role": account["role"]
+    },
+    JWT_SECRET,
+    algorithm=JWT_ALGORITHM
+)
+
         return {
             "message": "Login successful.",
+            "token": token,
             "user": {
                 "user_id": account["user_id"],
                 "username": account["username"],
@@ -230,7 +244,6 @@ def login_user(user: UserLogin):
                 "role": account["role"]
             }
         }
-
     except HTTPException:
         raise
 
