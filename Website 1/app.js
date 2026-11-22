@@ -216,3 +216,30 @@ function playSong(url, button) {
 }
 
 loadSongs();
+
+// PROFILE MENU
+const profileButton = document.getElementById("profileButton");
+const profileMenu = document.getElementById("profileMenu");
+const profileUsername = document.getElementById("profileUsername");
+const profileEmail = document.getElementById("profileEmail");
+const logoutButton = document.getElementById("logoutButton");
+
+const savedUser = localStorage.getItem("notenoughUser");
+
+if (savedUser) {
+    const user = JSON.parse(savedUser);
+
+    profileUsername.textContent = user.username;
+    profileEmail.textContent = user.email;
+}
+
+profileButton.addEventListener("click", function () {
+    profileMenu.classList.toggle("show");
+});
+
+logoutButton.addEventListener("click", function () {
+    localStorage.removeItem("notenoughUser");
+    localStorage.removeItem("notenoughToken");
+
+    window.location.href = "login.html";
+});

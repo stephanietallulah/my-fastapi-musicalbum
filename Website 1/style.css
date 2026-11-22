@@ -902,6 +902,59 @@ body {
     background: rgba(255, 255, 255, 0.12);
 }
 
+.profile-container {
+    position: relative;
+}
+
+.profile-menu {
+    position: absolute;
+    top: 48px;
+    right: 0;
+
+    width: 220px;
+    padding: 16px;
+
+    background: #111;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+
+    display: none;
+    z-index: 1000;
+}
+
+.profile-menu.show {
+    display: block;
+}
+
+.profile-menu p {
+    margin: 5px 0;
+    color: #fff;
+    font-size: 14px;
+}
+
+#profileEmail {
+    color: #aaa;
+    font-size: 12px;
+    margin-bottom: 15px;
+}
+
+#logoutButton {
+    width: 100%;
+    padding: 9px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: #fff;
+    color: #111;
+
+    cursor: pointer;
+}
+
+#logoutButton:hover {
+    opacity: 0.8;
+}
+
 
 /* hero section */ 
 .hero-section {
