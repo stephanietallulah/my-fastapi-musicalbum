@@ -2,7 +2,7 @@ import os
 import bcrypt
 import jwt
 from fastapi import FastAPI, HTTPException, Header, Query, Depends
-from fastapi.middleware.cors import CORSMiddleware
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from datetime import datetime
 from pydantic import BaseModel, Field
 from typing import Optional
@@ -33,22 +33,12 @@ def verify_api_key(x_api_key: Optional[str] = Header(default=None)):
     return True
 
 # JWT TOKEN AUTHENTICATION
+security = HTTPBearer()
+
 def verify_token(
-    authorization: Optional[str] = Header(default=None)
+    credentials: HTTPAuthorizationCredentials = Depends(security)
 ):
-    if not authorization:
-        raise HTTPException(
-            status_code=401,
-            detail="Missing authentication token."
-        )
-
-    if not authorization.startswith("Bearer "):
-        raise HTTPException(
-            status_code=401,
-            detail="Invalid authentication format."
-        )
-
-    token = authorization.split(" ", 1)[1]
+    token = credentials.credentials
 
     try:
         payload = jwt.decode(
@@ -544,7 +534,7 @@ def delete_song(song_id: int):
             status_code=500,
             detail="Failed to delete song."
         )
-        
+
 # TEST JWT TOKEN
 @app.get("/api/v1/test-auth")
 def test_auth(user=Depends(verify_token)):
