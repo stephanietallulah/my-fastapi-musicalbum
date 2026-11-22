@@ -396,7 +396,7 @@ def get_songs():
 @app.post(
     "/api/v1/songs",
     status_code=201,
-    dependencies=[Depends(verify_api_key)]
+    dependencies=[Depends(verify_token)]
 )
 def create_song(song: Song):
 
