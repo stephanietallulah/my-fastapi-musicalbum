@@ -497,7 +497,7 @@ def update_song(
 # DELETE SONG
 @app.delete(
     "/api/v1/songs/{song_id}",
-    dependencies=[Depends(verify_api_key)]
+    dependencies=[Depends(verify_token)]
 )
 def delete_song(song_id: int):
 
