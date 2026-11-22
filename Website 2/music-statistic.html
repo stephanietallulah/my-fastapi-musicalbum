@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>notenough - Music Statistic</title> <!-- temporary only -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css" >
+</head>
+
+
+<body>
+
+    <header class="landing-header">
+        <div class="landing-logo">
+            <span>✦</span>
+            <em>encore</em>
+        </div>
+
+        <nav class="landing-nav">
+            <a href="../Website 1/index.html" class="nav-item">
+                <span>⌂</span>
+                Home
+            </a>
+
+            <a href="../Website 3/pick-music.html" class="nav-item">
+                <span>♧</span>
+                Pick Your Music
+            </a>
+
+             <a href="../Website 2/music-statistic.html" class="nav-item">
+                <span>⌁</span>
+                Music Statistic
+            </a>
+        </nav>
+
+        <button class="profile-button" aria-label="Profile">
+            <span>♙</span>
+        </button>
+    </header>
+
+    <main>
+        <!-- home -->
+        <section id="home">
+            <div class="hero-section">
+                <div class="hero-container">
+                    <div class="hero-content">
+                        <div class="hero-badge">
+                            <span>✦</span> Discover. Listen. Feel.
+                        </div>
+                        <h1>Music <em>Statistic</em></h1>
+                        <p>Explore the numbers behind your music.</p>
+                    </div>
+
+                    <div class="hero-orbit-graphic" aria-hidden="true">
+                        <div class="orbit-ring orbit-outer"></div>
+                        <div class="orbit-ring orbit-inner"></div>
+                        <span class="hero-star star-1">✦</span>
+                        <span class="hero-star star-2">✦</span>
+                        <span class="hero-star star-3">✦</span>
+                        <span class="hero-star star-4">✦</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="statistic">
+                <div class="statscard">
+                    <p>Total Song</p>
+                    <h2 id="totalsong">0</h2>
+                </div>
+
+                <div class="statscard">
+                    <p>Total Artists</p>
+                    <h2 id="totalartist">0</h2>
+                </div>
+                
+                <div class="statscard">
+                    <p>Average Rating</p>
+                    <h2 id="averagerating">0</h2>
+                </div>
+
+                <div class="statscard">
+                    <p>Total Streams</p>
+                    <h2 id="totalstreams">0</h2>
+                </div>
+            </div>
+            
+            <section id="top-songs-section" class="dashboard">
+                <div class="section">
+                    <h2>Top Songs by Streams</h2>
+                </div>
+                
+                    <!-- image calling -->
+                    <div id="top-songs"></div>
+
+            </section>
+
+            <section id="overview" class="statistic-section">
+                <div class="statistic-grid">
+
+                    <!-- songs by year-->
+                    <div class="stat-card">
+                        <div class="stat-card-header">
+                            <div>
+                                <h2>Songs by Year</h2>
+                            </div>
+                        </div>
+
+                        <div id="songs-by-year"></div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-card-header">
+                            <div>
+                                <h2>Genre Distribution</h2>
+                            </div>
+                        </div>
+
+                        <div id="genre-distribution"></div>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+    <!--genres-->
+    <section id="genres">
+        <div class="genre-page-header">
+
+            <div class="genre-title">
+                <h2>Genre Analysis</h2>
+                <p>Explore the distribution and statistics of different music genres</p>
+            </div>
+
+        <div class="select-genre">
+            <label for="select-genre">Select a Genre</label>
+
+            <select id="select-genre">
+                <option value="">Choose a Genre</option>
+            </select>
+            </div>
+        </div>
+
+        <div id="genre-result">
+            <div class="genre-overview">
+                <h2 id="genre-name"></h2>
+                <div class="genre-summary">
+                    
+                    <div class="genre-summary-card">
+                        <strong id="genre-song-count">0</strong>
+                        <span>Songs</span>
+                    </div>
+
+                    <div class="genre-summary-card">
+                        <strong id="genre-artist-count">0</strong>
+                        <span>Artists</span>
+                    </div>
+
+                    <div class="genre-summary-card">
+                        <strong id="genre-percentage">0%</strong>
+                        <span>of Collection</span>
+                    </div>
+                </div>
+
+                <div class="genre-song-section">
+                    <h3>Song in this Genre</h3>
+                    <div id="genre-song-list"></div>
+                </div>
+            </div>
+            
+            <div class="genre-song-details">
+                <h2>Song Details</h2>
+
+                <div id="selected-song-details">
+                    <p class="empty-song-message">
+                        Select a song to view its details
+                    </p>
+                </div>
+            </div>
+        </div>
+    
+    </section>
+
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>

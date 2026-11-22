@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>notenough - Pick Your Music</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- header -->
+    <header class="landing-header">
+        <div class="landing-logo">
+            <span>✦</span>
+            <em>encore</em>
+        </div>
+
+        <nav class="landing-nav">
+            <a href="../Website 1/index.html" class="nav-item" id="home-link">
+                <span>⌂</span>
+                Home
+            </a>
+
+            <a href="#home" class="nav-item active">
+                <span>♧</span>
+                Pick Your Music
+            </a>
+
+            <a href="../Website 2/music-statistic.html" class="nav-item">
+                <span>⌁</span>
+                Music Statistic
+            </a>
+        </nav>
+
+        <button class="profile-button" aria-label="Profile">
+            <span>♙</span>
+        </button>
+    </header>
+
+
+    <main>
+
+        <!-- home -->
+        <section id="home">
+            <div class="hero-section">
+                <div class="hero-container">
+                    <div class="hero-content">
+                        <div class="hero-badge">
+                            <span>✦</span> Discover. Listen. Feel.
+                        </div>
+                        <h1>Pick Your <em>Music</em></h1>
+                        <p>Tell us what you're feeling. Choose a mood to get started.</p>
+                    </div>
+
+                    <div class="hero-orbit-graphic" aria-hidden="true">
+                        <div class="orbit-ring orbit-outer"></div>
+                        <div class="orbit-ring orbit-inner"></div>
+                        <span class="hero-star star-1">✦</span>
+                        <span class="hero-star star-2">✦</span>
+                        <span class="hero-star star-3">✦</span>
+                        <span class="hero-star star-4">✦</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- pick my music -->
+        <section id="choose-music">
+
+            <!-- guest mode mood picker -->
+            <div class="guest-mood-wrapper">
+                <div class="choice-grid mood-grid">
+
+                    <!-- chill button (unlocked) -->
+                    <button class="choice-card mood-choice" data-value="Chill">
+                        <span class="choice-icon" aria-hidden="true">
+                            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+                                <line x1="12" y1="2" x2="12" y2="22"/>
+                                <line x1="2" y1="12" x2="22" y2="12"/>
+                                <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/>
+                                <line x1="19.07" y1="4.93" x2="4.93" y2="19.07"/>
+                            </svg>
+                        </span>
+                        <span class="mood-name">Chill</span>
+                    </button>
+
+                    <!-- happy button (locked) -->
+                    <button class="choice-card mood-choice locked" data-value="Happy" type="button">
+                        <span class="choice-icon lock-icon" aria-hidden="true">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="5" y="11" width="14" height="10" rx="2"/>
+                                <path d="M8 11V7a4 4 0 0 1 8 0v4"/>
+                            </svg>
+                        </span>
+                        <span class="mood-name">Happy</span>
+                        <small class="unlock-label">Sign in to unlock</small>
+                    </button>
+
+                    <!-- sad button (locked) -->
+                    <button class="choice-card mood-choice locked" data-value="Sad" type="button">
+                        <span class="choice-icon lock-icon" aria-hidden="true">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="5" y="11" width="14" height="10" rx="2"/>
+                                <path d="M8 11V7a4 4 0 0 1 8 0v4"/>
+                            </svg>
+                        </span>
+                        <span class="mood-name">Sad</span>
+                        <small class="unlock-label">Sign in to unlock</small>
+                    </button>
+
+                </div>
+
+                <!-- guest sign-in callout bar -->
+                <div class="guest-signin-banner">
+                    <div class="guest-banner-text">
+                        <span class="info-icon" aria-hidden="true">i</span>
+                        <p>Sign in to explore more moods and get personalized music recommendations.</p>
+                    </div>
+                    <button class="guest-signin-btn" type="button" onclick="window.location.href='../Website 1/login.html'">
+                        Sign In <span>→</span>
+                    </button>
+                </div>
+            </div>
+
+
+            <!-- step 2 - situation -->
+            <div class="music-step" id="step-situation">
+
+                <div class="section">
+                    <span class="pop-level">STEP 2 OF 4</span>
+
+                    <h2>What are you doing?</h2>
+
+                    <p>Pick a situation that fits your listening moment.</p>
+                </div>
+
+
+                <div class="choice-grid situation-grid">
+
+                    <!-- studying button -->
+                    <button class="choice-card situation-choice" data-value="Studying">
+                        <span class="choice-icon">▤</span>
+                        <span>Studying</span>
+                    </button>
+
+
+                    <!-- working -->
+                    <button class="choice-card situation-choice" data-value="Working">
+                        <span class="choice-icon">▱</span>
+                        <span>Working</span>
+                    </button>
+
+
+                    <!-- driving -->
+                    <button class="choice-card situation-choice" data-value="Driving">
+                        <span class="choice-icon">◇</span>
+                        <span>Driving</span>
+                    </button>
+
+
+                    <!-- relaxing -->
+                    <button class="choice-card situation-choice" data-value="Relaxing">
+                        <span class="choice-icon">⌒</span>
+                        <span>Relaxing</span>
+                    </button>
+
+
+                    <!-- hanging out -->
+                    <button class="choice-card situation-choice" data-value="Hanging Out">
+                        <span class="choice-icon">◎</span>
+                        <span>Hanging Out</span>
+                    </button>
+
+
+                    <!-- night -->
+                    <button class="choice-card situation-choice" data-value="Night">
+                        <span class="choice-icon">◔</span>
+                        <span>Late Night</span>
+                    </button>
+
+                </div>
+
+
+                <div class="pop-buttons">
+
+                    <!-- back button -->
+                    <button class="back-button" id="situation-back">
+                        ← Back
+                    </button>
+
+
+                    <!-- next button -->
+                    <button class="next-button" id="situation-next" disabled>
+                        Next →
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- step 3 - energy -->
+            <div class="music-step" id="step-preference">
+
+                <div class="section">
+                    <span class="pop-level">STEP 3 OF 4</span>
+
+                    <h2>What energy do you want?</h2>
+
+                    <p>Choose how energetic you want your music to feel.</p>
+                </div>
+
+
+                <!-- energy choices -->
+                <div class="energy-options">
+
+                    <!-- low bar -->
+                    <button class="energy-card" data-value="Low">
+                        <span class="low-energy-bar">▂▂▂</span>
+                        <strong>Low</strong>
+                        <small>Calm & Mellow</small>
+                    </button>
+
+
+                    <!-- medium bar -->
+                    <button class="energy-card" data-value="Medium">
+                        <span class="medium-energy-bar">▂▅▇</span>
+                        <strong>Medium</strong>
+                        <small>Balanced</small>
+                    </button>
+
+
+                    <!-- high bar -->
+                    <button class="energy-card" data-value="High">
+                        <span class="high-energy-bar">▂▅▇█</span>
+                        <strong>High</strong>
+                        <small>Energetic & Upbeat</small>
+                    </button>
+
+                </div>
+
+
+                <!-- optional filters -->
+                <div class="filters">
+
+                    <div class="header-filters">
+                        <h3>Fine-tune your music</h3>
+                        <span>Optional</span>
+                    </div>
+
+
+                    <div class="music-preferences">
+
+                        <!-- genre -->
+                        <div class="preference">
+                            <label for="select-genre">Genre</label>
+
+                            <select id="select-genre">
+                                <option value="">Any Genre</option>
+                            </select>
+                        </div>
+
+
+                        <!-- era -->
+                        <div class="preference">
+                            <label for="select-era">Era</label>
+
+                            <select id="select-era">
+                                <option value="">Any Era</option>
+                            </select>
+                        </div>
+
+
+                        <!-- rating -->
+                        <div class="preference">
+                            <label for="select-rating">Minimum Rating</label>
+
+                            <select id="select-rating">
+                                <option value="">Any Rating</option>
+                                <option value="4">4.0+</option>
+                                <option value="4.5">4.5+</option>
+                            </select>
+                        </div>
+
+
+                        <!-- popularity -->
+                        <div class="preference">
+                            <label for="select-popularity">Popularity</label>
+
+                            <select id="select-popularity">
+                                <option value="">Any Level</option>
+                                <option value="popular">Popular</option>
+                                <option value="very-popular">Very Popular</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="pop-buttons">
+
+                    <!-- back button -->
+                    <button class="back-button" id="preference-back">
+                        ← Back
+                    </button>
+
+
+                    <!-- next button -->
+                    <button class="next-button" id="preference-next" disabled>
+                        Next →
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- step 4 - find music -->
+            <div class="music-step" id="step-find">
+
+                <div class="section">
+                    <span class="pop-level">STEP 4 OF 4</span>
+
+                    <h2>Ready to find your music?</h2>
+
+                    <p>We'll match your choices with songs from our collection.</p>
+                </div>
+
+
+                <!-- selected preferences -->
+                <div class="selected-preferences">
+
+                    <div class="selected-item">
+                        <span>Mood</span>
+                        <strong id="selected-mood">—</strong>
+                    </div>
+
+
+                    <div class="selected-item">
+                        <span>Situation</span>
+                        <strong id="selected-situation">—</strong>
+                    </div>
+
+
+                    <div class="selected-item">
+                        <span>Energy</span>
+                        <strong id="selected-energy">—</strong>
+                    </div>
+
+                </div>
+
+
+                <!-- buttons -->
+                <div class="reco-button">
+
+                    <button id="find-music">
+                        Find Your Music →
+                    </button>
+
+                </div>
+
+
+                <div class="pop-buttons">
+
+                    <!-- back button -->
+                    <button class="back-button" id="find-back">
+                        ← Back
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- recommendations -->
+        <section id="recommendations" style="display:none">
+
+            <div class="section">
+                <span class="pop-level">YOUR RESULTS</span>
+
+                <h2>Your Music Match</h2>
+
+                <p>Here are the songs that best match your preferences.</p>
+            </div>
+
+
+            <!-- best match -->
+            <div id="best-match">
+
+            </div>
+
+
+            <!-- recommended songs will appear here -->
+            <div id="recommended-music">
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script src="app.js"></script>
+
+</body>
+</html>

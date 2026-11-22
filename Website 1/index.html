@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>notenough - Music Player</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+
+<body>
+
+    <header class="landing-header">
+        <div class="landing-logo">
+            <span>✦</span>
+            <em>encore</em>
+        </div>
+
+        <nav class="landing-nav">
+            <a href="index.html" class="nav-item">
+                <span>⌂</span>
+                Home
+            </a>
+
+            <a href="../Website 3/pick-music.html" class="nav-item">
+                <span>♧</span>
+                Pick Your Music
+            </a>
+
+             <a href="../Website 2/music-statistic.html" class="nav-item">
+                <span>⌁</span>
+                Music Statistic
+            </a>
+
+        </nav>
+
+        <button class="profile-button">
+            <span>♙</span>
+        </button>
+
+    </header>
+
+
+    <main>
+            <section class="hero-section">
+                <div class="hero-container">
+                    <div class="hero-content">
+                        <div class="hero-badge">
+                            <span>✦</span> Discover. Listen. Feel.
+                        </div>
+                        <h1>
+                            Discover the <span class="muted">music</span><br>
+                            that fits <em>your</em> mood.
+                        </h1>
+                        <p>Explore songs, artists, and the story behind the music.</p>
+                        <div class="hero-buttons">
+                            <button class="hero-login" onclick="window.location.href='login.html'">
+                                Log in <span>→</span>
+                            </button>
+                            <button class="hero-signup" onclick="window.location.href='login.html'">
+                                Sign up
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="hero-orbit-graphic" aria-hidden="true">
+                        <div class="orbit-ring orbit-outer"></div>
+                        <div class="orbit-ring orbit-inner"></div>
+                        <span class="hero-star star-1">✦</span>
+                        <span class="hero-star star-2">✦</span>
+                        <span class="hero-star star-3">✦</span>
+                        <span class="hero-star star-4">✦</span>
+                    </div>
+                </div>
+            </section>
+
+        <section class="preview-section">
+            
+            <div class="section-heading">
+                <h2>
+                    <span>✦</span>
+                    Preview Songs
+                </h2>
+
+                <a href="login.html" class="see-more">
+                    See more
+                    <span>→</span>
+                </a>
+            </div>
+
+            <div id="songList" class="landing-song-list">
+            </div>
+
+        </section>
+
+        <section class="landing-cta">
+            <div>
+                <span class="cta-star">✦</span>
+
+                <h2>
+                    Sign in to unlock full access
+                    <br>
+                    to all songs and features.
+                </h2>
+
+                <p>
+                    Your music journey starts here.
+                </p>
+            </div>
+
+            <button class="cta-login" onclick="window.location.href='login.html'">
+                Log in
+                <span>→</span>
+            </button>
+
+        </section>
+
+    </main>
+
+<div class="song-preview-overlay">
+
+
+    <div class="song-preview">
+
+        <div class="preview-left">
+            <img id="modalImage" src="" alt="Album Cover">
+            <span class="preview-year" id="previewYear"></span>
+            <h2 id="previewTitle"></h2>
+            <p class="preview-artist" id="previewArtist"></p>
+            <p class="preview-album" id="previewAlbum"></p>
+
+        <div class="song-stats">
+            <div>
+                <span>★</span>
+                <strong id="previewRating"></strong>
+                <small>Listener Score</small>
+            </div>
+
+            <div>
+                <strong id="previewStreams"></strong>
+                <small>Spotify Streams</small>
+            </div>
+        </div>
+</div>
+
+        <div class="preview-divider"></div>
+        <div class="preview-right">
+            <button class="preview-close">×</button>
+            
+            <div class="preview-row">
+                <span>Album</span>
+                <p id="previewAlbumInfo"></p>
+            </div>
+
+            <div class="preview-row">
+                <span>Featured Artist</span>
+                <p id="previewFeatured"></p>
+            </div>
+
+            <div class="preview-row">
+                <span>Writers</span>
+                <p id="previewWriters"></p>
+            </div>
+
+            <div class="preview-row">
+                <span>Producers</span>
+                <p id="previewProducers"></p>
+            </div>
+
+            <div class="preview-row">
+                <span>Genre</span>
+                <p id="previewGenre"></p>
+            </div>
+
+            <div class="preview-row">
+                <span>Language</span>
+                <p id="previewLanguage"></p>
+            </div>
+
+            <div class="preview-row">
+                <span>Duration</span>
+                <p id="previewDuration"></p>
+            </div>
+
+            <div class="preview-row">
+                <span>Popularity</span>
+                <p id="previewPopularity"></p>
+            </div>
+
+            <div class="preview-description">
+                <span>Description</span>
+                <p id="previewDescription"></p>
+            </div>
+
+            <button class="preview-spotify" id="spotifyButton">Open on Spotify</button>
+        </div>
+    </div>
+</div>
+    <audio id="audioPlayer"></audio>
+    <script src="app.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>encore</title>
+
+        <!-- Editorial serif font to match the reference -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+
+        <link rel="stylesheet" href="style.css">
+    </head>
+
+    <body class="login-page">
+
+        <main class="login-container">
+
+            <!--images / left -side -->
+            <section class="login-art">
+
+                <span class="sparkle s1">✦</span>
+                <span class="sparkle s2">✦</span>
+                <span class="sparkle s3">✦</span>
+                <span class="sparkle s4">✦</span>
+
+                <div class="album-wall">
+
+                    <div class="album-card image-1"> <!-- daniel caesar -->
+                        <img src="https://i.scdn.co/image/ab67616100005174e4d94f7cbebb17504c25d419" alt="Daniel Caesar">
+                    </div>
+
+                    <div class="album-card image-2"> <!-- niki -->
+                        <img src="https://i.scdn.co/image/ab6761610000e5eb0654e511623cba4e0e9e2f0c" alt="NIKI">
+                    </div>
+
+                    <div class="album-card image-3"> <!-- the 1975 -->
+                        <img src="https://i.scdn.co/image/ab6761610000e5eb0c6e752cbb1e6d1416970f5a" alt="The 1975">
+                    </div>
+
+                    <div class="album-card image-4"> <!-- tyler the creator -->
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXBDYs2lCWaCsfCYKgf1mNY09-ek5AwhYmVCtg3qQCzg&s=10" alt="Tyler, The Creator">
+                    </div>
+
+                    <div class="album-card image-5"> <!-- rex orange country -->
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTjASMzjtlGn81lm7aqvRwIXT57T5ELXUQdCPw-gVnDg&s=10" alt="Rex Orange County">
+                    </div>
+
+                    <div class="album-card image-6"> <!-- chase atlantic -->
+                        <img src="https://pbs.twimg.com/profile_images/2122390743692259329/xK149Q27_400x400.jpg" alt="Chase Atlantic">
+                    </div>
+
+                    <div class="album-card image-7"> <!-- the weeknd -->
+                        <img src="https://i.scdn.co/image/ab6761610000e5ebc1719ac9e6a75c1c25835018" alt="The Weeknd">
+                    </div>
+
+                    <div class="album-card image-8"> <!-- partynextdoor -->
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQ5_rRMIuJlqaNzxcPTOReX-kP40A1xRnf3c12p5QHeQ&s=10" alt="PARTYNEXTDOOR">
+                    </div>
+
+                    <div class="album-card image-9"> <!-- lana del rey -->
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQuMR_q7D-T1P4xRXL3a3BPy8PznvdrlcBtbhYgfLmlw&s=10" alt="Lana Del Rey">
+                    </div>
+
+                    <div class="album-card image-10"> <!-- summer walker -->
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLKGfnZYN_kRnZc7V6WwwyHdL5onNyLLH6NTBNbDvysw&s=10" alt="Summer Walker">
+                    </div>
+
+                </div>
+
+                <div class="login-brand">
+                    <h1>encore</h1>
+                    <p>discover the music behind the story.</p>
+                </div>
+
+            </section>
+            
+            <!-- right side-->
+            <section class="login-form-section">
+
+                <div class="auth-viewport">
+                    <div class="auth-slider" id="authSlider">
+
+                        <div class="login-form-wrapper auth-panel">
+                            <div class="login-heading">
+                                <h2>Welcome back</h2>
+                                <p>Please enter your details.</p>
+                            </div>
+
+                            <form id="loginForm">
+
+                                <!-- email -->
+                                <div class="login-input-group">
+                                    <label for="email">Email</label>
+
+                                    <input
+                                        type="email"
+                                        id="email"
+                                        name="email"
+                                        placeholder="Enter your email"
+                                        required
+                                    >
+                                </div>
+
+                                <!-- password -->
+                                <div class="login-input-group">
+                                    <label for="password">Password</label>
+
+                                    <div class="password-wrapper">
+
+                                        <input
+                                            type="password"
+                                            id="password"
+                                            name="password"
+                                            placeholder="Enter your password"
+                                            required
+                                        >
+
+                                        <button
+                                            type="button"
+                                            class="password-toggle"
+                                            id="passwordToggle"
+                                            aria-label="Show password"
+                                        >
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                                <circle cx="12" cy="12" r="3"></circle>
+                                            </svg>
+                                        </button>
+
+                                    </div>
+                                </div>
+
+                                <!-- options -->
+                                <div class="login-options">
+
+                                    <label class="remember-me">
+                                        <input type="checkbox" id="rememberMe">
+                                        <span>Remember me</span>
+                                    </label>
+
+                                    <a href="#" class="forgot-password">
+                                        Forgot password?
+                                    </a>
+
+                                </div>
+
+                                <!-- log in button -->
+                                <button
+                                    type="submit"
+                                    class="login-button"
+                                >
+                                    Log in
+                                </button>
+                                    
+                                <!-- message -->
+                                <p id="loginMessage" class="login-message"></p>
+
+                            </form>
+
+                            <!-- sign up -->
+                            <p class="signup-text">
+                                Don't have an account?
+                                <a href="#" id="showSignup">Sign up</a>
+                            </p>
+
+                        </div>
+
+                        <!-- sign up panel -->
+                        <div class="login-form-wrapper auth-panel">
+                            <div class="login-heading">
+                                <h2>Create account</h2>
+                                <p>Join notenough and discover the music behind the story.</p>
+                            </div>
+
+                            <form id="signupForm">
+                                <div class="login-input-group">
+                                    <label for="signupName">Full Name</label>
+                                    <input type="text" id="signupName" placeholder="Enter your name" required>
+                                </div>
+
+                                <div class="login-input-group">
+                                    <label for="signupEmail">Email</label>
+                                    <input type="email" id="signupEmail" placeholder="Enter your email" required>
+                                </div>
+
+                                <div class="login-input-group">
+                                    <label for="signupPassword">Password</label>
+                                    <div class="password-wrapper">
+                                        <input type="password" id="signupPassword" placeholder="Create a password" required>
+                                        <button type="button" class="password-toggle" aria-label="Show password">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                                <circle cx="12" cy="12" r="3"></circle>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="login-button">Sign up</button>
+                                <p class="login-message" id="signupMessage"></p>
+                            </form>
+
+                            <p class="signup-text">
+                                Already have an account? <a href="#" id="showLogin">Log in</a>
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+
+            </section>
+
+        </main>
+
+        <script src="login.js"></script>
+        
+    </body>
+</html>

@@ -1,0 +1,898 @@
+/* general */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+    background: #050505;
+    color: #efede3;
+}
+
+.landing-header {
+    width: 100%;
+    height: 80px;
+    padding: 0 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #050505;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+
+/* Logo */
+.landing-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 22px;
+    font-weight: 600;
+    color: #efede3;
+}
+
+.landing-logo span {
+    font-size: 18px;
+}
+
+.landing-logo em {
+    font-style: normal;
+}
+
+/* Navigation */
+.landing-nav {
+    display: flex;
+    align-items: center;
+    gap: 35px;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: #aaa;
+    text-decoration: none;
+    font-size: 14px;
+    transition: 0.3s ease;
+}
+
+.nav-item span {
+    font-size: 16px;
+}
+
+.nav-item:hover,
+.nav-item.active {
+    color: #fff;
+}
+
+/* Profile Button */
+.profile-button {
+    width: 38px;
+    height: 38px;
+    margin: 0;
+    padding: 0;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s ease;
+}
+
+.profile-button:hover {
+    background: rgba(255, 255, 255, 0.12);
+}
+/* main */
+main {
+    max-width: 1250px;
+    margin: 0 auto;
+    padding: 0 30px 30px;
+}
+
+/* sections */
+section {
+    scroll-margin-top: 100px;
+}
+
+/* hero section */
+.hero-section {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding: 110px 30px 30px; /* 80px navbar + 30px breathing room, 30px side padding to match main */
+    background:
+        linear-gradient(
+            to bottom,
+            transparent 60%,
+            #050505 100%
+        ),
+        radial-gradient(
+            circle at 72% 45%,
+            rgba(239, 237, 227, 0.045) 0%,
+            transparent 50%
+        );
+}
+.hero-container {
+    width: 100%;
+    max-width: 1250px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    align-items: center;
+    gap: 40px;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: left;
+    max-width: 580px;
+}
+
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 16px;
+    border: 1px solid rgba(239, 237, 227, 0.22);
+    border-radius: 30px;
+    background: rgba(255, 255, 255, 0.02);
+    color: #ccc;
+    font-size: 12.5px;
+    margin-bottom: 26px;
+}
+
+.hero-badge span {
+    color: #efede3;
+    font-size: 13px;
+}
+
+.hero-content h1 {
+    margin: 0;
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: clamp(46px, 5.2vw, 74px);
+    line-height: 1.06;
+    font-weight: 500;
+    letter-spacing: -1.5px;
+    color: #efede3;
+}
+
+.hero-content h1 em {
+    font-style: italic;
+    font-weight: 400;
+    color: #efede3;
+}
+
+.hero-content > p {
+    margin: 22px 0 0;
+    max-width: 480px;
+    color: #9e9d97;
+    font-size: 15.5px;
+    line-height: 1.6;
+}
+
+.hero-orbit-graphic {
+    position: relative;
+    width: 100%;
+    height: 440px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.orbit-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(239, 237, 227, 0.16);
+}
+
+.orbit-outer {
+    width: 620px;
+    height: 290px;
+    transform: rotate(-27deg);
+}
+
+.orbit-inner {
+    width: 450px;
+    height: 360px;
+    transform: rotate(-18deg) translate(25px, -10px);
+    border-color: rgba(239, 237, 227, 0.13);
+}
+
+.hero-star {
+    position: absolute;
+    color: #efede3;
+    line-height: 1;
+    opacity: 0.85;
+    animation: starTwinkle 4s ease-in-out infinite alternate;
+}
+
+.star-1 { top: 14%; left: 14%; font-size: 18px; }
+.star-2 { top: 38%; right: 12%; font-size: 24px; animation-delay: 1s; }
+.star-3 { bottom: 24%; left: 20%; font-size: 22px; animation-delay: 2s; }
+.star-4 { bottom: 10%; right: 6%; font-size: 20px; animation-delay: 1.5s; }
+
+@keyframes starTwinkle {
+    from { opacity: 0.45; transform: scale(0.92); }
+    to   { opacity: 0.95; transform: scale(1.06); }
+}
+
+/* statistic */
+.statistic {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-bottom: 80px;
+}
+
+.statscard {
+    border: 1px solid #333;
+    border-radius: 15px;
+    padding: 25px; 
+    min-height: 150px;
+    background: #080808;
+}
+
+.statscard p {
+    margin: 0;
+    color: #777;
+    font-size: 14px;
+}
+
+.statscard h2 {
+    margin: 25px 0 0;
+    font-size: 38px;
+    font-weight: 500;
+    color: #efede3;
+}
+
+/* grid for statistic */
+.statistic-section {
+    padding: 30px 0 80px;
+}
+
+.statistic-section > .section {
+    margin-bottom: 30px;
+}
+
+/* two column layout */
+.statistic-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+/* statistic card */
+.stat-card {
+    background: #080808;
+    border: 1px solid #292929;
+    border-radius: 15px;
+    padding: 30px;
+}
+
+/* card header */
+.stat-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 35px;
+}
+
+.stat-card-header h2 {
+    margin: 0 0 8px;
+    font-size: 24px;
+}
+
+/* filter button */
+.stat-filter {
+    background: transparent;
+    color: #aaa;
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 13px;
+}
+
+/* dashboard sections */
+.dashboard {
+    border-top: 1px solid #222;
+    padding: 40px 0;
+}
+
+.section h2 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 500;
+}
+
+.section p {
+    color: #777;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+/* top songs */
+#top-songs {
+    margin-top: 25px;
+    min-height: 0;
+}
+
+/* songs */
+#songs-by-year {
+    margin-top: 20px;
+    min-height: 180px;
+}
+
+.year-chart {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.year-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.year-label {
+    width: 50px;
+    color: #777;
+    font-size: 14px;
+}
+
+.year-bar {
+    flex: 1;
+    height: 10px;
+    background: #222;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.year-fill {
+    height: 100%;
+    background: #efede3;
+    border-radius: 10px;
+}
+
+.year-count {
+    width: 70px;
+    color: #777;
+    font-size: 13px;
+    text-align: right;
+}
+
+
+
+
+/* genre distribution */
+#genre-distribution {
+    margin-top: 20px;
+    min-height: 250px;
+}
+
+.genre-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.genre-label {
+    width: 100px;
+    color: #777;
+    font-size: 14px;
+}
+
+.genre-bar {
+    flex: 1;
+    height: 10px;
+    background: #222;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.genre-fill {
+    height: 100%;
+    background: #efede3;
+    border-radius: 10px;
+}
+
+.genre-count {
+    width: 70px;
+    color: #777;
+    font-size: 13px;
+    text-align: right;
+}
+
+
+
+
+/* genre result */
+#genres {
+    border-top: 1px solid #222;
+    padding: 80px 0;
+}
+
+/* top part */
+.genre-page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 50px;
+    margin-bottom: 30px;
+}
+
+.genre-title {
+    flex: 1;
+}
+
+.genre-title h2 {
+    margin: 0;
+    font-size: 36px;
+    font-weight: 500;
+}
+
+.genre-title p {
+    margin: 10px 0 0;
+    color: #777;
+    font-size: 15px;
+}
+
+/* genre dropdown */
+.select-genre {
+    width: 300px;
+    flex-shrink: 0;
+}
+
+.select-genre label {
+    display: block;
+    margin-bottom: 10px;
+    color: #aaa;
+    font-size: 14px;
+}
+
+.select-genre select {
+    width: 100%;
+    padding: 14px 18px;
+
+    background-color: #050505;
+    color: #efede3;
+
+    border: 1px solid #555;
+    border-radius: 10px;
+
+    font-size: 15px;
+    cursor: pointer;
+}
+
+/* main two-column */
+#genre-result {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+
+    margin-top: 20px;
+}
+
+/* left genre overview */
+.genre-overview {
+    background: #080808;
+    border: 1px solid #292929;
+    border-radius: 15px;
+    padding: 30px;
+}
+
+#genre-name {
+    margin: 0 0 20px;
+
+    font-size: 30px;
+    font-weight: 500;
+}
+
+/* summary cards */
+.genre-summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+
+    margin-bottom: 20px;
+}
+
+.genre-summary-card {
+    border: 1px solid #292929;
+    border-radius: 10px;
+
+    padding: 20px;
+}
+
+.genre-summary-card strong {
+    display: block; 
+
+    font-size: 30px;
+    font-weight: 500;
+
+    margin-bottom: 8px;
+}
+
+.genre-summary-card span {
+    color: #777;
+    font-size: 13px;
+}
+
+/* divider */
+.genre-song-section {
+    border-top: 1px solid #292929;
+    padding-top: 18px;
+}
+
+.genre-song-section h3 {
+    margin: 0 0 15px;
+
+    font-size: 18px;
+    font-weight: 500;
+}
+
+/* song list */
+.genre-song-row {
+    display: grid;
+
+    grid-template-columns: 35px 60px 1fr 70px 60px 160px;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 10px 0;
+
+    border-bottom: 1px solid #222;
+
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.genre-song-row:hover {
+    background: #101010;
+}
+
+.genre-song-row:last-child {
+    border-bottom: none;
+}
+
+.genre-song-number {
+    color: #777;
+    font-size: 13px;
+}
+
+.genre-song-image {
+    width: 60px;
+    height: 60px;
+
+    object-fit: cover;
+    border-radius: 7px;
+}
+
+.genre-song-info h4 {
+    margin: 0 0 5px;
+
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.genre-song-info p {
+    margin: 0;
+
+    color: #777;
+    font-size: 13px;
+}
+
+.genre-song-year, .genre-song-duration {
+    color: #aaa;
+    font-size: 13px;
+}
+
+.genre-song-rating {
+    color: #efede3;
+    font-size: 13px;
+}
+
+/* right song details */
+.genre-song-details {
+    background: #080808;
+    border: 1px solid #292929;
+    border-radius: 15px;
+
+    padding: 30px;
+
+    min-height: 440px;
+}
+
+.genre-song-details > h2 {
+    margin: 0 0 20px;
+
+    font-size: 24px;
+    font-weight: 500;
+}
+
+/* selected song */
+.selected-song {
+    display: grid;
+
+    grid-template-columns: 160px 1fr;
+
+    gap: 25px;
+}
+
+.selected-song-image {
+    width: 160px;
+    height: 160px;
+
+    object-fit: cover;
+
+    border-radius: 8px;
+}
+
+.selected-song-title {
+    margin: 0 0 5px;
+
+    font-size: 22px;
+    font-weight: 500;
+}
+
+.selected-song-artist {
+    margin: 0 0 25px;
+
+    color: #aaa;
+    font-size: 14px;
+}
+
+/* details */
+.song-detail-grid {
+    display: grid;
+
+    grid-template-columns: 90px 1fr;
+
+    column-gap: 20px;
+    row-gap: 10px;
+}
+
+.song-detail-label {
+    color: #777;
+    font-size: 13px;
+}
+
+.song-detail-value {
+    color: #aaa;
+    font-size: 13px;
+}
+
+/* right side additional information */
+.selected-song-extra {
+    border-top: 1px solid #292929;
+
+    margin-top: 25px;
+    padding-top: 20px;
+}
+
+.selected-song-extra-row {
+    display: grid;
+
+    grid-template-columns: 120px 1fr;
+
+    gap: 20px;
+
+    margin-bottom: 15px;
+}
+
+.selected-song-extra-row .label {
+    color: #777;
+    font-size: 13px;
+}
+
+.selected-song-extra-row .value {
+    color: #aaa;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+/* listen button */
+.listen-button {
+    display: inline-block;
+
+    margin-top: 10px;
+
+    padding: 12px 20px;
+
+    border: 1px solid #555;
+    border-radius: 10px;
+
+    color: #efede3;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    transition: 0.2s ease;
+}
+
+.listen-button:hover {
+    background: #161616;
+}
+
+/* empty state */
+.empty-song-message {
+    color: #777;
+    font-size: 14px;
+}
+
+
+
+
+/* button */ 
+button {
+    background: transparent;
+    color: white;
+
+    border: 1px solid #777;
+    border-radius: 30px;
+
+    padding: 8px 18px;
+    margin-top: 25px;
+
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+button:hover {
+    background: #646464;
+}
+
+/* song ranking */
+.song-ranking {
+    display: grid;
+    grid-template-columns: 40px 60px 1fr 100px;
+    align-items: center;
+    gap: 15px;
+
+    padding: 18px 0;
+    border-bottom: 1px solid #222;
+}
+
+/* image */
+.song-cover {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.song-rank {
+    color: #777;
+    font-size: 14px;
+}
+
+.song-ranking-info {
+    flex: 1;
+}
+
+.song-ranking-info h3 {
+    margin: 0 0 6px;
+
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.song-ranking-info p {
+    margin: 0;
+
+    color: #777;
+    font-size: 14px;
+}
+
+.song-streams {
+    color: #efede3;
+    font-size: 15px;
+}
+
+
+
+
+/* responsive */
+@media (max-width: 900px) {
+
+    header {
+        flex-direction: column;
+        gap: 20px;
+        align-items: flex-start;
+    }
+
+    nav {
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+    main {
+        padding: 30px;
+    }
+
+    .statistic {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .hero-content h1 {
+        font-size: 50px;
+    }
+
+}
+
+/* responsive for the statistic */
+@media (max-width: 900px) {
+
+    .statistic-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+
+    header {
+        flex-direction: column;
+        gap: 20px;
+        align-items: flex-start;
+    }
+
+    nav {
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+    main {
+        padding: 20px;
+    }
+
+    .statistic {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-section {
+        min-height: auto;
+        padding: 100px 0 40px;
+    }
+
+    .hero-container {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-content h1 {
+        font-size: 42px;
+        letter-spacing: -1px;
+    }
+
+    .hero-orbit-graphic {
+        display: none;
+    }
+
+    .select-artist select,
+    .select-genre select {
+        width: 100%;
+    }
+
+}
