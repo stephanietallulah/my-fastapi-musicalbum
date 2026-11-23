@@ -62,6 +62,16 @@ def verify_token(
             detail="Invalid authentication token."
         )
 
+# ADMIN AUTHENTICATION
+def verify_admin(user=Depends(verify_token)):
+    if user.get("role") != "admin":
+        raise HTTPException(
+            status_code=403,
+            detail="Admin access required."
+        )
+
+    return user
+
 app = FastAPI(
     title="NOTENOUGH Music API",
     description="Discover songs, artists, and the stories behind the music.",
@@ -75,15 +85,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-def verify_admin(user=Depends(verify_token)):
-    if user.get("role") != "admin":
-        raise HTTPException(
-            status_code=403,
-            detail="Admin access required."
-        )
-
-    return user
 
 # DATA MODEL
 class Song(BaseModel):
@@ -142,6 +143,7 @@ class UserLogin(BaseModel):
     email: str = Field(min_length=3)
     password: str = Field(min_length=1)
 
+# ADMIN SONG CREATE MODEL
 class SongCreate(BaseModel):
     title: str = Field(min_length=1)
     album: Optional[str] = None
@@ -163,6 +165,24 @@ class SongCreate(BaseModel):
     best_for: list[str]
     duration: str = Field(min_length=1)
     description: str = Field(min_length=1)
+
+# PLAYLIST MODELS
+class PlaylistCreate(BaseModel):
+    name: str = Field(min_length=1)
+    description: Optional[str] = None
+
+
+class PlaylistUpdate(BaseModel):
+    name: Optional[str] = Field(default=None, min_length=1)
+    description: Optional[str] = None
+
+
+class PlaylistSongCreate(BaseModel):
+    song_id: int
+
+# FAVORITE MODEL
+class FavoriteCreate(BaseModel):
+    song_id: int
 
 # HOME
 @app.get("/")
@@ -305,6 +325,7 @@ def login_user(user: UserLogin):
                 "role": account["role"]
             }
         }
+
     except HTTPException:
         raise
 
@@ -315,6 +336,479 @@ def login_user(user: UserLogin):
         raise HTTPException(
             status_code=500,
             detail="Login failed."
+        )
+
+# CREATE PLAYLIST
+@app.post(
+    "/api/v1/playlists",
+    status_code=201,
+    dependencies=[Depends(verify_token)]
+)
+def create_playlist(
+    playlist: PlaylistCreate,
+    user=Depends(verify_token)
+):
+    try:
+        response = (
+            supabase
+            .table("playlist")
+            .insert({
+                "name": playlist.name,
+                "description": playlist.description,
+                "user_id": user["user_id"]
+            })
+            .execute()
+        )
+
+        return {
+            "message": "Playlist created successfully.",
+            "playlist": response.data[0]
+        }
+
+    except Exception as e:
+        print("CREATE PLAYLIST ERROR:", e)
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to create playlist: {str(e)}"
+        )
+
+# GET USER PLAYLISTS
+@app.get(
+    "/api/v1/playlists",
+    dependencies=[Depends(verify_token)]
+)
+def get_playlists(user=Depends(verify_token)):
+
+    try:
+        response = (
+            supabase
+            .table("playlist")
+            .select("*")
+            .eq("user_id", user["user_id"])
+            .order("playlist_id", desc=True)
+            .execute()
+        )
+
+        return {
+            "count": len(response.data),
+            "playlists": response.data
+        }
+
+    except Exception as e:
+        print("GET PLAYLISTS ERROR:", e)
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to fetch playlists: {str(e)}"
+        )
+
+# ADD SONG TO PLAYLIST
+@app.post(
+    "/api/v1/playlists/{playlist_id}/songs",
+    status_code=201,
+    dependencies=[Depends(verify_token)]
+)
+def add_song_to_playlist(
+    playlist_id: int,
+    data: PlaylistSongCreate,
+    user=Depends(verify_token)
+):
+
+    try:
+        # Check that playlist belongs to logged-in user
+        playlist = (
+            supabase
+            .table("playlist")
+            .select("playlist_id")
+            .eq("playlist_id", playlist_id)
+            .eq("user_id", user["user_id"])
+            .execute()
+        )
+
+        if not playlist.data:
+            raise HTTPException(
+                status_code=404,
+                detail="Playlist not found."
+            )
+
+        # Check that song exists
+        song = (
+            supabase
+            .table("songs")
+            .select("id")
+            .eq("id", data.song_id)
+            .execute()
+        )
+
+        if not song.data:
+            raise HTTPException(
+                status_code=404,
+                detail="Song not found."
+            )
+
+        # Check if song is already in playlist
+        existing = (
+            supabase
+            .table("playlist_songs")
+            .select("playlist_song_id")
+            .eq("playlist_id", playlist_id)
+            .eq("song_id", data.song_id)
+            .execute()
+        )
+
+        if existing.data:
+            raise HTTPException(
+                status_code=409,
+                detail="Song is already in this playlist."
+            )
+
+        response = (
+            supabase
+            .table("playlist_songs")
+            .insert({
+                "playlist_id": playlist_id,
+                "song_id": data.song_id
+            })
+            .execute()
+        )
+
+        return {
+            "message": "Song added to playlist successfully.",
+            "playlist_song": response.data[0]
+        }
+
+    except HTTPException:
+        raise
+
+    except Exception as e:
+        print("ADD SONG TO PLAYLIST ERROR:", e)
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to add song to playlist: {str(e)}"
+        )
+
+# GET SONGS FROM PLAYLIST
+@app.get(
+    "/api/v1/playlists/{playlist_id}/songs",
+    dependencies=[Depends(verify_token)]
+)
+def get_playlist_songs(
+    playlist_id: int,
+    user=Depends(verify_token)
+):
+
+    try:
+        # Check playlist ownership
+        playlist = (
+            supabase
+            .table("playlist")
+            .select("playlist_id, name, description")
+            .eq("playlist_id", playlist_id)
+            .eq("user_id", user["user_id"])
+            .execute()
+        )
+
+        if not playlist.data:
+            raise HTTPException(
+                status_code=404,
+                detail="Playlist not found."
+            )
+
+        response = (
+            supabase
+            .table("playlist_songs")
+            .select("playlist_song_id, playlist_id, song_id")
+            .eq("playlist_id", playlist_id)
+            .execute()
+        )
+
+        return {
+            "playlist": playlist.data[0],
+            "count": len(response.data),
+            "songs": response.data
+        }
+
+    except HTTPException:
+        raise
+
+    except Exception as e:
+        print("GET PLAYLIST SONGS ERROR:", e)
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to fetch playlist songs: {str(e)}"
+        )
+
+# REMOVE SONG FROM PLAYLIST
+@app.delete(
+    "/api/v1/playlists/{playlist_id}/songs/{song_id}",
+    dependencies=[Depends(verify_token)]
+)
+def remove_song_from_playlist(
+    playlist_id: int,
+    song_id: int,
+    user=Depends(verify_token)
+):
+
+    try:
+        # Check playlist ownership
+        playlist = (
+            supabase
+            .table("playlist")
+            .select("playlist_id")
+            .eq("playlist_id", playlist_id)
+            .eq("user_id", user["user_id"])
+            .execute()
+        )
+
+        if not playlist.data:
+            raise HTTPException(
+                status_code=404,
+                detail="Playlist not found."
+            )
+
+        existing = (
+            supabase
+            .table("playlist_songs")
+            .select("playlist_song_id")
+            .eq("playlist_id", playlist_id)
+            .eq("song_id", song_id)
+            .execute()
+        )
+
+        if not existing.data:
+            raise HTTPException(
+                status_code=404,
+                detail="Song is not in this playlist."
+            )
+
+        (
+            supabase
+            .table("playlist_songs")
+            .delete()
+            .eq("playlist_id", playlist_id)
+            .eq("song_id", song_id)
+            .execute()
+        )
+
+        return {
+            "message": "Song removed from playlist successfully.",
+            "playlist_id": playlist_id,
+            "song_id": song_id
+        }
+
+    except HTTPException:
+        raise
+
+    except Exception as e:
+        print("REMOVE SONG ERROR:", e)
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to remove song: {str(e)}"
+        )
+
+# DELETE PLAYLIST
+@app.delete(
+    "/api/v1/playlists/{playlist_id}",
+    dependencies=[Depends(verify_token)]
+)
+def delete_playlist(
+    playlist_id: int,
+    user=Depends(verify_token)
+):
+
+    try:
+        playlist = (
+            supabase
+            .table("playlist")
+            .select("playlist_id")
+            .eq("playlist_id", playlist_id)
+            .eq("user_id", user["user_id"])
+            .execute()
+        )
+
+        if not playlist.data:
+            raise HTTPException(
+                status_code=404,
+                detail="Playlist not found."
+            )
+
+        # Delete songs inside playlist first
+        (
+            supabase
+            .table("playlist_songs")
+            .delete()
+            .eq("playlist_id", playlist_id)
+            .execute()
+        )
+
+        # Delete playlist
+        (
+            supabase
+            .table("playlist")
+            .delete()
+            .eq("playlist_id", playlist_id)
+            .execute()
+        )
+
+        return {
+            "message": "Playlist deleted successfully.",
+            "playlist_id": playlist_id
+        }
+
+    except HTTPException:
+        raise
+
+    except Exception as e:
+        print("DELETE PLAYLIST ERROR:", e)
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to delete playlist: {str(e)}"
+        )
+
+# ADD FAVORITE
+@app.post(
+    "/api/v1/favorites",
+    status_code=201,
+    dependencies=[Depends(verify_token)]
+)
+def add_favorite(
+    favorite: FavoriteCreate,
+    user=Depends(verify_token)
+):
+    try:
+        # Check if song exists
+        song = (
+            supabase
+            .table("songs")
+            .select("id")
+            .eq("id", favorite.song_id)
+            .execute()
+        )
+
+        if not song.data:
+            raise HTTPException(
+                status_code=404,
+                detail="Song not found."
+            )
+
+        # Check if already a favorite
+        existing = (
+            supabase
+            .table("favorites")
+            .select("favorite_id")
+            .eq("user_id", user["user_id"])
+            .eq("song_id", favorite.song_id)
+            .execute()
+        )
+
+        if existing.data:
+            raise HTTPException(
+                status_code=409,
+                detail="Song is already in favorites."
+            )
+
+        # Add favorite
+        response = (
+            supabase
+            .table("favorites")
+            .insert({
+                "user_id": user["user_id"],
+                "song_id": favorite.song_id
+            })
+            .execute()
+        )
+
+        return {
+            "message": "Song added to favorites.",
+            "favorite": response.data[0]
+        }
+
+    except HTTPException:
+        raise
+
+    except Exception as e:
+        print("ADD FAVORITE ERROR:", e)
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to add favorite: {str(e)}"
+        )
+
+
+# GET USER FAVORITES
+@app.get(
+    "/api/v1/favorites",
+    dependencies=[Depends(verify_token)]
+)
+def get_favorites(user=Depends(verify_token)):
+    try:
+        response = (
+            supabase
+            .table("favorites")
+            .select("*")
+            .eq("user_id", user["user_id"])
+            .order("favorite_id", desc=True)
+            .execute()
+        )
+
+        return {
+            "count": len(response.data),
+            "favorites": response.data
+        }
+
+    except Exception as e:
+        print("GET FAVORITES ERROR:", e)
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to fetch favorites: {str(e)}"
+        )
+
+
+# REMOVE FAVORITE
+@app.delete(
+    "/api/v1/favorites/{song_id}",
+    dependencies=[Depends(verify_token)]
+)
+def remove_favorite(
+    song_id: int,
+    user=Depends(verify_token)
+):
+    try:
+        existing = (
+            supabase
+            .table("favorites")
+            .select("favorite_id")
+            .eq("user_id", user["user_id"])
+            .eq("song_id", song_id)
+            .execute()
+        )
+
+        if not existing.data:
+            raise HTTPException(
+                status_code=404,
+                detail="Favorite not found."
+            )
+
+        (
+            supabase
+            .table("favorites")
+            .delete()
+            .eq("user_id", user["user_id"])
+            .eq("song_id", song_id)
+            .execute()
+        )
+
+        return {
+            "message": "Song removed from favorites.",
+            "song_id": song_id
+        }
+
+    except HTTPException:
+        raise
+
+    except Exception as e:
+        print("REMOVE FAVORITE ERROR:", e)
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to remove favorite: {str(e)}"
         )
 
 # SEARCH SONG
@@ -413,10 +907,12 @@ def get_songs():
     try:
         response = supabase.table("songs").select("*").execute()
         songs_data = response.data
+
         return {
             "count": len(songs_data),
             "songs": songs_data
         }
+
     except Exception as e:
         raise HTTPException(
             status_code=500,
@@ -463,10 +959,11 @@ def create_song(song: Song):
 
     except Exception as e:
         print("CREATE SONG ERROR:", e)
+
         raise HTTPException(
             status_code=500,
             detail=f"Failed to create song: {str(e)}"
-    )
+        )
 
 # UPDATE SONG
 @app.patch(
@@ -567,14 +1064,7 @@ def delete_song(song_id: int):
             detail="Failed to delete song."
         )
 
-# TEST JWT TOKEN
-@app.get("/api/v1/test-auth")
-def test_auth(user=Depends(verify_token)):
-    return {
-        "message": "Token is valid.",
-        "user": user
-    }
-
+# ADMIN - ADD SONG
 @app.post(
     "/api/v1/admin/songs",
     status_code=201,
@@ -585,7 +1075,6 @@ def admin_create_song(
     user=Depends(verify_admin)
 ):
     try:
-
         response = (
             supabase
             .table("songs")
@@ -629,6 +1118,14 @@ def admin_create_song(
             status_code=500,
             detail=f"Failed to add song: {str(e)}"
         )
+
+# TEST JWT TOKEN
+@app.get("/api/v1/test-auth")
+def test_auth(user=Depends(verify_token)):
+    return {
+        "message": "Token is valid.",
+        "user": user
+    }
 
 # HEALTH CHECK (Public)
 @app.get("/health")
