@@ -408,7 +408,7 @@ def get_song(song_id: int):
         )
 
 # GET ALL SONGS (Protected)
-@app.get("/api/v1/songs", dependencies=[Depends(verify_api_key)])
+@app.get("/api/v1/songs", dependencies=[Depends(verify_admin)])
 def get_songs():
     try:
         response = supabase.table("songs").select("*").execute()
@@ -618,8 +618,10 @@ def admin_create_song(
             "song": response.data[0]
         }
 
-    except Exception as e:
+    except HTTPException:
+        raise
 
+    except Exception as e:
         print("ADMIN CREATE SONG ERROR:", e)
 
         raise HTTPException(

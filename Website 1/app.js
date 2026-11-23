@@ -712,7 +712,17 @@ const logoutButton = document.getElementById("logoutButton");
 const savedUser = localStorage.getItem("notenoughUser");
 const savedToken = localStorage.getItem("notenoughToken");
 
-console.log("Logged in user:", savedUser);
+const adminSection = document.getElementById("adminSection");
+
+if (savedUser && savedToken) {
+
+    const user = JSON.parse(savedUser);
+
+    if (adminSection && user.role === "admin") {
+        adminSection.style.display = "block";
+    }   
+
+}
 
 if (savedUser && savedToken) {
 
@@ -736,6 +746,131 @@ if (savedUser && savedToken) {
 
     profileButton.addEventListener("click", function () {
         window.location.href = "login.html";
+    });
+
+}
+
+const adminSongForm = document.getElementById("adminSongForm");
+
+if (adminSongForm) {
+
+    adminSongForm.addEventListener("submit", async function (event) {
+
+        event.preventDefault();
+
+        const token = localStorage.getItem("notenoughToken");
+
+        try {
+
+            const response = await fetch(
+                `${API_URL}/api/v1/admin/songs`,
+                {
+                    method: "POST",
+
+                    headers: {
+                        "x-api-key": API_KEY,
+                        "Authorization": `Bearer ${token}`,
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        title: document.getElementById("adminTitle").value,
+
+                        album:
+                            document.getElementById("adminAlbum").value || null,
+
+                        artist:
+                            document.getElementById("adminArtist").value,
+
+                        featured_artist:
+                            document.getElementById("adminFeaturedArtist").value || null,
+
+                        writers:
+                            document.getElementById("adminWriters").value,
+
+                        producers:
+                            document.getElementById("adminProducers").value,
+
+                        year:
+                            Number(document.getElementById("adminYear").value),
+
+                        genre:
+                            document.getElementById("adminGenre").value,
+
+                        language:
+                            document.getElementById("adminLanguage").value || null,
+
+                        popularity:
+                            document.getElementById("adminPopularity").value,
+
+                        rating:
+                            document.getElementById("adminRating").value,
+
+                        spotify_url:
+                            document.getElementById("adminSpotifyUrl").value,
+
+                        image_url:
+                            document.getElementById("adminImageUrl").value,
+
+                        audio_url:
+                            document.getElementById("adminAudioUrl").value,
+
+                        mood:
+                            document.getElementById("adminMood").value
+                                .split(",")
+                                .map(item => item.trim())
+                                .filter(Boolean),
+
+                        energy:
+                            document.getElementById("adminEnergy").value,
+
+                        vibe:
+                            document.getElementById("adminVibe").value
+                                .split(",")
+                                .map(item => item.trim())
+                                .filter(Boolean),
+
+                        best_for:
+                            document.getElementById("adminBestFor").value
+                                .split(",")
+                                .map(item => item.trim())
+                                .filter(Boolean),
+
+                        duration:
+                            document.getElementById("adminDuration").value,
+
+                        description:
+                            document.getElementById("adminDescription").value
+
+                    })
+                }
+            );
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(
+                    data.detail || "Failed to add music."
+                );
+            }
+
+            showToast("Music added successfully!", "success");
+
+            adminSongForm.reset();
+
+            loadSongs();
+
+        } catch (error) {
+
+            console.error("Admin music error:", error);
+
+            showToast(
+                error.message || "Unable to add music.",
+                "error"
+            );
+        }
+
     });
 
 }
