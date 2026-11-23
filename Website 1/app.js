@@ -61,24 +61,46 @@ async function loadFavorites() {
     }
 }
 
+async function showFavoriteSongs() {
+
+    const token = localStorage.getItem("notenoughToken");
+
+    if (!token) {
+        window.location.href = "login.html";
+        return;
+    }
+
+    try {
+        await loadFavorites();
+
+        const response = await fetch(
+            `${API_URL}/api/v1/songs`,
+            FETCH_OPTIONS
+        );
+
+        const data = await response.json();
+
+        const favoriteSongs = data.songs.filter(song =>
+            userFavorites.includes(String(song.id))
+        );
+
+        displaySongs(favoriteSongs);
+
+    } catch (error) {
+        console.error("Unable to load favorite songs:", error);
+    }
+}
+
 // DISPLAY SONGS
 function displaySongs(songs) {
     const songList = document.getElementById("songList");
     songList.innerHTML = "";
 
     const token = localStorage.getItem("notenoughToken");
-    const songsHeading = document.getElementById("songsHeading");
-
-    if (token) {
-        if (songsHeading) songsHeading.innerHTML = "<span>✦</span> All Songs";
-
-        const seeAllButton = document.getElementById("seeAllButton");
-        if (seeAllButton) seeAllButton.style.display = "none";
-    }
 
     const songsToDisplay = token ? songs : songs.slice(0, 4);
 
-    songsToDisplay.forEach(song => {
+    songsToDisplay.forEach(song =>  {
         const card = document.createElement("article");
         card.className = "landing-song-card";
 
@@ -181,6 +203,86 @@ async function loadPlaylists() {
         console.error("Playlist error:", error);
         alert("Unable to load playlists.");
         return [];
+    }
+}
+
+async function showPlaylists() {
+
+    const playlists = await loadPlaylists();
+
+    const songList = document.getElementById("songList");
+
+    songList.innerHTML = "";
+
+    if (playlists.length === 0) {
+        songList.innerHTML = `
+            <p class="no-playlists">
+                You don't have any playlists yet.
+            </p>
+        `;
+        return;
+    }
+
+    playlists.forEach(playlist => {
+
+        const playlistCard = document.createElement("div");
+
+        playlistCard.className = "playlist-card";
+
+        playlistCard.innerHTML = `
+            <div class="playlist-card-content">
+                <span class="playlist-icon">♫</span>
+
+                <div>
+                    <h3>${playlist.name}</h3>
+                    <p>${playlist.description || "No description"}</p>
+                </div>
+            </div>
+        `;
+
+        playlistCard.addEventListener("click", function () {
+            showPlaylistSongs(playlist.playlist_id, playlist.name);
+        });
+
+        songList.appendChild(playlistCard);
+    });
+}
+
+async function showPlaylistSongs(playlistId, playlistName) {
+
+    const token = localStorage.getItem("notenoughToken");
+
+    if (!token) {
+        window.location.href = "login.html";
+        return;
+    }
+
+    try {
+
+        const response = await fetch(
+            `${API_URL}/api/v1/playlists/${playlistId}/songs`,
+            {
+                headers: {
+                    "x-api-key": API_KEY,
+                    "Authorization": `Bearer ${token}`
+                }
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error("Failed to load playlist songs.");
+        }
+
+        const data = await response.json();
+
+        document.getElementById("songSectionTitle").textContent =
+            playlistName;
+
+        displaySongs(data.songs || []);
+
+    } catch (error) {
+        console.error("Playlist songs error:", error);
+        alert("Unable to load playlist songs.");
     }
 }
 
@@ -585,4 +687,30 @@ async function toggleFavorite(button, songId) {
         console.error("Favorite error:", error);
         showToast(error.message || "Unable to update favorites.", "error");
     }
+}
+
+const songFilter = document.getElementById("song-filter");
+
+if (songFilter) {
+    songFilter.addEventListener("change", function () {
+
+        const selected = this.value;
+        const title = document.getElementById("songSectionTitle");
+
+        if (selected === "all") {
+            title.textContent = "All Songs";
+            loadSongs();
+        }
+
+        else if (selected === "favorites") {
+            title.textContent = "Favorites";
+            showFavoriteSongs();
+        }
+
+        else if (selected === "playlists") {
+            title.textContent = "My Playlists";
+            showPlaylists();
+        }
+
+    });
 }

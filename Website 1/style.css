@@ -1833,3 +1833,50 @@ body {
 .create-playlist-button:hover {
     opacity: 0.85;
 }
+
+#song-filter {
+    padding: 10px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    background: #111;
+    color: white;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+#song-filter option {
+    background: #111;
+    color: white;
+}
+
+.playlist-card {
+    padding: 20px;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 12px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    background: rgba(255,255,255,0.03);
+}
+
+.playlist-card:hover {
+    background: rgba(255,255,255,0.08);
+}
+
+.playlist-card-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.playlist-icon {
+    font-size: 30px;
+}
+
+.playlist-card h3 {
+    margin: 0 0 5px;
+}
+
+.playlist-card p {
+    margin: 0;
+    opacity: 0.6;
+}
