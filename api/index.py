@@ -1075,10 +1075,27 @@ def admin_create_song(
     user=Depends(verify_admin)
 ):
     try:
+        # Get the current highest song ID
+        latest_song = (
+            supabase
+            .table("songs")
+            .select("id")
+            .order("id", desc=True)
+            .limit(1)
+            .execute()
+        )
+
+        # Automatically create the next ID
+        if latest_song.data:
+            new_id = latest_song.data[0]["id"] + 1
+        else:
+            new_id = 1
+
         response = (
             supabase
             .table("songs")
             .insert({
+                "id": new_id,
                 "title": song.title,
                 "album": song.album,
                 "artist": song.artist,
