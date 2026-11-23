@@ -342,6 +342,22 @@
             </div>
         </div>
 
+        <!-- CONFIRM DELETE MODAL -->
+        <div class="confirm-modal-overlay" id="confirmModal" style="display: none;">
+            <div class="confirm-modal-card">
+                <button type="button" class="confirm-modal-close" id="confirmModalClose" aria-label="Close">✕</button>
+                <span class="confirm-modal-eyebrow">CONFIRM ACTION</span>
+                <h3 class="confirm-modal-title" id="confirmModalTitle">Delete Item?</h3>
+                <p class="confirm-modal-message" id="confirmModalMessage">
+                    Are you sure you want to permanently delete this item? This action cannot be undone.
+                </p>
+                <div class="confirm-modal-actions">
+                    <button type="button" class="confirm-btn-cancel" id="confirmCancelButton">Cancel</button>
+                    <button type="button" class="confirm-btn-danger" id="confirmProceedButton">Delete</button>
+                </div>
+            </div>
+        </div>
+
         <!-- playlist success message -->
          <div class="toast-notification" id="toastNotification" role="status" aria-live="polite">
             <span class="toast-icon" id="toastIcon">✦</span>

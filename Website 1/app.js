@@ -289,6 +289,48 @@ async function showPlaylists() {
     });
 }
 
+// CUSTOM CONFIRMATION MODAL HELPER
+function openConfirmModal({ title, message, confirmText = "Delete" }) {
+    return new Promise((resolve) => {
+        const modal = document.getElementById("confirmModal");
+        const titleEl = document.getElementById("confirmModalTitle");
+        const messageEl = document.getElementById("confirmModalMessage");
+        const proceedBtn = document.getElementById("confirmProceedButton");
+        const cancelBtn = document.getElementById("confirmCancelButton");
+        const closeBtn = document.getElementById("confirmModalClose");
+
+        if (!modal) {
+            resolve(window.confirm(message));
+            return;
+        }
+
+        titleEl.textContent = title;
+        messageEl.textContent = message;
+        proceedBtn.textContent = confirmText;
+        modal.style.display = "flex";
+
+        const cleanup = (result) => {
+            modal.style.display = "none";
+            proceedBtn.removeEventListener("click", onProceed);
+            cancelBtn.removeEventListener("click", onCancel);
+            closeBtn.removeEventListener("click", onCancel);
+            modal.removeEventListener("click", onBackdrop);
+            resolve(result);
+        };
+
+        const onProceed = () => cleanup(true);
+        const onCancel = () => cleanup(false);
+        const onBackdrop = (event) => {
+            if (event.target === modal) cleanup(false);
+        };
+
+        proceedBtn.addEventListener("click", onProceed);
+        cancelBtn.addEventListener("click", onCancel);
+        closeBtn.addEventListener("click", onCancel);
+        modal.addEventListener("click", onBackdrop);
+    });
+}
+
 // DELETE PLAYLIST
 async function deletePlaylist(playlistId, playlistName) {
     const token = localStorage.getItem("notenoughToken");
@@ -298,7 +340,11 @@ async function deletePlaylist(playlistId, playlistName) {
         return;
     }
 
-    const confirmed = confirm(`Are you sure you want to delete "${playlistName}"?`);
+    const confirmed = await openConfirmModal({
+        title: "Delete Playlist?",
+        message: `Are you sure you want to delete "${playlistName}"? All songs inside this playlist will be removed.`,
+        confirmText: "Delete Playlist"
+    });
     if (!confirmed) return;
 
     try {
@@ -709,9 +755,14 @@ if (previewCloseButton && previewOverlay) {
     });
 }
 
-// Close either popup with the Escape key
+// Close open popups with the Escape key
 document.addEventListener("keydown", function (event) {
     if (event.key === "Escape") {
+        const confirmModal = document.getElementById("confirmModal");
+        if (confirmModal && confirmModal.style.display === "flex") {
+            confirmModal.style.display = "none";
+            return;
+        }
         if (previewOverlay) previewOverlay.style.display = "none";
         closePlaylistModal();
         closeAdminModal();
