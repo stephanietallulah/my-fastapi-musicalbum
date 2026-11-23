@@ -137,8 +137,8 @@
                     ×
                 </button>
 
-                <h2>✦ Add New Song</h2>
-                <p>Add a new track to the encore music database.</p>
+                <h2 id="adminModalTitle">✦ Add New Song</h2>
+                <p id="adminModalSubtitle">Add a new track to the encore music database.</p>
 
                 <form id="adminSongForm">
                     <input id="adminTitle" type="text" placeholder="Title" required>
@@ -162,7 +162,7 @@
                     <input id="adminDuration" type="text" placeholder="Duration" required>
                     <textarea id="adminDescription" placeholder="Description" required></textarea>
 
-                    <button type="submit" class="admin-submit-button">
+                    <button type="submit" id="adminSubmitButton" class="admin-submit-button">
                         Add Music
                     </button>
                 </form>
@@ -270,6 +270,13 @@
 
             <div class="preview-actions">
                 <button class="preview-spotify" id="spotifyButton">Open on Spotify</button>
+                <button
+                    type="button"
+                    class="preview-edit"
+                    id="editSongButton"
+                    style="display: none;">
+                    Edit Song
+                </button>
                 <button
                     type="button"
                     class="preview-delete"

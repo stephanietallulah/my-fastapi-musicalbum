@@ -382,7 +382,11 @@ async function deleteSong(songId, songTitle) {
         return;
     }
 
-    const confirmed = confirm(`Are you sure you want to permanently delete "${songTitle}"?`);
+    const confirmed = await openConfirmModal({
+        title: "Delete Song?",
+        message: `Are you sure you want to permanently delete "${songTitle}"? This will remove it from the catalog and all user playlists.`,
+        confirmText: "Delete Song"
+    });
     if (!confirmed) return;
 
     try {
@@ -713,11 +717,25 @@ async function viewSong(id) {
             );
         };
 
+        const editSongButton = document.getElementById("editSongButton");
         const deleteSongButton = document.getElementById("deleteSongButton");
         const currentUser = savedUser ? JSON.parse(savedUser) : null;
+        const isAdmin = currentUser && savedToken && currentUser.role === "admin";
+
+        if (editSongButton) {
+            if (isAdmin) {
+                editSongButton.style.display = "inline-flex";
+                editSongButton.onclick = function () {
+                    openEditSongModal(song);
+                };
+            } else {
+                editSongButton.style.display = "none";
+                editSongButton.onclick = null;
+            }
+        }
 
         if (deleteSongButton) {
-            if (currentUser && savedToken && currentUser.role === "admin") {
+            if (isAdmin) {
                 deleteSongButton.style.display = "inline-flex";
                 deleteSongButton.onclick = function () {
                     deleteSong(song.id, song.title);
@@ -760,7 +778,7 @@ document.addEventListener("keydown", function (event) {
     if (event.key === "Escape") {
         const confirmModal = document.getElementById("confirmModal");
         if (confirmModal && confirmModal.style.display === "flex") {
-            confirmModal.style.display = "none";
+            document.getElementById("confirmCancelButton")?.click();
             return;
         }
         if (previewOverlay) previewOverlay.style.display = "none";
@@ -768,7 +786,6 @@ document.addEventListener("keydown", function (event) {
         closeAdminModal();
     }
 });
-
 
 // MUSIC 
 function playSong(url, button) {
@@ -827,6 +844,8 @@ const logoutButton = document.getElementById("logoutButton");
 const savedUser = localStorage.getItem("notenoughUser");
 const savedToken = localStorage.getItem("notenoughToken");
 
+let editingSongId = null;
+
 const adminModal = document.getElementById("adminModal");
 const adminModalClose = document.getElementById("adminModalClose");
 const addSongButton = document.getElementById("addSongButton");
@@ -834,6 +853,50 @@ const addSongButton = document.getElementById("addSongButton");
 function closeAdminModal() {
     if (adminModal) {
         adminModal.style.display = "none";
+    }
+    editingSongId = null;
+}
+
+function openEditSongModal(song) {
+    editingSongId = song.id;
+
+    // Close preview modal first
+    const overlay = document.querySelector(".song-preview-overlay");
+    if (overlay) overlay.style.display = "none";
+
+    // Switch modal headings & submit text
+    const modalTitle = document.getElementById("adminModalTitle");
+    const modalSubtitle = document.getElementById("adminModalSubtitle");
+    const submitBtn = document.getElementById("adminSubmitButton");
+    if (modalTitle) modalTitle.textContent = `✦ Edit "${song.title}"`;
+    if (modalSubtitle) modalSubtitle.textContent = "Update track details in the encore music database.";
+    if (submitBtn) submitBtn.textContent = "Save Changes";
+
+    // Pre-fill all inputs
+    document.getElementById("adminTitle").value = song.title || "";
+    document.getElementById("adminAlbum").value = song.album || "";
+    document.getElementById("adminArtist").value = song.artist || "";
+    document.getElementById("adminFeaturedArtist").value = song.featured_artist || "";
+    document.getElementById("adminWriters").value = song.writers || "";
+    document.getElementById("adminProducers").value = song.producers || "";
+    document.getElementById("adminYear").value = song.year || "";
+    document.getElementById("adminGenre").value = song.genre || "";
+    document.getElementById("adminLanguage").value = song.language || "";
+    document.getElementById("adminPopularity").value = song.popularity || "";
+    document.getElementById("adminRating").value = song.rating || "";
+    document.getElementById("adminSpotifyUrl").value = song.spotify_url || "";
+    document.getElementById("adminImageUrl").value = song.image_url || "";
+    document.getElementById("adminAudioUrl").value = song.audio_url || "";
+    document.getElementById("adminMood").value = Array.isArray(song.mood) ? song.mood.join(", ") : "";
+    document.getElementById("adminEnergy").value = song.energy || "";
+    document.getElementById("adminVibe").value = Array.isArray(song.vibe) ? song.vibe.join(", ") : "";
+    document.getElementById("adminBestFor").value = Array.isArray(song.best_for) ? song.best_for.join(", ") : "";
+    document.getElementById("adminDuration").value = song.duration || "";
+    document.getElementById("adminDescription").value = song.description || "";
+
+    if (adminModal) {
+        adminModal.style.display = "flex";
+        document.getElementById("adminTitle").focus();
     }
 }
 
@@ -855,6 +918,16 @@ if (savedUser && savedToken) {
     if (user.role === "admin" && addSongButton) {
         addSongButton.style.display = "inline-flex";
         addSongButton.addEventListener("click", function () {
+            editingSongId = null;
+            if (adminSongForm) adminSongForm.reset();
+
+            const modalTitle = document.getElementById("adminModalTitle");
+            const modalSubtitle = document.getElementById("adminModalSubtitle");
+            const submitBtn = document.getElementById("adminSubmitButton");
+            if (modalTitle) modalTitle.textContent = "✦ Add New Song";
+            if (modalSubtitle) modalSubtitle.textContent = "Add a new track to the encore music database.";
+            if (submitBtn) submitBtn.textContent = "Add Music";
+
             if (adminModal) {
                 adminModal.style.display = "flex";
                 const titleInput = document.getElementById("adminTitle");
@@ -900,12 +973,18 @@ if (adminSongForm) {
 
         const token = localStorage.getItem("notenoughToken");
 
+        const isEditing = editingSongId !== null;
+        const endpoint = isEditing
+            ? `${API_URL}/api/v1/songs/${editingSongId}`
+            : `${API_URL}/api/v1/admin/songs`;
+        const method = isEditing ? "PATCH" : "POST";
+
         try {
 
             const response = await fetch(
-                `${API_URL}/api/v1/admin/songs`,
-                {
-                    method: "POST",
+                    endpoint,
+                    {
+                        method: method,
 
                     headers: {
                         "x-api-key": API_KEY,
@@ -991,11 +1070,14 @@ if (adminSongForm) {
 
             if (!response.ok) {
                 throw new Error(
-                    data.detail || "Failed to add music."
+                    data.detail || (isEditing ? "Failed to update music." : "Failed to add music.")
                 );
             }
 
-            showToast("Music added successfully!", "success");
+            showToast(
+                isEditing ? "Music updated successfully!" : "Music added successfully!",
+                "success"
+            );
 
             adminSongForm.reset();
             closeAdminModal();

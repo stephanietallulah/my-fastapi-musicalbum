@@ -965,14 +965,15 @@ def create_song(song: Song):
             detail=f"Failed to create song: {str(e)}"
         )
 
-# UPDATE SONG
+# UPDATE SONG (Admin Only)
 @app.patch(
     "/api/v1/songs/{song_id}",
-    dependencies=[Depends(verify_token)]
+    dependencies=[Depends(verify_api_key)]
 )
 def update_song(
     song_id: int,
-    song: SongUpdate
+    song: SongUpdate,
+    user=Depends(verify_admin)
 ):
 
     try:
