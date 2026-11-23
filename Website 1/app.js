@@ -712,6 +712,8 @@ const logoutButton = document.getElementById("logoutButton");
 const savedUser = localStorage.getItem("notenoughUser");
 const savedToken = localStorage.getItem("notenoughToken");
 
+console.log("Logged in user:", savedUser);
+
 if (savedUser && savedToken) {
 
     const user = JSON.parse(savedUser);
@@ -881,6 +883,7 @@ async function toggleFavorite(button, songId) {
     }
 }
 
+const backToPlaylistsButton = document.getElementById("backToPlaylistsButton");
 const songFilter = document.getElementById("song-filter");
 
 if (songFilter) {
@@ -893,33 +896,34 @@ if (songFilter) {
 
             title.textContent = "All Songs";
 
-            backToPlaylistsButton.style.display = "none";
+            if (backToPlaylistsButton) {
+                backToPlaylistsButton.style.display = "none";
+            }
 
             loadSongs();
-        }
 
-        else if (selected === "favorites") {
+        } else if (selected === "favorites") {
 
             title.textContent = "Favorites";
 
-            backToPlaylistsButton.style.display = "none";
+            if (backToPlaylistsButton) {
+                backToPlaylistsButton.style.display = "none";
+            }
 
             showFavoriteSongs();
-        }
 
-        else if (selected === "playlists") {
+        } else if (selected === "playlists") {
 
             title.textContent = "My Playlists";
 
-            backToPlaylistsButton.style.display = "none";
+            if (backToPlaylistsButton) {
+                backToPlaylistsButton.style.display = "none";
+            }
 
             showPlaylists();
         }
-
-            });
-        }
-
-const backToPlaylistsButton = document.getElementById("backToPlaylistsButton");
+    });
+}
 
 if (backToPlaylistsButton) {
     backToPlaylistsButton.addEventListener("click", function () {

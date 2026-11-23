@@ -76,6 +76,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+def verify_admin(user=Depends(verify_token)):
+    if user.get("role") != "admin":
+        raise HTTPException(
+            status_code=403,
+            detail="Admin access required."
+        )
+
+    return user
+
 # DATA MODEL
 class Song(BaseModel):
     id: int
@@ -132,6 +141,28 @@ class UserRegister(BaseModel):
 class UserLogin(BaseModel):
     email: str = Field(min_length=3)
     password: str = Field(min_length=1)
+
+class SongCreate(BaseModel):
+    title: str = Field(min_length=1)
+    album: Optional[str] = None
+    artist: str = Field(min_length=1)
+    featured_artist: Optional[str] = None
+    writers: str
+    producers: str
+    year: int = Field(ge=1900, le=2100)
+    genre: str = Field(min_length=1)
+    language: Optional[str] = None
+    popularity: str
+    rating: str = Field(min_length=1)
+    spotify_url: str
+    image_url: str
+    audio_url: str
+    mood: list[str]
+    energy: str
+    vibe: list[str]
+    best_for: list[str]
+    duration: str = Field(min_length=1)
+    description: str = Field(min_length=1)
 
 # HOME
 @app.get("/")
@@ -543,6 +574,58 @@ def test_auth(user=Depends(verify_token)):
         "message": "Token is valid.",
         "user": user
     }
+
+@app.post(
+    "/api/v1/admin/songs",
+    status_code=201
+)
+def admin_create_song(
+    song: SongCreate,
+    user=Depends(verify_admin)
+):
+    try:
+
+        response = (
+            supabase
+            .table("songs")
+            .insert({
+                "title": song.title,
+                "album": song.album,
+                "artist": song.artist,
+                "featured_artist": song.featured_artist,
+                "writers": song.writers,
+                "producers": song.producers,
+                "year": song.year,
+                "genre": song.genre,
+                "language": song.language,
+                "popularity": song.popularity,
+                "rating": song.rating,
+                "spotify_url": song.spotify_url,
+                "image_url": song.image_url,
+                "audio_url": song.audio_url,
+                "mood": song.mood,
+                "energy": song.energy,
+                "vibe": song.vibe,
+                "best_for": song.best_for,
+                "duration": song.duration,
+                "description": song.description
+            })
+            .execute()
+        )
+
+        return {
+            "message": "Song added successfully.",
+            "song": response.data[0]
+        }
+
+    except Exception as e:
+
+        print("ADMIN CREATE SONG ERROR:", e)
+
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to add song: {str(e)}"
+        )
 
 # HEALTH CHECK (Public)
 @app.get("/health")
