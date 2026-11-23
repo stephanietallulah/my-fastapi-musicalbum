@@ -357,6 +357,109 @@ if (playlistModal) {
     });
 }
 
+// CREATE PLAYLIST
+const createPlaylistButton = document.getElementById("createPlaylistButton");
+const createPlaylistModal = document.getElementById("createPlaylistModal");
+const createPlaylistClose = document.getElementById("createPlaylistClose");
+const savePlaylistButton = document.getElementById("savePlaylistButton");
+
+if (savePlaylistButton) {
+    savePlaylistButton.addEventListener("click", createPlaylist);
+}
+
+if (createPlaylistButton) {
+    createPlaylistButton.addEventListener("click", function () {
+
+        // Close Add to Playlist modal
+        playlistModal.style.display = "none";
+
+        // Open Create Playlist modal
+        createPlaylistModal.style.display = "flex";
+
+        document.getElementById("playlistNameInput").value = "";
+        document.getElementById("playlistDescriptionInput").value = "";
+
+    });
+}
+
+// function to create a new playlist
+async function createPlaylist() {
+
+    const token = localStorage.getItem("notenoughToken");
+
+    if (!token) {
+        window.location.href = "login.html";
+        return;
+    }
+
+    const name = document.getElementById("playlistNameInput").value.trim();
+    const description = document.getElementById("playlistDescriptionInput").value.trim();
+
+    if (!name) {
+        showToast("Please enter a playlist name.", "error");
+        return;
+    }
+
+    try {
+
+        const response = await fetch(
+            `${API_URL}/api/v1/playlists`,
+            {
+                method: "POST",
+                headers: {
+                    "x-api-key": API_KEY,
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    name: name,
+                    description: description
+                })
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                data.detail || "Failed to create playlist."
+            );
+        }
+
+        createPlaylistModal.style.display = "none";
+
+        showToast("Playlist created successfully!", "success");
+
+        // Refresh playlist list
+        const songFilter = document.getElementById("song-filter");
+
+        if (songFilter && songFilter.value === "playlists") {
+            showPlaylists();
+        }
+
+    } catch (error) {
+
+        console.error("Create playlist error:", error);
+
+        showToast(
+            error.message || "Unable to create playlist.",
+            "error"
+        );
+    }
+}
+
+// CLOSE CREATE PLAYLIST
+if (createPlaylistClose) {
+    createPlaylistClose.addEventListener("click", function () {
+
+        createPlaylistModal.style.display = "none";
+
+        // Open Add to Playlist modal again
+        playlistModal.style.display = "flex";
+
+    });
+}
+
 // GET ONE SONG
 async function viewSong(id) {
     try {

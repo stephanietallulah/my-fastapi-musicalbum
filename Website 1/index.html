@@ -231,6 +231,42 @@
             </div>
         </div>
 
+        <!-- CREATE PLAYLIST MODAL -->
+        <div class="create-playlist-overlay" id="createPlaylistModal">
+            <div class="create-playlist-modal">
+
+                <button
+                    type="button"
+                    class="create-playlist-close"
+                    id="createPlaylistClose">
+                    ×
+                </button>
+
+                <h2>Create Playlist</h2>
+                <p>Give your playlist a name.</p>
+
+                <input
+                    type="text"
+                    id="playlistNameInput"
+                    placeholder="Playlist name"
+                    maxlength="50">
+
+                <input
+                    type="text"
+                    id="playlistDescriptionInput"
+                    placeholder="Description (optional)"
+                    maxlength="100">
+
+                <button
+                    type="button"
+                    id="savePlaylistButton"
+                    class="save-playlist-button">
+                    Create Playlist
+                </button>
+
+            </div>
+        </div>
+
         <!-- playlist success message -->
          <div class="toast-notification" id="toastNotification" role="status" aria-live="polite">
             <span class="toast-icon" id="toastIcon">✦</span>
