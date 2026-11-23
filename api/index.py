@@ -62,6 +62,16 @@ def verify_token(
             detail="Invalid authentication token."
         )
 
+# ADMIN AUTHENTICATION
+def verify_admin(user=Depends(verify_token)):
+    if user.get("role") != "admin":
+        raise HTTPException(
+            status_code=403,
+            detail="Admin access required."
+        )
+
+    return user
+
 app = FastAPI(
     title="NOTENOUGH Music API",
     description="Discover songs, artists, and the stories behind the music.",
@@ -132,6 +142,29 @@ class UserRegister(BaseModel):
 class UserLogin(BaseModel):
     email: str = Field(min_length=3)
     password: str = Field(min_length=1)
+
+# ADMIN SONG CREATE MODEL
+class SongCreate(BaseModel):
+    title: str = Field(min_length=1)
+    album: Optional[str] = None
+    artist: str = Field(min_length=1)
+    featured_artist: Optional[str] = None
+    writers: str
+    producers: str
+    year: int = Field(ge=1900, le=2100)
+    genre: str = Field(min_length=1)
+    language: Optional[str] = None
+    popularity: str
+    rating: str = Field(min_length=1)
+    spotify_url: str
+    image_url: str
+    audio_url: str
+    mood: list[str]
+    energy: str
+    vibe: list[str]
+    best_for: list[str]
+    duration: str = Field(min_length=1)
+    description: str = Field(min_length=1)
 
 # PLAYLIST MODELS
 class PlaylistCreate(BaseModel):
@@ -292,6 +325,7 @@ def login_user(user: UserLogin):
                 "role": account["role"]
             }
         }
+
     except HTTPException:
         raise
 
@@ -776,7 +810,7 @@ def remove_favorite(
             status_code=500,
             detail=f"Failed to remove favorite: {str(e)}"
         )
-    
+
 # SEARCH SONG
 @app.get("/api/v1/songs/search", dependencies=[Depends(verify_api_key)])
 def search_songs(
@@ -873,16 +907,17 @@ def get_songs():
     try:
         response = supabase.table("songs").select("*").execute()
         songs_data = response.data
+
         return {
             "count": len(songs_data),
             "songs": songs_data
         }
+
     except Exception as e:
         raise HTTPException(
             status_code=500,
             detail=f"Failed to fetch songs from database: {str(e)}"
         )
-        
 
 # CREATE SONG
 @app.post(
@@ -924,10 +959,11 @@ def create_song(song: Song):
 
     except Exception as e:
         print("CREATE SONG ERROR:", e)
+
         raise HTTPException(
             status_code=500,
             detail=f"Failed to create song: {str(e)}"
-    )
+        )
 
 # UPDATE SONG
 @app.patch(
@@ -1026,6 +1062,61 @@ def delete_song(song_id: int):
         raise HTTPException(
             status_code=500,
             detail="Failed to delete song."
+        )
+
+# ADMIN - ADD SONG
+@app.post(
+    "/api/v1/admin/songs",
+    status_code=201,
+    dependencies=[Depends(verify_api_key)]
+)
+def admin_create_song(
+    song: SongCreate,
+    user=Depends(verify_admin)
+):
+    try:
+        response = (
+            supabase
+            .table("songs")
+            .insert({
+                "title": song.title,
+                "album": song.album,
+                "artist": song.artist,
+                "featured_artist": song.featured_artist,
+                "writers": song.writers,
+                "producers": song.producers,
+                "year": song.year,
+                "genre": song.genre,
+                "language": song.language,
+                "popularity": song.popularity,
+                "rating": song.rating,
+                "spotify_url": song.spotify_url,
+                "image_url": song.image_url,
+                "audio_url": song.audio_url,
+                "mood": song.mood,
+                "energy": song.energy,
+                "vibe": song.vibe,
+                "best_for": song.best_for,
+                "duration": song.duration,
+                "description": song.description
+            })
+            .execute()
+        )
+
+        return {
+            "message": "Song added successfully.",
+            "song": response.data[0]
+        }
+
+    except HTTPException:
+        raise
+
+    except Exception as e:
+        print("ADMIN CREATE SONG ERROR:", e)
+
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to add song: {str(e)}"
         )
 
 # TEST JWT TOKEN
