@@ -940,12 +940,32 @@ if (savedUser && savedToken) {
 if (savedUser && savedToken) {
 
     const user = JSON.parse(savedUser);
+    const initial = (user.username || "U").charAt(0).toUpperCase();
 
     profileUsername.textContent = user.username;
     profileEmail.textContent = user.email;
 
-    profileButton.addEventListener("click", function () {
-        profileMenu.classList.toggle("show");
+    const profileAvatar = document.getElementById("profileAvatar");
+    const profileButtonIcon = document.getElementById("profileButtonIcon");
+    const profileRoleBadge = document.getElementById("profileRoleBadge");
+
+    if (profileAvatar) profileAvatar.textContent = initial;
+    if (profileButtonIcon) profileButtonIcon.textContent = initial;
+    if (profileRoleBadge) {
+        profileRoleBadge.textContent = (user.role || "user").toUpperCase();
+    }
+
+    profileButton.addEventListener("click", function (event) {
+        event.stopPropagation();
+        const isOpen = profileMenu.classList.toggle("show");
+        profileButton.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    document.addEventListener("click", function (event) {
+        if (!event.target.closest(".profile-container")) {
+            profileMenu.classList.remove("show");
+            profileButton.setAttribute("aria-expanded", "false");
+        }
     });
 
     logoutButton.addEventListener("click", function () {

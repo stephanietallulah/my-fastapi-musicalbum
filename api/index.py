@@ -1,6 +1,7 @@
 import os
 import bcrypt
 import jwt
+import json
 from fastapi import FastAPI, HTTPException, Header, Query, Depends
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi.middleware.cors import CORSMiddleware
@@ -16,6 +17,20 @@ SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY")
 
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
+
+# JSON DATASET
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+SONGS_FILE = os.path.join(BASE_DIR, "data", "songs.json")
+
+
+def load_songs_from_json():
+    try:
+        with open(SONGS_FILE, "r", encoding="utf-8") as file:
+            return json.load(file)
+
+    except Exception as e:
+        print("JSON DATASET ERROR:", e)
+        return []
 
 # configuration 
 API_KEY = os.getenv("API_KEY")
@@ -903,12 +918,26 @@ def get_song(song_id: int):
 
 # GET ALL SONGS (Protected)
 @app.get("/api/v1/songs", dependencies=[Depends(verify_api_key)])
-def get_songs():
+def get_songs(
+    source: str = "database"
+):
+
+    if source == "json":
+
+        songs_data = load_songs_from_json()
+
+        return {
+            "source": "json",
+            "count": len(songs_data),
+            "songs": songs_data
+        }
+
     try:
         response = supabase.table("songs").select("*").execute()
         songs_data = response.data
 
         return {
+            "source": "database",
             "count": len(songs_data),
             "songs": songs_data
         }
@@ -1144,14 +1173,6 @@ def admin_create_song(
             status_code=500,
             detail=f"Failed to add song: {str(e)}"
         )
-
-# TEST JWT TOKEN
-@app.get("/api/v1/test-auth")
-def test_auth(user=Depends(verify_token)):
-    return {
-        "message": "Token is valid.",
-        "user": user
-    }
 
 # HEALTH CHECK (Public)
 @app.get("/health")

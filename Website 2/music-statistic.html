@@ -35,9 +35,27 @@
             </a>
         </nav>
 
-        <button class="profile-button" aria-label="Profile">
-            <span>♙</span>
-        </button>
+        <div class="profile-container">
+            <button class="profile-button" id="profileButton" aria-label="Account menu" aria-expanded="false">
+                <span id="profileButtonIcon">♙</span>
+            </button>
+            <div class="profile-menu" id="profileMenu" role="menu">
+                <div class="profile-menu-header">
+                    <div class="profile-avatar" id="profileAvatar">A</div>
+                    <div class="profile-identity">
+                        <div class="profile-name-row">
+                            <p id="profileUsername"></p>
+                            <span class="profile-role-badge" id="profileRoleBadge"></span>
+                        </div>
+                        <p id="profileEmail"></p>
+                    </div>
+                </div>
+
+                <button type="button" id="logoutButton">
+                    Log out
+                </button>
+            </div>
+        </div>
     </header>
 
     <main>
@@ -91,10 +109,23 @@
                     <h2>Top Songs by Streams</h2>
                 </div>
                 
-                    <!-- image calling -->
-                    <div id="top-songs"></div>
-
+                <!-- image calling -->
+                <div id="top-songs"></div>
             </section>
+
+            <!-- guest lock banner -->
+            <div class="guest-stats-lock" id="guestStatsLock" style="display: none;">
+                <div class="guest-lock-content">
+                    <span class="guest-lock-icon" aria-hidden="true">🔒</span>
+                    <div>
+                        <h3>Sign in for full analytics</h3>
+                        <p>Unlock Top 5 rankings, yearly & genre distribution charts, and interactive genre analysis.</p>
+                    </div>
+                </div>
+                <button type="button" class="guest-signin-btn" onclick="window.location.href='../Website 1/login.html'">
+                    Sign In <span>→</span>
+                </button>
+            </div>
 
             <section id="overview" class="statistic-section">
                 <div class="statistic-grid">
@@ -123,63 +154,62 @@
             </section>
         </section>
 
-    <!--genres-->
-    <section id="genres">
-        <div class="genre-page-header">
+        <!--genres-->
+        <section id="genres">
+            <div class="genre-page-header">
 
-            <div class="genre-title">
-                <h2>Genre Analysis</h2>
-                <p>Explore the distribution and statistics of different music genres</p>
-            </div>
-
-        <div class="select-genre">
-            <label for="select-genre">Select a Genre</label>
-
-            <select id="select-genre">
-                <option value="">Choose a Genre</option>
-            </select>
-            </div>
-        </div>
-
-        <div id="genre-result">
-            <div class="genre-overview">
-                <h2 id="genre-name"></h2>
-                <div class="genre-summary">
-                    
-                    <div class="genre-summary-card">
-                        <strong id="genre-song-count">0</strong>
-                        <span>Songs</span>
-                    </div>
-
-                    <div class="genre-summary-card">
-                        <strong id="genre-artist-count">0</strong>
-                        <span>Artists</span>
-                    </div>
-
-                    <div class="genre-summary-card">
-                        <strong id="genre-percentage">0%</strong>
-                        <span>of Collection</span>
-                    </div>
+                <div class="genre-title">
+                    <h2>Genre Analysis</h2>
+                    <p>Explore the distribution and statistics of different music genres</p>
                 </div>
 
-                <div class="genre-song-section">
-                    <h3>Song in this Genre</h3>
-                    <div id="genre-song-list"></div>
-                </div>
-            </div>
-            
-            <div class="genre-song-details">
-                <h2>Song Details</h2>
+                <div class="select-genre">
+                    <label for="select-genre">Select a Genre</label>
 
-                <div id="selected-song-details">
-                    <p class="empty-song-message">
-                        Select a song to view its details
-                    </p>
+                    <select id="select-genre">
+                        <option value="">Choose a Genre</option>
+                    </select>
                 </div>
             </div>
-        </div>
-    
-    </section>
+
+            <div id="genre-result">
+                <div class="genre-overview">
+                    <h2 id="genre-name"></h2>
+                    <div class="genre-summary">
+                        
+                        <div class="genre-summary-card">
+                            <strong id="genre-song-count">0</strong>
+                            <span>Songs</span>
+                        </div>
+
+                        <div class="genre-summary-card">
+                            <strong id="genre-artist-count">0</strong>
+                            <span>Artists</span>
+                        </div>
+
+                        <div class="genre-summary-card">
+                            <strong id="genre-percentage">0%</strong>
+                            <span>of Collection</span>
+                        </div>
+                    </div>
+
+                    <div class="genre-song-section">
+                        <h3>Song in this Genre</h3>
+                        <div id="genre-song-list"></div>
+                    </div>
+                </div>
+                
+                <div class="genre-song-details">
+                    <h2>Song Details</h2>
+
+                    <div id="selected-song-details">
+                        <p class="empty-song-message">
+                            Select a song to view its details
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
     </main>
 

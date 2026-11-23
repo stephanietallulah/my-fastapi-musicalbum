@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>notenough - Music Player</title>
+    <title>encore</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,9 +35,27 @@
             </a>
         </nav>
 
-        <button class="profile-button" aria-label="Profile">
-            <span>♙</span>
-        </button>
+        <div class="profile-container">
+            <button class="profile-button" id="profileButton" aria-label="Account menu" aria-expanded="false">
+                <span id="profileButtonIcon">♙</span>
+            </button>
+            <div class="profile-menu" id="profileMenu" role="menu">
+                <div class="profile-menu-header">
+                    <div class="profile-avatar" id="profileAvatar">A</div>
+                    <div class="profile-identity">
+                        <div class="profile-name-row">
+                            <p id="profileUsername"></p>
+                            <span class="profile-role-badge" id="profileRoleBadge"></span>
+                        </div>
+                        <p id="profileEmail"></p>
+                    </div>
+                </div>
+
+                <button type="button" id="logoutButton">
+                    Log out
+                </button>
+            </div>
+        </div>
     </header>
 
 
@@ -68,62 +86,97 @@
         </section>
 
 
-        <!-- pick my music -->
+       <!-- pick my music -->
         <section id="choose-music">
 
-            <!-- guest mode mood picker -->
-            <div class="guest-mood-wrapper">
-                <div class="choice-grid mood-grid">
+            <!-- step 1 - mood (acts as guest picker when logged out, step 1 of 4 when logged in) -->
+            <div class="music-step active" id="step-mood">
 
-                    <!-- chill button (unlocked) -->
-                    <button class="choice-card mood-choice" data-value="Chill">
-                        <span class="choice-icon" aria-hidden="true">
-                            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
-                                <line x1="12" y1="2" x2="12" y2="22"/>
-                                <line x1="2" y1="12" x2="22" y2="12"/>
-                                <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/>
-                                <line x1="19.07" y1="4.93" x2="4.93" y2="19.07"/>
-                            </svg>
-                        </span>
-                        <span class="mood-name">Chill</span>
-                    </button>
-
-                    <!-- happy button (locked) -->
-                    <button class="choice-card mood-choice locked" data-value="Happy" type="button">
-                        <span class="choice-icon lock-icon" aria-hidden="true">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="5" y="11" width="14" height="10" rx="2"/>
-                                <path d="M8 11V7a4 4 0 0 1 8 0v4"/>
-                            </svg>
-                        </span>
-                        <span class="mood-name">Happy</span>
-                        <small class="unlock-label">Sign in to unlock</small>
-                    </button>
-
-                    <!-- sad button (locked) -->
-                    <button class="choice-card mood-choice locked" data-value="Sad" type="button">
-                        <span class="choice-icon lock-icon" aria-hidden="true">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="5" y="11" width="14" height="10" rx="2"/>
-                                <path d="M8 11V7a4 4 0 0 1 8 0v4"/>
-                            </svg>
-                        </span>
-                        <span class="mood-name">Sad</span>
-                        <small class="unlock-label">Sign in to unlock</small>
-                    </button>
-
+                <div class="section logged-in-only" style="display: none;">
+                    <span class="pop-level">STEP 1 OF 4</span>
+                    <h2>What's your mood?</h2>
+                    <p>Pick the vibe that matches how you feel right now.</p>
                 </div>
 
-                <!-- guest sign-in callout bar -->
-                <div class="guest-signin-banner">
-                    <div class="guest-banner-text">
-                        <span class="info-icon" aria-hidden="true">i</span>
-                        <p>Sign in to explore more moods and get personalized music recommendations.</p>
+                <div class="guest-mood-wrapper">
+                    <div class="choice-grid mood-grid">
+
+                        <!-- chill button (always unlocked) -->
+                        <button class="choice-card mood-choice" data-value="Chill" type="button">
+                            <span class="choice-icon" aria-hidden="true">
+                                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+                                    <line x1="12" y1="2" x2="12" y2="22"/>
+                                    <line x1="2" y1="12" x2="22" y2="12"/>
+                                    <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/>
+                                    <line x1="19.07" y1="4.93" x2="4.93" y2="19.07"/>
+                                </svg>
+                            </span>
+                            <span class="mood-name">Chill</span>
+                        </button>
+
+                        <!-- happy button (locked when logged out, unlocked when logged in) -->
+                        <button class="choice-card mood-choice locked" data-value="Happy" type="button">
+                            <span class="choice-icon lock-icon" aria-hidden="true">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="5" y="11" width="14" height="10" rx="2"/>
+                                    <path d="M8 11V7a4 4 0 0 1 8 0v4"/>
+                                </svg>
+                            </span>
+                            <span class="choice-icon unlocked-icon" aria-hidden="true" style="display: none;">☀</span>
+                            <span class="mood-name">Happy</span>
+                            <small class="unlock-label">Sign in to unlock</small>
+                        </button>
+
+                        <!-- sad button (locked when logged out, unlocked when logged in) -->
+                        <button class="choice-card mood-choice locked" data-value="Sad" type="button">
+                            <span class="choice-icon lock-icon" aria-hidden="true">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="5" y="11" width="14" height="10" rx="2"/>
+                                    <path d="M8 11V7a4 4 0 0 1 8 0v4"/>
+                                </svg>
+                            </span>
+                            <span class="choice-icon unlocked-icon" aria-hidden="true" style="display: none;">☂</span>
+                            <span class="mood-name">Sad</span>
+                            <small class="unlock-label">Sign in to unlock</small>
+                        </button>
+
+                        <!-- extra moods (only visible when logged in) -->
+                        <button class="choice-card mood-choice logged-in-only" data-value="Romantic" type="button" style="display: none;">
+                            <span class="choice-icon">♡</span>
+                            <span class="mood-name">Romantic</span>
+                        </button>
+
+                        <button class="choice-card mood-choice logged-in-only" data-value="Energetic" type="button" style="display: none;">
+                            <span class="choice-icon">⚡</span>
+                            <span class="mood-name">Energetic</span>
+                        </button>
+
+                        <button class="choice-card mood-choice logged-in-only" data-value="Melancholic" type="button" style="display: none;">
+                            <span class="choice-icon">☾</span>
+                            <span class="mood-name">Melancholic</span>
+                        </button>
+
                     </div>
-                    <button class="guest-signin-btn" type="button" onclick="window.location.href='../Website 1/login.html'">
-                        Sign In <span>→</span>
+
+                    <!-- guest sign-in callout bar (hidden when logged in) -->
+                    <div class="guest-signin-banner" id="guestSigninBanner">
+                        <div class="guest-banner-text">
+                            <span class="info-icon" aria-hidden="true">i</span>
+                            <p>Sign in to explore more moods and get personalized music recommendations.</p>
+                        </div>
+                        <button class="guest-signin-btn" type="button" onclick="window.location.href='../Website 1/login.html'">
+                            Sign In <span>→</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- step 1 next button (only visible when logged in) -->
+                <div class="pop-buttons logged-in-only" style="display: none;">
+                    <button class="next-button" id="mood-next" disabled>
+                        Next →
                     </button>
                 </div>
+
             </div>
 
 
@@ -361,6 +414,10 @@
 
                     <button id="find-music">
                         Find Your Music →
+                    </button>
+
+                    <button type="button" id="surprise">
+                        ✦ Surprise Me
                     </button>
 
                 </div>

@@ -9,6 +9,10 @@ const FETCH_OPTIONS = {
 
 let allSongs = [];
 
+const savedUser = localStorage.getItem("notenoughUser");
+const savedToken = localStorage.getItem("notenoughToken");
+const isLoggedIn = Boolean(savedUser && savedToken);
+
 // load songs from api
 async function loadSongs() {
     try {
@@ -25,9 +29,24 @@ async function loadSongs() {
 
         displayStatistics();
         displayTopSongs();
-        displaySongsByYear();
-        displayGenreDistribution();
-        loadGenreOptions();
+
+        const overviewSection = document.getElementById("overview");
+        const genresSection = document.getElementById("genres");
+        const guestStatsLock = document.getElementById("guestStatsLock");
+
+        if (isLoggedIn) {
+            if (guestStatsLock) guestStatsLock.style.display = "none";
+            if (overviewSection) overviewSection.style.display = "block";
+            if (genresSection) genresSection.style.display = "block";
+
+            displaySongsByYear();
+            displayGenreDistribution();
+            loadGenreOptions();
+        } else {
+            if (guestStatsLock) guestStatsLock.style.display = "flex";
+            if (overviewSection) overviewSection.style.display = "none";
+            if (genresSection) genresSection.style.display = "none";
+        }
     }
 
     catch (error) {
@@ -132,13 +151,14 @@ function displayTopSongs() {
 
     container.innerHTML = "";
 
+    const topLimit = isLoggedIn ? 5 : 3;
     const sortedSongs = [...allSongs]
         .sort(
             (a, b) =>
                 getStreams(b.popularity) -
                 getStreams(a.popularity)
         )
-        .slice(0, 5);
+        .slice(0, topLimit);
 
 
     sortedSongs.forEach((song, index) => {
@@ -157,7 +177,7 @@ function displayTopSongs() {
             <img
                 class="song-cover"
                 src="${song.image_url}"
-                alt="$(song.title)"
+                alt="${song.title}"
             >
 
             <div class="song-ranking-info">
@@ -256,32 +276,32 @@ function displaySongsByYear() {
 
 }
 
-    const genreCategories = {
-        "R&B / Soul": "R&B",
-        "R&B / Indie Rock": "R&B",
-        "R&B": "R&B",
+const genreCategories = {
+    "R&B / Soul": "R&B",
+    "R&B / Indie Rock": "R&B",
+    "R&B": "R&B",
 
-        "Indie Pop / R&B": "R&B / Indie",
-        "Contemporary R&B / Pop": "R&B / Pop",
+    "Indie Pop / R&B": "R&B / Indie",
+    "Contemporary R&B / Pop": "R&B / Pop",
 
-        "Pop / Soul": "Pop",
-        "Pop / Trip-Hop": "Pop",
-        "Pop / Electropop": "Pop",
-        "Downtempo / Pop": "Pop",
+    "Pop / Soul": "Pop",
+    "Pop / Trip-Hop": "Pop",
+    "Pop / Electropop": "Pop",
+    "Downtempo / Pop": "Pop",
 
-        "Soft Rock / Pop Rock": "Rock",
-        "Soft Pop Rock / Blue-eyed Soul": "Rock / Soul",
+    "Soft Rock / Pop Rock": "Rock",
+    "Soft Pop Rock / Blue-eyed Soul": "Rock / Soul",
 
-        "Indie Rock / Alternative Rock": "Indie / Alternative",
-        "Alternative / Indie": "Indie / Alternative",
+    "Indie Rock / Alternative Rock": "Indie / Alternative",
+    "Alternative / Indie": "Indie / Alternative",
 
-        "OPM / Indie / Kundiman": "OPM",
-        "OPM / Pop Rock": "OPM",
+    "OPM / Indie / Kundiman": "OPM",
+    "OPM / Pop Rock": "OPM",
 
-        "Dance / Electronic / Pop": "Electronic / Dance",
+    "Dance / Electronic / Pop": "Electronic / Dance",
 
-        "Hip-hop / Rap": "Hip-hop"
-    };
+    "Hip-hop / Rap": "Hip-hop"
+};
 
 // genre distribution
 function displayGenreDistribution() {
@@ -404,7 +424,7 @@ function displayGenreAnalysis() {
             </p>
             `;
 
-            return;
+        return;
     }
 
     const genreSongs =
@@ -444,7 +464,7 @@ function displayGenreAnalysis() {
 
     // song list
 
-      const songList = document.getElementById("genre-song-list");
+    const songList = document.getElementById("genre-song-list");
 
     songList.innerHTML = genreSongs.map((song, index) => {
 
@@ -485,10 +505,10 @@ function displayGenreAnalysis() {
     }).join("");
 
 
-/* selected song */
+    /* selected song */
     displaySelectedGenreSong(genreSongs[0]);
 
-/* click song */
+    /* click song */
     document.querySelectorAll(".genre-song-row")
         .forEach((row, index) => {
 
@@ -688,3 +708,53 @@ function displaySelectedGenreSong(song) {
 
 // load songs
 loadSongs();
+
+// PROFILE MENU
+const profileButton = document.getElementById("profileButton");
+const profileMenu = document.getElementById("profileMenu");
+const profileUsername = document.getElementById("profileUsername");
+const profileEmail = document.getElementById("profileEmail");
+const logoutButton = document.getElementById("logoutButton");
+
+if (isLoggedIn && profileButton) {
+    const user = JSON.parse(savedUser);
+    const initial = (user.username || "U").charAt(0).toUpperCase();
+
+    if (profileUsername) profileUsername.textContent = user.username;
+    if (profileEmail) profileEmail.textContent = user.email;
+
+    const profileAvatar = document.getElementById("profileAvatar");
+    const profileButtonIcon = document.getElementById("profileButtonIcon");
+    const profileRoleBadge = document.getElementById("profileRoleBadge");
+
+    if (profileAvatar) profileAvatar.textContent = initial;
+    if (profileButtonIcon) profileButtonIcon.textContent = initial;
+    if (profileRoleBadge) {
+        profileRoleBadge.textContent = (user.role || "user").toUpperCase();
+    }
+
+    profileButton.addEventListener("click", function (event) {
+        event.stopPropagation();
+        const isOpen = profileMenu.classList.toggle("show");
+        profileButton.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    document.addEventListener("click", function (event) {
+        if (!event.target.closest(".profile-container")) {
+            profileMenu.classList.remove("show");
+            profileButton.setAttribute("aria-expanded", "false");
+        }
+    });
+
+    if (logoutButton) {
+        logoutButton.addEventListener("click", function () {
+            localStorage.removeItem("notenoughUser");
+            localStorage.removeItem("notenoughToken");
+            window.location.href = "../Website 1/login.html";
+        });
+    }
+} else if (profileButton) {
+    profileButton.addEventListener("click", function () {
+        window.location.href = "../Website 1/login.html";
+    });
+}

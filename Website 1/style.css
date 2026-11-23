@@ -7,7 +7,7 @@ html {
 }
 
 body {
-    font-family: "Plus Jakarta Sans", "Helvetica Neue", Arial, sans-serif;
+    font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
     margin: 0;
     background: #050505;
     color: #efede3;
@@ -17,7 +17,7 @@ button,
 input,
 select,
 textarea {
-    font-family: inherit;
+    font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
 }
 
 /* navbar / profile menu */
@@ -33,7 +33,7 @@ textarea {
     background: #050505;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 
-    position: fixed; /* Changed from sticky */
+    position: fixed;
     top: 0;
     left: 0;
     z-index: 100;
@@ -137,14 +137,12 @@ textarea {
     position: absolute;
     top: 48px;
     right: 0;
-
-    width: 220px;
-    padding: 16px;
-
-    background: #111;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 12px;
-
+    width: 256px;
+    padding: 18px;
+    background: #111111;
+    border: 1px solid rgba(239, 237, 227, 0.15);
+    border-radius: 16px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
     display: none;
     z-index: 1000;
 }
@@ -153,33 +151,91 @@ textarea {
     display: block;
 }
 
-.profile-menu p {
-    margin: 5px 0;
-    color: #fff;
-    font-size: 14px;
+.profile-menu-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.profile-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1px solid rgba(239, 237, 227, 0.22);
+    background: rgba(239, 237, 227, 0.08);
+    color: #efede3;
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 18px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    text-transform: uppercase;
+}
+
+.profile-identity {
+    min-width: 0;
+    flex: 1;
+}
+
+.profile-name-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#profileUsername {
+    margin: 0;
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 19px;
+    font-weight: 500;
+    line-height: 1.15;
+    color: #efede3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.profile-role-badge {
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: rgba(239, 237, 227, 0.12);
+    color: #efede3;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    flex-shrink: 0;
 }
 
 #profileEmail {
-    color: #aaa;
-    font-size: 12px;
-    margin-bottom: 15px;
+    margin: 3px 0 0;
+    color: #9e9d97;
+    font-size: 12.5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 #logoutButton {
     width: 100%;
-    padding: 9px;
-
+    height: 38px;
+    padding: 0 16px;
     border: none;
-    border-radius: 8px;
-
-    background: #fff;
-    color: #111;
-
+    border-radius: 999px;
+    background: #efede3;
+    color: #0b0b0b;
+    font-size: 13.5px;
+    font-weight: 600;
     cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
 }
 
 #logoutButton:hover {
-    opacity: 0.8;
+    background: #ffffff;
+    transform: translateY(-1px);
 }
 
 /* hero section */ 
@@ -188,7 +244,7 @@ textarea {
     align-items: center;
     position: relative;
     overflow: hidden;
-    padding: 120px 60px 50px; /* Keeps consistent top/bottom spacing */
+    padding: 120px 60px 50px;
     background:
         linear-gradient(
             to bottom,
@@ -364,7 +420,7 @@ textarea {
 .preview-section {
     max-width: 1250px;
     margin: 0 auto;
-    padding: 30px 30px 100px; /* Brings Preview Songs closer to the hero */
+    padding: 30px 30px 100px;
 }
 
 .section-heading {
@@ -491,7 +547,7 @@ textarea {
 .landing-song-list {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 28px; /* Slightly wider gap for clean separation */
+    gap: 28px;
 }
 
 .landing-song-card {
@@ -565,7 +621,6 @@ textarea {
             rgba(255, 255, 255, 0.14) 215deg,
             transparent 250deg
         ),
-        /* Subtle vinyl grooves */
         repeating-radial-gradient(
             circle,
             #111 0px,
@@ -1014,7 +1069,7 @@ textarea {
     position: relative;
     width: 920px;
     max-width: 100%;
-    min-height: auto; /* Removes excess empty space at the bottom */
+    min-height: auto;
     display: flex;
     background:
         radial-gradient(circle at 88% 88%, rgba(239, 237, 227, 0.08) 0%, transparent 45%),
@@ -1087,7 +1142,7 @@ textarea {
     height: 215px;
     object-fit: cover;
     border-radius: 18px;
-    margin-bottom: 35px; /* Tighter gap between cover and year */
+    margin-bottom: 35px;
     box-shadow: 0 14px 32px rgba(0, 0, 0, 0.65);
 }
 
@@ -1103,7 +1158,7 @@ textarea {
 }
 
 .preview-year {
-    display: block; /* Ensures vertical margins apply cleanly */
+    display: block;
     margin-top: 4px;
     color: #9e9d97;
     font-size: 14px;
@@ -1189,7 +1244,7 @@ textarea {
     position: relative;
     z-index: 3;
     flex: 1;
-    padding-top: 34px; /* Clears the top-right close button */
+    padding-top: 34px;
     display: flex;
     flex-direction: column;
 }
@@ -1459,14 +1514,13 @@ textarea {
 }
 
 /* login / sign up page */
-/* log in ui */
 .login-page {
     margin: 0;
     height: 100%;
     overflow: hidden;
     background: #0b0b0b;
     color: #efede3;
-    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 .login-container {
@@ -1540,7 +1594,6 @@ textarea {
     height: 680px;
     flex-shrink: 0;
     z-index: 5;
-    /* Shifted slightly right and down to clear the top-left logo */
     transform: translate(35px, 32px) scale(0.98);
 }
 
@@ -1594,7 +1647,7 @@ textarea {
 
 .image-2 {
     top: 55px;
-    left: 105px; /* Tucked inward to give the logo breathing room */
+    left: 105px;
     transform: rotate(6deg);
 }
 
@@ -1666,6 +1719,7 @@ textarea {
 
 .login-brand p {
     margin: 3px 0 0;
+    font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
     color: #999;
     font-size: 12.5px;
 }
@@ -1678,7 +1732,8 @@ textarea {
     align-items: center;
     justify-content: center;
     padding: 40px 60px 40px 40px;
-    overflow: hidden; 
+    overflow: hidden;
+    font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 .login-form-wrapper {
@@ -1687,23 +1742,25 @@ textarea {
 }
 
 .login-heading {
-    margin-bottom: 42px;
+    margin-bottom: 36px;
 }
 
 .login-heading h2 {
-    margin: 0 0 12px;
-    font-family: "Helvetica Neue", Arial, sans-serif;
-    font-size: 48px;
-    line-height: 1;
-    font-weight: 500;
-    letter-spacing: -2px;
+    margin: 0 0 10px;
+    font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 42px;
+    line-height: 1.08;
+    font-weight: 600;
+    letter-spacing: -1.2px;
     color: #efede3;
 }
 
 .login-heading p {
     margin: 0;
+    font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
     color: #999;
-    font-size: 16px;
+    font-size: 14.5px;
+    letter-spacing: 0.2px;
 }
 
 .login-input-group {
@@ -1713,20 +1770,24 @@ textarea {
 .login-input-group label {
     display: block;
     margin-bottom: 8px;
-    font-size: 14px;
-    font-weight: 600;
+    font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
     color: #efede3;
 }
 
 .login-input-group input {
     width: 100%;
-    height: 58px;
+    height: 54px;
     padding: 0 18px;
     border: 1px solid #444;
     border-radius: 14px;
     background: #171717;
     color: #efede3;
-    font-size: 16px;
+    font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 14.5px;
+    letter-spacing: 0.2px;
     outline: none;
     transition:
         border-color 0.25s ease,
@@ -1779,49 +1840,18 @@ textarea {
     opacity: 1;
 }
 
-.login-options {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 5px 0 28px;
-    font-size: 14px;
-}
-
-.remember-me {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: #efede3;
-    cursor: pointer;
-}
-
-.remember-me input {
-    width: 17px;
-    height: 17px;
-    accent-color: #efede3;
-    cursor: pointer;
-}
-
-.forgot-password {
-    color: #efede3;
-    text-decoration: none;
-    font-weight: 500;
-}
-
-.forgot-password:hover {
-    color: #efede3;
-    text-decoration: underline;
-}
-
 .login-button {
     width: 100%;
-    height: 58px;
+    height: 52px;
+    margin-top: 8px;
     border: none;
-    border-radius: 30px;
+    border-radius: 999px;
     background: #efede3;
-    color: #111318;
-    font-size: 17px;
+    color: #0b0b0b;
+    font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 14.5px;
     font-weight: 600;
+    letter-spacing: 0.3px;
     cursor: pointer;
     transition:
         transform 0.25s ease,
@@ -1844,15 +1874,18 @@ textarea {
     min-height: 20px;
     margin: 15px 0 0;
     text-align: center;
-    font-size: 14px;
+    font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 13.5px;
     color: #999;
 }
 
 .signup-text {
-    margin-top: 30px;
+    margin-top: 28px;
     text-align: center;
-    color: #777;
-    font-size: 15px;
+    font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+    color: #9e9d97;
+    font-size: 13.5px;
+    letter-spacing: 0.2px;
 }
 
 .signup-text a {
@@ -2055,15 +2088,11 @@ textarea {
     }
 
     .login-heading h2 {
-        font-size: 38px;
+        font-size: 36px;
     }
 
     .login-form-section {
         padding: 45px 22px;
-    }
-
-    .login-options {
-        font-size: 13px;
     }
 }
 

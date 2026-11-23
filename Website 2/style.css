@@ -97,13 +97,6 @@ body {
     font-weight: 600;
 }
 
-/* Active Solid Pill State */
-.nav-item.active {
-    background: #efede3;
-    color: #0b0b0b;
-    font-weight: 600;
-}
-
 /* Profile Button & Dropdown */
 .profile-container {
     position: relative;
@@ -118,6 +111,8 @@ body {
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.05);
     color: #fff;
+    font-size: 14px;
+    font-weight: 600;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -133,11 +128,12 @@ body {
     position: absolute;
     top: 48px;
     right: 0;
-    width: 220px;
-    padding: 16px;
-    background: #111;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 12px;
+    width: 256px;
+    padding: 18px;
+    background: #111111;
+    border: 1px solid rgba(239, 237, 227, 0.15);
+    border-radius: 16px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
     display: none;
     z-index: 1000;
 }
@@ -146,33 +142,92 @@ body {
     display: block;
 }
 
-.profile-menu p {
-    margin: 5px 0;
-    color: #fff;
-    font-size: 14px;
+.profile-menu-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.profile-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1px solid rgba(239, 237, 227, 0.22);
+    background: rgba(239, 237, 227, 0.08);
+    color: #efede3;
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 18px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    text-transform: uppercase;
+}
+
+.profile-identity {
+    min-width: 0;
+    flex: 1;
+}
+
+.profile-name-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#profileUsername {
+    margin: 0;
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 19px;
+    font-weight: 500;
+    line-height: 1.15;
+    color: #efede3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.profile-role-badge {
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: rgba(239, 237, 227, 0.12);
+    color: #efede3;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    flex-shrink: 0;
 }
 
 #profileEmail {
-    color: #aaa;
-    font-size: 12px;
-    margin-bottom: 15px;
+    margin: 3px 0 0;
+    color: #9e9d97;
+    font-size: 12.5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 #logoutButton {
     width: 100%;
+    height: 38px;
     margin: 0;
-    padding: 9px;
+    padding: 0 16px;
     border: none;
-    border-radius: 8px;
+    border-radius: 999px;
     background: #efede3;
     color: #0b0b0b;
+    font-size: 13.5px;
     font-weight: 600;
     cursor: pointer;
-    transition: opacity 0.2s ease;
+    transition: background 0.2s ease, transform 0.2s ease;
 }
 
 #logoutButton:hover {
-    opacity: 0.85;
+    background: #ffffff;
+    transform: translateY(-1px);
 }
 
 /* main */
@@ -841,6 +896,75 @@ section {
     font-size: 15px;
 }
 
+/* Guest Lock Banner */
+.guest-stats-lock {
+    margin: 24px 0 60px;
+    padding: 22px 26px;
+    border: 1px solid rgba(239, 237, 227, 0.16);
+    border-radius: 18px;
+    background:
+        radial-gradient(circle at 85% 50%, rgba(239, 237, 227, 0.05) 0%, transparent 55%),
+        #080808;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.guest-lock-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.guest-lock-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1px solid rgba(239, 237, 227, 0.22);
+    background: rgba(239, 237, 227, 0.06);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+}
+
+.guest-lock-content h3 {
+    margin: 0 0 4px;
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 20px;
+    font-weight: 500;
+    color: #efede3;
+}
+
+.guest-lock-content p {
+    margin: 0;
+    color: #9e9d97;
+    font-size: 13.5px;
+}
+
+.guest-signin-btn {
+    padding: 11px 22px;
+    border: none;
+    border-radius: 999px;
+    background: #efede3;
+    color: #0b0b0b;
+    font-size: 13.5px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.guest-signin-btn:hover {
+    background: #ffffff;
+    transform: translateY(-1px);
+}
+
 /* responsive - tablet */
 @media (max-width: 900px) {
     .landing-header {
@@ -938,5 +1062,15 @@ section {
     .genre-song-year,
     .genre-song-duration {
         display: none;
+    }
+
+    .guest-stats-lock {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .guest-signin-btn {
+        width: 100%;
+        justify-content: center;
     }
 }

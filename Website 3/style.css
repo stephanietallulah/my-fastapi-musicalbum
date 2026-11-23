@@ -3,6 +3,16 @@
     box-sizing: border-box;
 }
 
+.best-match-label {
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: #efede3;
+    color: #0b0b0b;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+}
+
 html {
     scroll-behavior: smooth;
 }
@@ -96,14 +106,22 @@ body {
     font-weight: 600;
 }
 
-/* profile button */
+/* profile button & dropdown */
+.profile-container {
+    position: relative;
+}
+
 .profile-button {
     width: 38px;
     height: 38px;
+    margin: 0;
+    padding: 0;
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.05);
     color: #fff;
+    font-size: 14px;
+    font-weight: 600;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -113,6 +131,112 @@ body {
 
 .profile-button:hover {
     background: rgba(255, 255, 255, 0.12);
+}
+
+.profile-menu {
+    position: absolute;
+    top: 48px;
+    right: 0;
+    width: 256px;
+    padding: 18px;
+    background: #111111;
+    border: 1px solid rgba(239, 237, 227, 0.15);
+    border-radius: 16px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+    display: none;
+    z-index: 1000;
+}
+
+.profile-menu.show {
+    display: block;
+}
+
+.profile-menu-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.profile-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1px solid rgba(239, 237, 227, 0.22);
+    background: rgba(239, 237, 227, 0.08);
+    color: #efede3;
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 18px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    text-transform: uppercase;
+}
+
+.profile-identity {
+    min-width: 0;
+    flex: 1;
+}
+
+.profile-name-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#profileUsername {
+    margin: 0;
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 19px;
+    font-weight: 500;
+    line-height: 1.15;
+    color: #efede3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.profile-role-badge {
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: rgba(239, 237, 227, 0.12);
+    color: #efede3;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    flex-shrink: 0;
+}
+
+#profileEmail {
+    margin: 3px 0 0;
+    color: #9e9d97;
+    font-size: 12.5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#logoutButton {
+    width: 100%;
+    height: 38px;
+    margin: 0;
+    padding: 0 16px;
+    border: none;
+    border-radius: 999px;
+    background: #efede3;
+    color: #0b0b0b;
+    font-size: 13.5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+#logoutButton:hover {
+    background: #ffffff;
+    transform: translateY(-1px);
 }
 
 /* main */

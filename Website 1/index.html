@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>notenough - Music Player</title>
+    <title>encore</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,14 +35,25 @@
             </a>
         </nav>
 
+
+        <!-- profile button / modal -->
         <div class="profile-container">
-            <button class="profile-button" id="profileButton">
-                <span>♙</span>
+            <button class="profile-button" id="profileButton" aria-label="Account menu" aria-expanded="false">
+                <span id="profileButtonIcon">♙</span>
             </button>
-            <div class="profile-menu" id="profileMenu">
-                <p id="profileUsername"></p>
-                <p id="profileEmail"></p>
-                <button id="logoutButton">
+            <div class="profile-menu" id="profileMenu" role="menu">
+                <div class="profile-menu-header">
+                    <div class="profile-avatar" id="profileAvatar">A</div>
+                    <div class="profile-identity">
+                        <div class="profile-name-row">
+                            <p id="profileUsername"></p>
+                            <span class="profile-role-badge" id="profileRoleBadge"></span>
+                        </div>
+                        <p id="profileEmail"></p>
+                    </div>
+                </div>
+
+                <button type="button" id="logoutButton">
                     Log out
                 </button>
             </div>
