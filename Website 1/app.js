@@ -327,6 +327,56 @@ async function deletePlaylist(playlistId, playlistName) {
     }
 }
 
+// ADMIN: DELETE SONG
+async function deleteSong(songId, songTitle) {
+    const token = localStorage.getItem("notenoughToken");
+
+    if (!token) {
+        window.location.href = "login.html";
+        return;
+    }
+
+    const confirmed = confirm(`Are you sure you want to permanently delete "${songTitle}"?`);
+    if (!confirmed) return;
+
+    try {
+        const response = await fetch(
+            `${API_URL}/api/v1/songs/${songId}`,
+            {
+                method: "DELETE",
+                headers: {
+                    "x-api-key": API_KEY,
+                    "Authorization": `Bearer ${token}`
+                }
+            }
+        );
+
+        const data = await response.json().catch(() => ({}));
+
+        if (!response.ok) {
+            throw new Error(data.detail || "Failed to delete song.");
+        }
+
+        // Close preview modal
+        const overlay = document.querySelector(".song-preview-overlay");
+        if (overlay) overlay.style.display = "none";
+
+        showToast(`Deleted "${songTitle}".`, "success");
+
+        // Refresh song list
+        await getSongs(true);
+        const songFilter = document.getElementById("song-filter");
+        if (songFilter && songFilter.value === "favorites") {
+            showFavoriteSongs();
+        } else {
+            loadSongs();
+        }
+    } catch (error) {
+        console.error("Delete song error:", error);
+        showToast(error.message || "Unable to delete song.", "error");
+    }
+}
+
 async function showPlaylistSongs(playlistId, playlistName) {
 
     const token = localStorage.getItem("notenoughToken");
@@ -610,25 +660,35 @@ async function viewSong(id) {
         document.getElementById("previewDescription").textContent =
             song.description;
         
-        document.getElementById("spotifyButton").onclick = function() {
-
+        document.getElementById("spotifyButton").onclick = function () {
             window.open(
                 song.spotify_url,
                 "_blank"
             );
+        };
 
-};
+        const deleteSongButton = document.getElementById("deleteSongButton");
+        const currentUser = savedUser ? JSON.parse(savedUser) : null;
 
-// SHOW POPUP
+        if (deleteSongButton) {
+            if (currentUser && savedToken && currentUser.role === "admin") {
+                deleteSongButton.style.display = "inline-flex";
+                deleteSongButton.onclick = function () {
+                    deleteSong(song.id, song.title);
+                };
+            } else {
+                deleteSongButton.style.display = "none";
+                deleteSongButton.onclick = null;
+            }
+        }
+
+        // SHOW POPUP
         document.querySelector(".song-preview-overlay")
-        .style.display = "flex";
-    }
-
-    catch(error){
+            .style.display = "flex";
+    } catch (error) {
         console.error(error);
         alert("Unable to retrieve song.");
     }
-
 }
 
 // CLOSE PREVIEW POPUP

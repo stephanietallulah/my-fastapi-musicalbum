@@ -1022,12 +1022,15 @@ def update_song(
             detail="Failed to update song."
         )
 
-# DELETE SONG
+# DELETE SONG (Admin Only)
 @app.delete(
     "/api/v1/songs/{song_id}",
-    dependencies=[Depends(verify_token)]
+    dependencies=[Depends(verify_api_key)]
 )
-def delete_song(song_id: int):
+def delete_song(
+    song_id: int,
+    user=Depends(verify_admin)
+):
 
     try:
         existing = (
@@ -1044,6 +1047,10 @@ def delete_song(song_id: int):
                 detail="Song not found."
             )
 
+        # Remove references from playlist_songs and favorites first
+        supabase.table("playlist_songs").delete().eq("song_id", song_id).execute()
+        supabase.table("favorites").delete().eq("song_id", song_id).execute()
+
         supabase \
             .table("songs") \
             .delete() \
@@ -1058,10 +1065,11 @@ def delete_song(song_id: int):
     except HTTPException:
         raise
 
-    except Exception:
+    except Exception as e:
+        print("DELETE SONG ERROR:", e)
         raise HTTPException(
             status_code=500,
-            detail="Failed to delete song."
+            detail=f"Failed to delete song: {str(e)}"
         )
 
 # ADMIN - ADD SONG
