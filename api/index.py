@@ -147,6 +147,10 @@ class PlaylistUpdate(BaseModel):
 class PlaylistSongCreate(BaseModel):
     song_id: int
 
+# FAVORITE MODEL
+class FavoriteCreate(BaseModel):
+    song_id: int
+
 # HOME
 @app.get("/")
 def home():
@@ -624,6 +628,153 @@ def delete_playlist(
         raise HTTPException(
             status_code=500,
             detail=f"Failed to delete playlist: {str(e)}"
+        )
+
+# ADD FAVORITE
+@app.post(
+    "/api/v1/favorites",
+    status_code=201,
+    dependencies=[Depends(verify_token)]
+)
+def add_favorite(
+    favorite: FavoriteCreate,
+    user=Depends(verify_token)
+):
+    try:
+        # Check if song exists
+        song = (
+            supabase
+            .table("songs")
+            .select("id")
+            .eq("id", favorite.song_id)
+            .execute()
+        )
+
+        if not song.data:
+            raise HTTPException(
+                status_code=404,
+                detail="Song not found."
+            )
+
+        # Check if already a favorite
+        existing = (
+            supabase
+            .table("favorites")
+            .select("favorite_id")
+            .eq("user_id", user["user_id"])
+            .eq("song_id", favorite.song_id)
+            .execute()
+        )
+
+        if existing.data:
+            raise HTTPException(
+                status_code=409,
+                detail="Song is already in favorites."
+            )
+
+        # Add favorite
+        response = (
+            supabase
+            .table("favorites")
+            .insert({
+                "user_id": user["user_id"],
+                "song_id": favorite.song_id
+            })
+            .execute()
+        )
+
+        return {
+            "message": "Song added to favorites.",
+            "favorite": response.data[0]
+        }
+
+    except HTTPException:
+        raise
+
+    except Exception as e:
+        print("ADD FAVORITE ERROR:", e)
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to add favorite: {str(e)}"
+        )
+
+
+# GET USER FAVORITES
+@app.get(
+    "/api/v1/favorites",
+    dependencies=[Depends(verify_token)]
+)
+def get_favorites(user=Depends(verify_token)):
+    try:
+        response = (
+            supabase
+            .table("favorites")
+            .select("*")
+            .eq("user_id", user["user_id"])
+            .order("favorite_id", desc=True)
+            .execute()
+        )
+
+        return {
+            "count": len(response.data),
+            "favorites": response.data
+        }
+
+    except Exception as e:
+        print("GET FAVORITES ERROR:", e)
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to fetch favorites: {str(e)}"
+        )
+
+
+# REMOVE FAVORITE
+@app.delete(
+    "/api/v1/favorites/{song_id}",
+    dependencies=[Depends(verify_token)]
+)
+def remove_favorite(
+    song_id: int,
+    user=Depends(verify_token)
+):
+    try:
+        existing = (
+            supabase
+            .table("favorites")
+            .select("favorite_id")
+            .eq("user_id", user["user_id"])
+            .eq("song_id", song_id)
+            .execute()
+        )
+
+        if not existing.data:
+            raise HTTPException(
+                status_code=404,
+                detail="Favorite not found."
+            )
+
+        (
+            supabase
+            .table("favorites")
+            .delete()
+            .eq("user_id", user["user_id"])
+            .eq("song_id", song_id)
+            .execute()
+        )
+
+        return {
+            "message": "Song removed from favorites.",
+            "song_id": song_id
+        }
+
+    except HTTPException:
+        raise
+
+    except Exception as e:
+        print("REMOVE FAVORITE ERROR:", e)
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to remove favorite: {str(e)}"
         )
     
 # SEARCH SONG

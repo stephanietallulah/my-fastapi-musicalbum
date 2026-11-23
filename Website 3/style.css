@@ -50,28 +50,50 @@ body {
 
 /* navigation */
 .landing-nav {
-    display: flex;
+    display: inline-flex;
+    font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
     align-items: center;
-    gap: 35px;
+    gap: 4px;
+    padding: 5px;
+    border: 1px solid rgba(239, 237, 227, 0.28);
+    border-radius: 999px;
+    background: rgba(11, 11, 11, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 .nav-item {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 7px;
-    color: #aaa;
+    padding: 9px 20px;
+    border-radius: 999px;
+    color: #9e9d97;
     text-decoration: none;
-    font-size: 14px;
-    transition: 0.3s ease;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    transition:
+        background 0.25s ease,
+        color 0.25s ease,
+        transform 0.2s ease;
 }
 
 .nav-item span {
-    font-size: 16px;
+    font-size: 15px;
+    line-height: 1;
 }
 
-.nav-item:hover,
+.nav-item:hover:not(.active) {
+    color: #efede3;
+    background: rgba(239, 237, 227, 0.07);
+}
+
 .nav-item.active {
-    color: #fff;
+    background: #efede3;
+    color: #0b0b0b;
+    font-weight: 600;
 }
 
 /* profile button */
@@ -859,12 +881,15 @@ main {
     }
 
     .landing-nav {
-        gap: 18px;
+        gap: 2px;
+        padding: 4px;
     }
 
     .nav-item {
+        padding: 7px 14px;
         font-size: 12px;
     }
+    
     main {
         padding: 30px;
     }

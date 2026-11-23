@@ -7,6 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>notenough - Music Player</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;1,400&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">   
 </head>
 
 
@@ -19,21 +22,17 @@
         </div>
 
         <nav class="landing-nav">
-            <a href="index.html" class="nav-item">
-                <span>⌂</span>
+            <a href="index.html" class="nav-item active">
                 Home
             </a>
 
             <a href="../Website 3/pick-music.html" class="nav-item">
-                <span>♧</span>
                 Pick Your Music
             </a>
 
-             <a href="../Website 2/music-statistic.html" class="nav-item">
-                <span>⌁</span>
+            <a href="../Website 2/music-statistic.html" class="nav-item">
                 Music Statistic
             </a>
-
         </nav>
 
         <div class="profile-container">
@@ -65,10 +64,10 @@
                         </h1>
                         <p>Explore songs, artists, and the story behind the music.</p>
                         <div class="hero-buttons">
-                            <button class="hero-login" onclick="window.location.href='login.html'">
+                            <button class="hero-login" id="loginButton" onclick="window.location.href='login.html'">
                                 Log in <span>→</span>
                             </button>
-                            <button class="hero-signup" onclick="window.location.href='login.html'">
+                            <button class="hero-signup" id="signupButton" onclick="window.location.href='login.html'">
                                 Sign up
                             </button>
                         </div>
@@ -86,25 +85,24 @@
             </section>
 
         <section class="preview-section">
-            
             <div class="section-heading">
-                <h2>
+                <h2 id="songsHeading">
                     <span>✦</span>
                     Preview Songs
                 </h2>
 
-                <a href="login.html" class="see-more">
+                <a href="login.html" class="see-more" id="seeAllButton">
                     See more
                     <span>→</span>
                 </a>
             </div>
 
+
             <div id="songList" class="landing-song-list">
             </div>
-
         </section>
 
-        <section class="landing-cta">
+        <section class="landing-cta" id="loginCTA">
             <div>
                 <span class="cta-star">✦</span>
 
@@ -128,31 +126,31 @@
 
     </main>
 
-<div class="song-preview-overlay">
+        <div class="song-preview-overlay">
 
 
-    <div class="song-preview">
+            <div class="song-preview">
 
-        <div class="preview-left">
-            <img id="modalImage" src="" alt="Album Cover">
-            <span class="preview-year" id="previewYear"></span>
-            <h2 id="previewTitle"></h2>
-            <p class="preview-artist" id="previewArtist"></p>
-            <p class="preview-album" id="previewAlbum"></p>
+                <div class="preview-left">
+                    <img id="modalImage" src="" alt="Album Cover">
+                    <span class="preview-year" id="previewYear"></span>
+                    <h2 id="previewTitle"></h2>
+                    <p class="preview-artist" id="previewArtist"></p>
+                    <p class="preview-album" id="previewAlbum"></p>
 
-        <div class="song-stats">
-            <div>
-                <span>★</span>
-                <strong id="previewRating"></strong>
-                <small>Listener Score</small>
-            </div>
+                <div class="song-stats">
+                    <div>
+                        <span>★</span>
+                        <strong id="previewRating"></strong>
+                        <small>Listener Score</small>
+                    </div>
 
-            <div>
-                <strong id="previewStreams"></strong>
-                <small>Spotify Streams</small>
-            </div>
+                    <div>
+                        <strong id="previewStreams"></strong>
+                        <small>Spotify Streams</small>
+                    </div>
+                </div>
         </div>
-</div>
 
         <div class="preview-divider"></div>
         <div class="preview-right">
@@ -204,9 +202,40 @@
             </div>
 
             <button class="preview-spotify" id="spotifyButton">Open on Spotify</button>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
+    
+         <!-- PLAYLIST MODAL -->
+        <div class="playlist-modal-overlay" id="playlistModal">
+            <div class="playlist-modal">
+                <button
+                    type="button"
+                    class="playlist-modal-close"
+                    id="playlistModalClose">
+                    ×
+                </button>
+
+                <h2>Add to Playlist</h2>
+                <p>Select a playlist for this song.</p>
+
+                <div id="playlistList"></div>
+
+                <button
+                    type="button"
+                    class="create-playlist-button"
+                    id="createPlaylistButton">
+                    + Create New Playlist
+                </button>
+            </div>
+        </div>
+
+        <!-- playlist success message -->
+         <div class="toast-notification" id="toastNotification" role="status" aria-live="polite">
+            <span class="toast-icon" id="toastIcon">✦</span>
+            <span class="toast-message" id="toastMessage">Song added to playlist!</span>
+        </div>
+
     <audio id="audioPlayer"></audio>
     <script src="app.js"></script>
 

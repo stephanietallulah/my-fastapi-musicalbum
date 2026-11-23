@@ -7,12 +7,18 @@ html {
 }
 
 body {
-    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-family: "Plus Jakarta Sans", "Helvetica Neue", Arial, sans-serif;
     margin: 0;
     background: #050505;
     color: #efede3;
 }
 
+button,
+input,
+select,
+textarea {
+    font-family: inherit;
+}
 
 
 /* song preview */
@@ -851,31 +857,50 @@ body {
 
 /* Navigation */
 .landing-nav {
-    display: flex;
+    display: inline-flex;
+    font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
     align-items: center;
-    gap: 35px;
+    gap: 4px;
+    padding: 5px;
+    border: 1px solid rgba(239, 237, 227, 0.28);
+    border-radius: 999px;
+    background: rgba(11, 11, 11, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 .nav-item {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 7px;
-
-    color: #aaa;
+    padding: 9px 20px;
+    border-radius: 999px;
+    color: #9e9d97;
     text-decoration: none;
-
-    font-size: 14px;
-
-    transition: 0.3s ease;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    transition:
+        background 0.25s ease,
+        color 0.25s ease,
+        transform 0.2s ease;
 }
 
 .nav-item span {
-    font-size: 16px;
+    font-size: 15px;
+    line-height: 1;
 }
 
-.nav-item:hover,
+.nav-item:hover:not(.active) {
+    color: #efede3;
+    background: rgba(239, 237, 227, 0.07);
+}
+
 .nav-item.active {
-    color: #fff;
+    background: #efede3;
+    color: #0b0b0b;
+    font-weight: 600;
 }
 
 /* Profile Button */
@@ -958,12 +983,11 @@ body {
 
 /* hero section */ 
 .hero-section {
-    min-height: 540px;
     display: flex;
     align-items: center;
     position: relative;
     overflow: hidden;
-    padding: 110px 60px 40px; /* 80px navbar + 30px breathing room */
+    padding: 120px 60px 50px; /* Keeps consistent top/bottom spacing */
     background:
         linear-gradient(
             to bottom,
@@ -1151,16 +1175,15 @@ body {
 }
 
 .section-heading {
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     margin-bottom: 25px;
 }
 
 .section-heading h2 {
     margin: 0;
-
     font-size: 24px;
     font-weight: 500;
 }
@@ -1171,11 +1194,11 @@ body {
 }
 
 .see-more {
+    margin-left: auto;
     color: #999;
     text-decoration: none;
-
     font-size: 13px;
-
+    white-space: nowrap;
     transition: 0.3s ease;
 }
 
@@ -1193,7 +1216,7 @@ body {
 /* Song cards container */
 .landing-song-list {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 28px; /* Slightly wider gap for clean separation */
 }
 
@@ -1317,7 +1340,7 @@ body {
     position: absolute;
     left: 16px;
     right: calc(22% + 56px);
-    bottom: 14px; /* <-- ADD THIS LINE BACK */
+    bottom: 14px;
     z-index: 4;
     pointer-events: none;
 }
@@ -1343,6 +1366,63 @@ body {
 
 .landing-song-card.playing .vinyl-disc {
     animation: landingVinylSpin 3s linear infinite;
+}
+
+/* Favorite Heart Button - Top-right of album cover, aligned with play button */
+.favorite-button {
+    position: absolute;
+    top: 14px;
+    right: calc(22% + 14px);
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border-radius: 50%;
+    border: 1px solid rgba(239, 237, 227, 0.35);
+    background: rgba(12, 12, 12, 0.78);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 5;
+    pointer-events: auto;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.favorite-button .heart-icon {
+    width: 15px;
+    height: 15px;
+    fill: transparent;
+    stroke: #efede3;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: fill 0.2s ease, stroke 0.2s ease, transform 0.2s ease;
+}
+
+.favorite-button:hover {
+    transform: scale(1.08);
+    background: rgba(12, 12, 12, 0.9);
+    border-color: rgba(239, 237, 227, 0.7);
+}
+
+.favorite-button.active {
+    background: rgba(12, 12, 12, 0.88);
+    border-color: rgba(239, 237, 227, 0.85);
+    box-shadow:
+        0 0 12px rgba(239, 237, 227, 0.35),
+        0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.favorite-button.active .heart-icon {
+    fill: #efede3;
+    stroke: #efede3;
 }
 
 @keyframes landingVinylSpin {
@@ -1440,6 +1520,50 @@ body {
     font-size: 16px;
 }
 
+/* TOAST NOTIFICATION */
+.toast-notification {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    z-index: 10000;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 13px 22px;
+    border-radius: 999px;
+    background: #111111;
+    color: #efede3;
+    border: 1px solid rgba(239, 237, 227, 0.25);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75);
+    font-size: 13.5px;
+    font-weight: 500;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(16px);
+    transition:
+        opacity 0.28s ease,
+        transform 0.28s ease,
+        visibility 0.28s ease;
+}
+
+.toast-notification.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.toast-notification.success .toast-icon {
+    color: #efede3;
+}
+
+.toast-notification.error {
+    border-color: rgba(255, 110, 110, 0.45);
+}
+
+.toast-notification.error .toast-icon {
+    color: #ff8a8a;
+}
+
 @media (max-width: 900px) {
 
     .landing-header {
@@ -1447,10 +1571,12 @@ body {
     }
 
     .landing-nav {
-        gap: 18px;
+        gap: 2px;
+        padding: 4px;
     }
 
     .nav-item {
+        padding: 7px 14px;
         font-size: 12px;
     }
 
@@ -1562,4 +1688,148 @@ body {
         justify-content: center;
     }
 
+}
+
+.playlist-button {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    height: 34px; /* Matches .favorite-button height for clean top alignment */
+    padding: 0 14px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+
+    border: 1px solid rgba(239, 237, 227, 0.35);
+    border-radius: 20px;
+
+    background: rgba(12, 12, 12, 0.78);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: #efede3;
+
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+
+    opacity: 1;
+    transform: translateY(0);
+    z-index: 10;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.playlist-button:hover {
+    background: #efede3;
+    color: #050505;
+    border-color: #efede3;
+    transform: translateY(-2px);
+}
+
+.landing-song-card:hover .playlist-button {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* PLAYLIST MODAL */
+
+.playlist-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    z-index: 9999;
+}
+
+.playlist-modal {
+    position: relative;
+
+    width: 400px;
+    max-width: 90%;
+
+    background: #111;
+    color: #fff;
+
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+
+    padding: 28px;
+
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.playlist-modal h2 {
+    margin: 0 0 8px;
+    font-size: 24px;
+}
+
+.playlist-modal p {
+    margin: 0 0 20px;
+    color: #aaa;
+}
+
+.playlist-modal-close {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+
+    border: none;
+    background: none;
+    color: #fff;
+
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.playlist-item {
+    width: 100%;
+
+    padding: 14px 16px;
+    margin-bottom: 10px;
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+
+    background: #1c1c1c;
+    color: #fff;
+
+    text-align: left;
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.playlist-item:hover {
+    background: #292929;
+}
+
+.create-playlist-button {
+    width: 100%;
+
+    margin-top: 10px;
+    padding: 13px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: #fff;
+    color: #000;
+
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.create-playlist-button:hover {
+    opacity: 0.85;
 }

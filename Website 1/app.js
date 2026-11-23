@@ -3,6 +3,8 @@ const API_KEY = "api-key-one";
 let currentAudio = null;
 let currentCard = null;
 let currentButton = null;
+let userFavorites = [];
+let selectedSongForPlaylist = null;
 
 const FETCH_OPTIONS = {
     headers: { "x-api-key": API_KEY}
@@ -22,6 +24,7 @@ async function loadSongs() {
     try {
         const response = await fetch(`${API_URL}/api/v1/songs`, FETCH_OPTIONS);
         const data = await response.json();
+        await loadFavorites();
         displaySongs(data.songs);
     }
 
@@ -31,48 +34,115 @@ async function loadSongs() {
     }
 }
 
-// DISPLAY IMAGES
+// LOAD USER FAVORITES
+async function loadFavorites() {
+    const token = localStorage.getItem("notenoughToken");
+
+    if (!token) {
+        userFavorites = [];
+        return;
+    }
+
+    try {
+        const response = await fetch(`${API_URL}/api/v1/favorites`, {
+            headers: {
+                "x-api-key": API_KEY,
+                "Authorization": `Bearer ${token}`
+            }
+        });
+
+        if (!response.ok) throw new Error("Failed to load favorites.");
+
+        const data = await response.json();
+        userFavorites = data.favorites.map(favorite => String(favorite.song_id));
+    } catch (error) {
+        console.error("Unable to load favorites:", error);
+        userFavorites = [];
+    }
+}
+
+// DISPLAY SONGS
 function displaySongs(songs) {
     const songList = document.getElementById("songList");
-
     songList.innerHTML = "";
 
-    // Show only 3 songs on the landing page
-    songs.slice(0, 3).forEach(song => {
+    const token = localStorage.getItem("notenoughToken");
+    const songsHeading = document.getElementById("songsHeading");
 
+    if (token) {
+        if (songsHeading) songsHeading.innerHTML = "<span>✦</span> All Songs";
+
+        const seeAllButton = document.getElementById("seeAllButton");
+        if (seeAllButton) seeAllButton.style.display = "none";
+    }
+
+    const songsToDisplay = token ? songs : songs.slice(0, 4);
+
+    songsToDisplay.forEach(song => {
         const card = document.createElement("article");
         card.className = "landing-song-card";
 
+        const isFav = userFavorites.includes(String(song.id));
+
         card.innerHTML = `
             <div class="landing-song-image">
-
                 <div class="vinyl-disc"></div>
 
                 <img src="${song.image_url}" alt="${song.title}">
 
-                <button class="landing-play-button">
-                    ▶
+                <button
+                    type="button"
+                    class="favorite-button ${isFav ? "active" : ""}"
+                    data-song-id="${song.id}"
+                >
+                    <svg class="heart-icon" viewBox="0 0 24 24">
+                        <path d="M12 20.5C12 20.5 3.5 15.1 3.5 8.8C3.5 5.9 5.8 3.8 8.5 3.8C10.2 3.8 11.4 4.6 12 5.7C12.6 4.6 13.8 3.8 15.5 3.8C18.2 3.8 20.5 5.9 20.5 8.8C20.5 15.1 12 20.5 12 20.5Z" />
+                    </svg>
                 </button>
 
+                <button type="button" class="landing-play-button">▶</button>
+
+                <button
+                    type="button"
+                    class="playlist-button"
+                    data-song-id="${song.id}"
+                >
+                    + Playlist
+                </button>
             </div>
 
             <div class="landing-song-overlay">
-
                 <h3>${song.title}</h3>
-
                 <p>${song.artist}</p>
-
             </div>
         `;
 
+        // FAVORITE BUTTON
+        const favButton = card.querySelector(".favorite-button");
+
+        favButton.addEventListener("click", function (event) {
+            event.stopPropagation();
+            toggleFavorite(favButton, song.id);
+        });
+
+        // PLAY BUTTON
         const playButton = card.querySelector(".landing-play-button");
 
-        playButton.addEventListener("click", function(event) {
+        playButton.addEventListener("click", function (event) {
             event.stopPropagation();
             playSong(song.audio_url, playButton);
         });
 
-        card.addEventListener("click", function() {
+        // ADD THIS
+        const playlistButton = card.querySelector(".playlist-button");
+
+        playlistButton.addEventListener("click", function (event) {
+            event.stopPropagation();
+            openPlaylistMenu(song.id);
+        });
+
+        // SONG CARD
+        card.addEventListener("click", function () {
             viewSong(song.id);
         });
 
@@ -80,6 +150,110 @@ function displaySongs(songs) {
     });
 }
 
+
+
+// LOAD USER PLAYLISTS
+async function loadPlaylists() {
+    const token = localStorage.getItem("notenoughToken");
+
+    if (!token) {
+        window.location.href = "login.html";
+        return [];
+    }
+
+    try {
+        const response = await fetch(`${API_URL}/api/v1/playlists`, {
+            headers: {
+                "x-api-key": API_KEY,
+                "Authorization": `Bearer ${token}`
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error("Failed to load playlists.");
+        }
+
+        const data = await response.json();
+
+        return data.playlists || [];
+
+    } catch (error) {
+        console.error("Playlist error:", error);
+        alert("Unable to load playlists.");
+        return [];
+    }
+}
+
+
+// OPEN PLAYLIST MENU
+async function openPlaylistMenu(songId) {
+    const token = localStorage.getItem("notenoughToken");
+
+    if (!token) {
+        window.location.href = "login.html";
+        return;
+    }
+
+    const playlists = await loadPlaylists();
+
+    selectedSongForPlaylist = songId;
+
+    const playlistList = document.getElementById("playlistList");
+    playlistList.innerHTML = "";
+
+    if (playlists.length === 0) {
+        playlistList.innerHTML = `
+            <p class="no-playlists">
+                You don't have any playlists yet.
+            </p>
+        `;
+    } else {
+        playlists.forEach(playlist => {
+
+            const button = document.createElement("button");
+
+            button.className = "playlist-item";
+            button.textContent = playlist.name;
+
+            button.addEventListener("click", async function () {
+
+                await addSongToPlaylist(
+                    playlist.playlist_id,
+                    selectedSongForPlaylist
+                );
+
+                closePlaylistModal();
+            });
+
+            playlistList.appendChild(button);
+        });
+    }
+
+    document.getElementById("playlistModal").style.display = "flex";
+}
+
+// CLOSE PLAYLIST MODAL
+function closePlaylistModal() {
+    document.getElementById("playlistModal").style.display = "none";
+    selectedSongForPlaylist = null;
+}
+
+const playlistModalClose = document.getElementById("playlistModalClose");
+const playlistModal = document.getElementById("playlistModal");
+
+if (playlistModalClose) {
+    playlistModalClose.addEventListener("click", function () {
+        closePlaylistModal();
+    });
+}
+
+if (playlistModal) {
+    playlistModal.addEventListener("click", function (event) {
+        if (event.target === playlistModal) {
+            closePlaylistModal();
+        }
+    });
+}
 
 // GET ONE SONG
 async function viewSong(id) {
@@ -161,13 +335,30 @@ async function viewSong(id) {
 }
 
 // CLOSE PREVIEW POPUP
-document
-.querySelector(".preview-close")
-.addEventListener("click", function(){
-    document.querySelector(".song-preview-overlay")
-    .style.display = "none";
-});
+const previewOverlay = document.querySelector(".song-preview-overlay");
+const previewCloseButton = document.querySelector(".preview-close");
 
+if (previewCloseButton && previewOverlay) {
+    previewCloseButton.addEventListener("click", function (event) {
+        event.stopPropagation();
+        previewOverlay.style.display = "none";
+    });
+
+    // Also close when clicking the dark backdrop outside the modal card
+    previewOverlay.addEventListener("click", function (event) {
+        if (event.target === previewOverlay) {
+            previewOverlay.style.display = "none";
+        }
+    });
+}
+
+// Close either popup with the Escape key
+document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape") {
+        if (previewOverlay) previewOverlay.style.display = "none";
+        closePlaylistModal();
+    }
+});
 
 
 // MUSIC 
@@ -251,4 +442,147 @@ if (savedUser && savedToken) {
         window.location.href = "login.html";
     });
 
+}
+
+// HIDE LOGIN AND SIGN UP BUTTONS WHEN LOGGED IN
+const loginButton = document.getElementById("loginButton");
+const signupButton = document.getElementById("signupButton");
+const loginCTA = document.getElementById("loginCTA");
+
+if (savedUser && savedToken) {
+    if (loginButton) loginButton.style.display = "none";
+    if (signupButton) signupButton.style.display = "none";
+    if (loginCTA) loginCTA.style.display = "none";
+}
+
+let toastTimeout = null;
+
+function showToast(message, type = "success") {
+    const toast = document.getElementById("toastNotification");
+    const toastMessage = document.getElementById("toastMessage");
+    const toastIcon = document.getElementById("toastIcon");
+
+    if (!toast || !toastMessage || !toastIcon) return;
+
+    toastMessage.textContent = message;
+    toast.classList.remove("success", "error");
+    toast.classList.add(type, "show");
+    toastIcon.textContent = type === "error" ? "!" : "✦";
+
+    clearTimeout(toastTimeout);
+    toastTimeout = setTimeout(() => {
+        toast.classList.remove("show");
+    }, 3000);
+}
+
+// ADD SONG TO PLAYLIST
+async function addSongToPlaylist(playlistId, songId) {
+    const token = localStorage.getItem("notenoughToken");
+
+    if (!token) {
+        window.location.href = "login.html";
+        return;
+    }
+
+    try {
+        const response = await fetch(
+            `${API_URL}/api/v1/playlists/${playlistId}/songs`,
+            {
+                method: "POST",
+                headers: {
+                    "x-api-key": API_KEY,
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    song_id: songId
+                })
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            if (response.status === 409) {
+                showToast("This song is already in the playlist.", "error");
+                return;
+            }
+
+            throw new Error(data.detail || "Failed to add song.");
+        }
+
+        showToast("Song added to playlist!", "success");
+
+    } catch (error) {
+        console.error("Add to playlist error:", error);
+        showToast("Unable to add song to playlist.", "error");
+    }
+}
+
+// TOGGLE FAVORITE
+async function toggleFavorite(button, songId) {
+    const token = localStorage.getItem("notenoughToken");
+
+    if (!token) {
+        window.location.href = "login.html";
+        return;
+    }
+
+    const isCurrentlyFavorite = button.classList.contains("active");
+
+    try {
+        const url = isCurrentlyFavorite
+            ? `${API_URL}/api/v1/favorites/${songId}`
+            : `${API_URL}/api/v1/favorites`;
+
+        const options = isCurrentlyFavorite
+            ? {
+                  method: "DELETE",
+                  headers: {
+                      "x-api-key": API_KEY,
+                      "Authorization": `Bearer ${token}`
+                  }
+              }
+            : {
+                  method: "POST",
+                  headers: {
+                      "x-api-key": API_KEY,
+                      "Authorization": `Bearer ${token}`,
+                      "Content-Type": "application/json"
+                  },
+                  body: JSON.stringify({
+                      song_id: Number(songId)
+                  })
+              };
+
+        const res = await fetch(url, options);
+
+        if (res.status === 401) {
+            localStorage.removeItem("notenoughToken");
+            localStorage.removeItem("notenoughUser");
+            window.location.href = "login.html";
+            return;
+        }
+
+        if (!res.ok) {
+            const errData = await res.json().catch(() => ({}));
+            console.error("Favorites API error:", res.status, errData);
+            throw new Error(errData.detail || `HTTP ${res.status}`);
+        }
+
+        if (isCurrentlyFavorite) {
+            button.classList.remove("active");
+            userFavorites = userFavorites.filter(id => id !== String(songId));
+            showToast("Removed from favorites.", "success");
+        } else {
+            button.classList.add("active");
+            if (!userFavorites.includes(String(songId))) {
+                userFavorites.push(String(songId));
+            }
+            showToast("Added to favorites!", "success");
+        }
+    } catch (error) {
+        console.error("Favorite error:", error);
+        showToast(error.message || "Unable to update favorites.", "error");
+    }
 }
