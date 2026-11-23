@@ -7,6 +7,7 @@ let allSongs = [];
 let userFavorites = [];
 let selectedSongForPlaylist = null;
 
+
 const FETCH_OPTIONS = {
     headers: { "x-api-key": API_KEY}
 };
@@ -19,6 +20,8 @@ window.addEventListener("scroll", function () {
         header.classList.remove("scrolled");
     }
 });
+
+
 
 // Helper: fetch songs once and cache in memory
 async function getSongs(forceRefresh = false) {
