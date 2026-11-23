@@ -1,8 +1,16 @@
 const API_URL = "https://my-fastapi-musicalbum.vercel.app";
 
-// =============================
-// AUTH SLIDER
-// =============================
+function redirectIfLoggedIn() {
+    const token = localStorage.getItem("notenoughToken");
+    const user = localStorage.getItem("notenoughUser");
+
+    if (token && user) {
+        window.location.replace("index.html");
+    }
+}
+
+redirectIfLoggedIn();
+window.addEventListener("pageshow", redirectIfLoggedIn);
 
 const authSlider = document.getElementById("authSlider");
 const showSignupBtn = document.getElementById("showSignup");
@@ -23,9 +31,7 @@ if (showLoginBtn) {
 }
 
 
-// =============================
-// PASSWORD SHOW / HIDE
-// =============================
+// shows or hides password
 
 document.querySelectorAll(".password-toggle").forEach((button) => {
 
@@ -44,9 +50,7 @@ document.querySelectorAll(".password-toggle").forEach((button) => {
 });
 
 
-// =============================
-// REGISTER
-// =============================
+// register slider
 
 const signupForm = document.getElementById("signupForm");
 const signupMessage = document.getElementById("signupMessage");
@@ -146,9 +150,7 @@ if (signupForm) {
 }
 
 
-// =============================
-// LOGIN
-// =============================
+// log in form 
 
 const loginForm = document.getElementById("loginForm");
 const loginMessage = document.getElementById("loginMessage");
@@ -208,9 +210,9 @@ if (loginForm) {
             loginMessage.textContent =
                 "Login successful!";
 
-            // Go to the main music page
+            // Replace history entry so Chrome's Back button cannot return to login.html
             setTimeout(() => {
-                window.location.href = "index.html";
+                window.location.replace("index.html");
             }, 500);
 
         } catch (error) {

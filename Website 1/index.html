@@ -7,6 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>notenough - Music Player</title>
     <link rel="stylesheet" href="style.css">
+        <script>
+            if (localStorage.getItem("notenoughToken") && localStorage.getItem("notenoughUser")) {
+                window.location.replace("index.html");
+            }
+        </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;1,400&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">   
@@ -84,24 +89,38 @@
                 </div>
             </section>
 
-        <section class="preview-section">
-            <div class="section-heading">
-                <h2 id="songsHeading">
-                    <span>✦</span>
-                    <span id="songSectionTitle">All Songs</span>
-                </h2>
+            <section class="preview-section">
+                <div class="section-heading">
 
-                <select id="song-filter">
-                    <option value="all">All Songs</option>
-                    <option value="favorites">Favorites</option>
-                    <option value="playlists">My Playlists</option>
-                </select>
-            </div>
+                    <div class="section-title-group">
+                        <button
+                            type="button"
+                            id="backToPlaylistsButton"
+                            class="back-to-playlists-button"
+                            aria-label="Back to My Playlists"
+                            title="Back to My Playlists"
+                            style="display: none;">
+                            ←
+                        </button>
 
+                        <h2 id="songsHeading">
+                            <span>✦</span>
+                            <span id="songSectionTitle">All Songs</span>
+                        </h2>
+                    </div>
 
-            <div id="songList" class="landing-song-list">
-            </div>
-        </section>
+                    <select id="song-filter">
+                        <option value="all">All Songs</option>
+                        <option value="favorites">Favorites</option>
+                        <option value="playlists">My Playlists</option>
+                    </select>
+
+                </div>
+
+                <div id="songList" class="landing-song-list">
+                </div>
+
+            </section>
 
         <section class="landing-cta" id="loginCTA">
             <div>

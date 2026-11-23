@@ -3,6 +3,7 @@ const API_KEY = "api-key-one";
 let currentAudio = null;
 let currentCard = null;
 let currentButton = null;
+let allSongs = [];
 let userFavorites = [];
 let selectedSongForPlaylist = null;
 
@@ -19,20 +20,47 @@ window.addEventListener("scroll", function () {
     }
 });
 
-// GET ALL SONGS
+// Helper: fetch songs once and cache in memory
+async function getSongs(forceRefresh = false) {
+    if (allSongs.length > 0 && !forceRefresh) {
+        return allSongs;
+    }
+    const response = await fetch(`${API_URL}/api/v1/songs`, FETCH_OPTIONS);
+    if (!response.ok) throw new Error("Failed to load songs.");
+    const data = await response.json();
+    allSongs = data.songs || [];
+    return allSongs;
+}
+
+
 async function loadSongs() {
-    try {
-        const response = await fetch(`${API_URL}/api/v1/songs`, FETCH_OPTIONS);
-        const data = await response.json();
-        await loadFavorites();
-        displaySongs(data.songs);
+    const songList = document.getElementById("songList");
+
+    if (!songList) return;
+
+    if (allSongs.length === 0) {
+        songList.innerHTML =
+            `<p class="loading-songs">Loading songs...</p>`;
     }
 
-    catch (error) {
-        console.error(error);
-        document.getElementById("songList").innerHTML = "Unable to connect to the API.";
+    try {
+        const songs = await getSongs();
+
+        // Display songs immediately
+        displaySongs(songs);
+
+        // Update favorites separately
+        loadFavorites().then(() => {
+            displaySongs(allSongs);
+        });
+
+    } catch (error) {
+        console.error("Song loading error:", error);
+        songList.innerHTML =
+            "Unable to connect to the API.";
     }
 }
+
 
 // LOAD USER FAVORITES
 async function loadFavorites() {
@@ -62,7 +90,6 @@ async function loadFavorites() {
 }
 
 async function showFavoriteSongs() {
-
     const token = localStorage.getItem("notenoughToken");
 
     if (!token) {
@@ -71,21 +98,16 @@ async function showFavoriteSongs() {
     }
 
     try {
-        await loadFavorites();
+        const [songs] = await Promise.all([
+            getSongs(),
+            loadFavorites()
+        ]);
 
-        const response = await fetch(
-            `${API_URL}/api/v1/songs`,
-            FETCH_OPTIONS
-        );
-
-        const data = await response.json();
-
-        const favoriteSongs = data.songs.filter(song =>
+        const favoriteSongs = songs.filter(song =>
             userFavorites.includes(String(song.id))
         );
 
         displaySongs(favoriteSongs);
-
     } catch (error) {
         console.error("Unable to load favorite songs:", error);
     }
@@ -233,12 +255,28 @@ async function showPlaylists() {
             <div class="playlist-card-content">
                 <span class="playlist-icon">♫</span>
 
-                <div>
+                <div class="playlist-info">
                     <h3>${playlist.name}</h3>
                     <p>${playlist.description || "No description"}</p>
                 </div>
+
+                <button
+                    type="button"
+                    class="delete-playlist-button"
+                    aria-label="Delete playlist"
+                    title="Delete playlist"
+                >
+                    🗑
+                </button>
             </div>
         `;
+
+        const deleteButton = playlistCard.querySelector(".delete-playlist-button");
+
+        deleteButton.addEventListener("click", function (event) {
+            event.stopPropagation(); // Prevents opening the playlist when clicking delete
+            deletePlaylist(playlist.playlist_id, playlist.name);
+        });
 
         playlistCard.addEventListener("click", function () {
             showPlaylistSongs(playlist.playlist_id, playlist.name);
@@ -246,6 +284,44 @@ async function showPlaylists() {
 
         songList.appendChild(playlistCard);
     });
+}
+
+// DELETE PLAYLIST
+async function deletePlaylist(playlistId, playlistName) {
+    const token = localStorage.getItem("notenoughToken");
+
+    if (!token) {
+        window.location.href = "login.html";
+        return;
+    }
+
+    const confirmed = confirm(`Are you sure you want to delete "${playlistName}"?`);
+    if (!confirmed) return;
+
+    try {
+        const response = await fetch(
+            `${API_URL}/api/v1/playlists/${playlistId}`,
+            {
+                method: "DELETE",
+                headers: {
+                    "x-api-key": API_KEY,
+                    "Authorization": `Bearer ${token}`
+                }
+            }
+        );
+
+        if (!response.ok) {
+            const errData = await response.json().catch(() => ({}));
+            throw new Error(errData.detail || "Failed to delete playlist.");
+        }
+
+        showToast(`Deleted "${playlistName}".`, "success");
+        showPlaylists();
+
+    } catch (error) {
+        console.error("Delete playlist error:", error);
+        showToast(error.message || "Unable to delete playlist.", "error");
+    }
 }
 
 async function showPlaylistSongs(playlistId, playlistName) {
@@ -259,30 +335,43 @@ async function showPlaylistSongs(playlistId, playlistName) {
 
     try {
 
-        const response = await fetch(
-            `${API_URL}/api/v1/playlists/${playlistId}/songs`,
-            {
+        const [playlistResponse, songs] = await Promise.all([
+            fetch(`${API_URL}/api/v1/playlists/${playlistId}/songs`, {
                 headers: {
                     "x-api-key": API_KEY,
                     "Authorization": `Bearer ${token}`
                 }
-            }
-        );
+            }),
+            getSongs()
+        ]);
 
-        if (!response.ok) {
+        if (!playlistResponse.ok) {
             throw new Error("Failed to load playlist songs.");
         }
 
-        const data = await response.json();
+        const playlistData = await playlistResponse.json();
+
+        const playlistSongIds = playlistData.songs.map(song =>
+            String(song.song_id)
+        );
+
+        const playlistSongs = songs.filter(song =>
+            playlistSongIds.includes(String(song.id))
+        );
 
         document.getElementById("songSectionTitle").textContent =
             playlistName;
 
-        displaySongs(data.songs || []);
+        document.getElementById("backToPlaylistsButton").style.display =
+            "inline-flex";
+
+        displaySongs(playlistSongs);
 
     } catch (error) {
+
         console.error("Playlist songs error:", error);
         alert("Unable to load playlist songs.");
+
     }
 }
 
@@ -801,19 +890,45 @@ if (songFilter) {
         const title = document.getElementById("songSectionTitle");
 
         if (selected === "all") {
+
             title.textContent = "All Songs";
+
+            backToPlaylistsButton.style.display = "none";
+
             loadSongs();
         }
 
         else if (selected === "favorites") {
+
             title.textContent = "Favorites";
+
+            backToPlaylistsButton.style.display = "none";
+
             showFavoriteSongs();
         }
 
         else if (selected === "playlists") {
+
             title.textContent = "My Playlists";
+
+            backToPlaylistsButton.style.display = "none";
+
             showPlaylists();
         }
 
+            });
+        }
+
+const backToPlaylistsButton = document.getElementById("backToPlaylistsButton");
+
+if (backToPlaylistsButton) {
+    backToPlaylistsButton.addEventListener("click", function () {
+
+        document.getElementById("songSectionTitle").textContent =
+            "My Playlists";
+
+        backToPlaylistsButton.style.display = "none";
+
+        showPlaylists();
     });
 }
