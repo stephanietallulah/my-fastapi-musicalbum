@@ -408,7 +408,7 @@ def get_song(song_id: int):
         )
 
 # GET ALL SONGS (Protected)
-@app.get("/api/v1/songs", dependencies=[Depends(verify_admin)])
+@app.get("/api/v1/songs", dependencies=[Depends(verify_api_key)])
 def get_songs():
     try:
         response = supabase.table("songs").select("*").execute()
@@ -577,7 +577,8 @@ def test_auth(user=Depends(verify_token)):
 
 @app.post(
     "/api/v1/admin/songs",
-    status_code=201
+    status_code=201,
+    dependencies=[Depends(verify_api_key)]
 )
 def admin_create_song(
     song: SongCreate,

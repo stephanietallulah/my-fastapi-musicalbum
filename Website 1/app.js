@@ -651,6 +651,7 @@ document.addEventListener("keydown", function (event) {
     if (event.key === "Escape") {
         if (previewOverlay) previewOverlay.style.display = "none";
         closePlaylistModal();
+        closeAdminModal();
     }
 });
 
@@ -712,16 +713,41 @@ const logoutButton = document.getElementById("logoutButton");
 const savedUser = localStorage.getItem("notenoughUser");
 const savedToken = localStorage.getItem("notenoughToken");
 
-const adminSection = document.getElementById("adminSection");
+const adminModal = document.getElementById("adminModal");
+const adminModalClose = document.getElementById("adminModalClose");
+const addSongButton = document.getElementById("addSongButton");
+
+function closeAdminModal() {
+    if (adminModal) {
+        adminModal.style.display = "none";
+    }
+}
+
+if (adminModalClose) {
+    adminModalClose.addEventListener("click", closeAdminModal);
+}
+
+if (adminModal) {
+    adminModal.addEventListener("click", function (event) {
+        if (event.target === adminModal) {
+            closeAdminModal();
+        }
+    });
+}
 
 if (savedUser && savedToken) {
-
     const user = JSON.parse(savedUser);
 
-    if (adminSection && user.role === "admin") {
-        adminSection.style.display = "block";
-    }   
-
+    if (user.role === "admin" && addSongButton) {
+        addSongButton.style.display = "inline-flex";
+        addSongButton.addEventListener("click", function () {
+            if (adminModal) {
+                adminModal.style.display = "flex";
+                const titleInput = document.getElementById("adminTitle");
+                if (titleInput) titleInput.focus();
+            }
+        });
+    }
 }
 
 if (savedUser && savedToken) {
@@ -858,7 +884,9 @@ if (adminSongForm) {
             showToast("Music added successfully!", "success");
 
             adminSongForm.reset();
+            closeAdminModal();
 
+            await getSongs(true);
             loadSongs();
 
         } catch (error) {
