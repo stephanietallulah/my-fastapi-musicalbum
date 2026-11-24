@@ -1988,114 +1988,56 @@ textarea {
 }
 
 @media (max-width: 600px) {
-    /* Header */
+
     .landing-header {
-        height: 70px;
-        padding: 0 20px;
+        height: 64px;
+        padding: 0 12px;
     }
 
     .landing-logo {
-        font-size: 19px;
+        font-size: 17px;
+        gap: 5px;
+        flex-shrink: 0;
+    }
+
+    .landing-logo span {
+        font-size: 13px;
     }
 
     .landing-nav {
+        display: inline-flex;
+        flex: 1;
+        min-width: 0;
+        max-width: none;
+        margin: 0 8px;
+        gap: 2px;
+        padding: 3px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scrollbar-width: none;
+    }
+
+    .landing-nav::-webkit-scrollbar {
         display: none;
+    }
+
+    .nav-item {
+        flex-shrink: 0;
+        padding: 7px 10px;
+        font-size: 10px;
+        gap: 4px;
+    }
+
+    .nav-item span {
+        font-size: 12px;
     }
 
     .profile-button {
         width: 34px;
         height: 34px;
-    }
-
-    /* hero */
-    .hero-section {
-        min-height: auto;
-        padding: 50px 20px;
-    }
-
-    .hero-container {
-        grid-template-columns: 1fr;
-    }
-
-    .hero-content h1 {
-        font-size: 42px;
-        letter-spacing: -1px;
-    }
-
-    .hero-buttons {
-        flex-direction: row;
-        justify-content: flex-start;
-    }
-
-    .hero-login,
-    .hero-signup {
-        width: auto;
-        min-width: 120px;
-    }
-
-    .hero-orbit-graphic {
-        display: none;
-    }
-
-    /* Preview */
-    .preview-section {
-        padding: 40px 20px 70px;
-    }
-
-    .section-heading h2 {
-        font-size: 20px;
-    }
-
-    .landing-song-list {
-        grid-template-columns: 1fr;
-    }
-
-    .landing-song-card {
-        height: 350px;
-    }
-
-    /* CTA */
-    .landing-cta {
-        margin: 0 20px 70px;
-        padding: 35px 25px;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 25px;
-    }
-
-    .landing-cta h2 {
-        font-size: 24px;
-    }
-
-    .cta-login {
-        width: 100%;
-        justify-content: center;
-    }
-
-    /* Login */
-    .login-art {
-        min-height: 350px;
-    }
-
-    .album-wall {
-        transform: translateY(25px) scale(0.55);
-    }
-
-    .login-brand {
-        left: 25px;
-        top: 25px;
-        bottom: auto;
-    }
-
-    .login-heading h2 {
-        font-size: 36px;
-    }
-
-    .login-form-section {
-        padding: 45px 22px;
+        flex-shrink: 0;
     }
 }
-
 /* ADMIN ADD SONG MODAL */
 .admin-modal-overlay {
     position: fixed;
